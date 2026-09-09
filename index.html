@@ -153,12 +153,22 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-family: var(--mono);
             font-size: 20px;
             font-weight: 700;
             color: var(--accent);
             letter-spacing: 2px;
             text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .logo img {
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
         }
 
         .logo span {
@@ -256,6 +266,16 @@
             bottom: 0;
             background: radial-gradient(ellipse at center top, rgba(0, 212, 255, 0.06), transparent 70%);
             pointer-events: none;
+        }
+
+        .hero-logo {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
         }
 
         .hero-badge {
@@ -359,16 +379,6 @@
 
         .btn-gold:hover {
             box-shadow: 0 8px 32px rgba(255, 204, 0, 0.3);
-        }
-
-        /* ============================================================
-               SHIELD ANIMATION (Hero Icon)
-            ============================================================ */
-        .shield-icon {
-            font-size: 72px;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite;
         }
 
         .hero-stats {
@@ -659,7 +669,7 @@
             border-radius: 16px;
             padding: 40px;
             text-align: center;
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
@@ -688,34 +698,74 @@
             margin-bottom: 24px;
         }
 
-        .upi-box {
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 16px 0 24px;
+        .upi-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 16px 0 20px;
         }
 
-        .upi-box .upi-id {
-            font-family: var(--mono);
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--gold);
-            letter-spacing: 2px;
+        .upi-qr {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid var(--gold);
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .upi-box .upi-label {
+        .upi-qr img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .upi-details {
+            text-align: left;
+            min-width: 200px;
+        }
+
+        .upi-details .upi-label {
             font-size: 12px;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
+        .upi-details .upi-id {
+            font-family: var(--mono);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin: 4px 0 8px;
+        }
+
+        .upi-details .upi-apps {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .upi-details .app-tag {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
         .donation-box .developer-name {
             font-size: 20px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
         .donation-box .developer-role {
@@ -723,28 +773,29 @@
             color: var(--text-secondary);
         }
 
-        .donation-box .apps {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin: 16px 0 8px;
-            flex-wrap: wrap;
-        }
-
-        .donation-box .app-tag {
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
         .donation-box .coffee-note {
             font-size: 14px;
             color: var(--text-muted);
-            margin-top: 12px;
+            margin-top: 16px;
             font-style: italic;
+        }
+
+        /* ============================================================
+               CONTACT / EMAIL
+            ============================================================ */
+        .contact-email {
+            text-align: center;
+            padding: 20px 0 0;
+        }
+
+        .contact-email a {
+            color: var(--accent);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-email a:hover {
+            color: var(--green);
         }
 
         /* ============================================================
@@ -825,8 +876,17 @@
                 padding: 24px 16px;
             }
 
-            .upi-box .upi-id {
-                font-size: 20px;
+            .upi-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .upi-details {
+                text-align: center;
+            }
+
+            .upi-details .upi-apps {
+                justify-content: center;
             }
 
             .screenshots-grid {
@@ -853,6 +913,15 @@
             .features-grid {
                 grid-template-columns: 1fr;
             }
+
+            .upi-qr {
+                width: 140px;
+                height: 140px;
+            }
+
+            .upi-details .upi-id {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
@@ -863,7 +932,10 @@
     ============================================================ -->
     <nav class="navbar" role="navigation">
         <div class="container">
-            <a href="#" class="logo">BABA<span>SITARAM</span></a>
+            <a href="#" class="logo">
+                <img src="icon128.png" alt="BABASITARAM PRO Logo" />
+                BABA<span>SITARAM</span>
+            </a>
             <button class="hamburger" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
@@ -883,7 +955,7 @@
     ============================================================ -->
     <section class="hero" id="home">
         <div class="container">
-            <div class="shield-icon">🛡️</div>
+            <img src="icon128.png" alt="BABASITARAM PRO" class="hero-logo" />
             <div class="hero-badge">🔥 Now Available on Firefox &amp; Edge</div>
             <h1>
                 Ultimate<br />
@@ -1097,20 +1169,26 @@
                     buying the developer a coffee is a genuinely appreciated way to say thanks.
                 </p>
 
-                <div class="upi-box">
-                    <div class="upi-label">💳 UPI ID</div>
-                    <div class="upi-id">Totalpay@upi</div>
-                    <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">Google Pay • PhonePe • Paytm</div>
+                <div class="upi-container">
+                    <!-- QR Code -->
+                    <div class="upi-qr">
+                        <img src="upi-qr.png" alt="UPI QR Code - Totalpay@upi" />
+                    </div>
+
+                    <!-- UPI Details -->
+                    <div class="upi-details">
+                        <div class="upi-label">💳 UPI ID</div>
+                        <div class="upi-id">Totalpay@upi</div>
+                        <div class="upi-apps">
+                            <span class="app-tag">📱 Google Pay</span>
+                            <span class="app-tag">📱 PhonePe</span>
+                            <span class="app-tag">📱 Paytm</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="developer-name">VIKRAM SINGH RAJPUT</div>
                 <div class="developer-role">Developer &amp; Maintainer</div>
-
-                <div class="apps">
-                    <span class="app-tag">📱 Google Pay</span>
-                    <span class="app-tag">📱 PhonePe</span>
-                    <span class="app-tag">📱 Paytm</span>
-                </div>
 
                 <p class="coffee-note">
                     Every coffee funds filter-list maintenance, bug fixes, and new features.<br />
@@ -1121,6 +1199,15 @@
     </section>
 
     <!-- ============================================================
+    CONTACT / EMAIL
+    ============================================================ -->
+    <div class="container contact-email">
+        <p>
+            📧 Contact: <a href="mailto:ramhardamp@gmail.com">ramhardamp@gmail.com</a>
+        </p>
+    </div>
+
+    <!-- ============================================================
     FOOTER
     ============================================================ -->
     <footer class="footer">
@@ -1129,7 +1216,7 @@
                 <a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy Policy</a>
                 <a href="https://github.com/ramhardamp/babasitaram-pro/issues" target="_blank" rel="noopener">Report Bug</a>
-                <a href="mailto:YOUR_EMAIL@example.com">Contact</a>
+                <a href="mailto:ramhardamp@gmail.com">Contact</a>
             </div>
             <p>
                 Made with ❤️ for a safer, faster, and more private browsing experience.<br />
