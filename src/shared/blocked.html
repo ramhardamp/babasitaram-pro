@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Blocked — BABASITARAM</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#060a10;color:#c8d8e8;font-family:'Rajdhani',sans-serif;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(circle at 50% 50%, rgba(255,56,96,0.08) 0%, transparent 70%);
+}
+.card{
+  background:#0c1219;border:1px solid rgba(255,56,96,0.4);border-radius:12px;
+  padding:40px;text-align:center;max-width:440px;position:relative;
+  box-shadow:0 0 60px rgba(255,56,96,0.15);
+}
+.shield{font-size:64px;margin-bottom:16px;display:block;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+h1{font-size:28px;color:#ff3860;letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+.sub{font-size:13px;color:#4a6080;letter-spacing:2px;margin-bottom:20px;font-family:'Share Tech Mono',monospace;}
+.msg{font-size:15px;color:#c8d8e8;line-height:1.7;margin-bottom:24px;}
+.msg strong{color:#ff3860;}
+.back-btn{
+  background:none;border:1px solid rgba(0,212,255,0.3);border-radius:6px;
+  color:#00d4ff;padding:10px 24px;cursor:pointer;font-size:14px;
+  font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:2px;
+  transition:all 0.2s;
+}
+.back-btn:hover{background:rgba(0,212,255,0.1);border-color:#00d4ff;}
+.badge{
+  position:absolute;top:12px;right:12px;
+  background:rgba(255,56,96,0.15);border:1px solid rgba(255,56,96,0.3);
+  border-radius:4px;padding:3px 8px;font-size:9px;
+  color:#ff3860;letter-spacing:1px;font-family:'Share Tech Mono',monospace;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge">CHILD PROTECTION</div>
+  <span class="shield">🛡️</span>
+  <h1>Access Blocked</h1>
+  <div class="sub">BABASITARAM MASTER V3</div>
+  <div class="msg">
+    This website has been blocked by the
+    <strong>child protection filter</strong>.<br><br>
+    Access to this site is not permitted.
+  </div>
+  <button class="back-btn">← Go Back</button>
+</div>
+<script src="blocked.js"></script>
+</body>
+</html>

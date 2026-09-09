@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Settings - BABASITARAM</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(255, 68, 0, 0.3);
+    }
+
+    h1 {
+      color: #ff4400;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .setting-row {
+      margin: 20px 0;
+      padding: 15px;
+      background: #0f0f0f;
+      border-radius: 5px;
+      border-left: 3px solid #ff4400;
+    }
+
+    .setting-row label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .setting-desc {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+
+    .toggle {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #444;
+      transition: 0.3s;
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: #fff;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background: #ff4400;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(26px);
+    }
+
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      background: #0a0a0a;
+      border: 1px solid #333;
+      border-radius: 4px;
+      color: #fff;
+      font-size: 14px;
+    }
+
+    button {
+      background: #ff4400;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #ff6600;
+    }
+
+    .info {
+      font-size: 12px;
+      color: #888;
+      margin-top: 5px;
+    }
+
+    .status {
+      padding: 10px;
+      background: #0a0a0a;
+      border-radius: 4px;
+      margin-top: 10px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .status.active {
+      color: #00ff88;
+      border: 1px solid #00ff88;
+    }
+
+    .status.inactive {
+      color: #888;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🔒 Site Lock Settings</h1>
+
+    <div class="setting-row">
+      <label>🚫 Lock All Sites (PC छोड़ते समय)</label>
+      <label class="toggle">
+        <input type="checkbox" id="lockAllToggle">
+        <span class="slider"></span>
+      </label>
+      <div class="setting-desc">
+        ✅ ON करने पर: सभी sites password मांगेंगी (सिर्फ whitelist छोड़कर)<br>
+        ❌ OFF करने पर: सभी sites normally खुलेंगी
+      </div>
+      <div class="status inactive" id="lockStatus">🔓 Sites Unlocked</div>
+    </div>
+
+    <div class="setting-row" id="passwordSection">
+      <label>🔐 Master Security Code (BABA PIN)</label>
+      <div class="info" style="color:#ffaa00; margin-bottom:10px;">Yeh feature apke central BABA PIN ka istemal karta
+        hai.</div>
+      <div style="background:#050505; padding:15px; border-radius:8px; border:1px solid #333;">
+        <p style="font-size:12px; color:#888;">PIN badalne ke liye Extension Popup ke 'Settings' tab mein jaein.</p>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+
+</html>

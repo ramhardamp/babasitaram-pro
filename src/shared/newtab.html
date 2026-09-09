@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>New Tab — BABASITARAM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #060a10;
+      --panel: #0c1219;
+      --border: #1a2535;
+      --accent: #00d4ff;
+      --red: #ff3860;
+      --green: #00ff88;
+      --text: #c8d8e8;
+      --muted: #4a6080;
+      --mono: 'Share Tech Mono', monospace;
+      --ui: 'Rajdhani', sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: var(--text);
+      font-family: var(--ui);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0a0e1a 0%, #1a0510 50%, #0a0e1a 100%);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(255, 68, 0, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 50%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+      animation: gridMove 30s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes gridMove {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(40px);
+      }
+    }
+
+    /* LOCK VIEW */
+    #lockView {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .nt-logo {
+      font-family: var(--mono);
+      font-size: 20px;
+      color: var(--accent);
+      letter-spacing: 4px;
+      text-shadow: 0 0 20px var(--accent);
+    }
+
+    .nt-logo span {
+      color: var(--green);
+    }
+
+    .shield-icon {
+      font-size: 52px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    .lock-subtitle {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+
+    .pin-dots {
+      display: flex;
+      gap: 14px;
+      margin: 6px 0;
+    }
+
+    .pin-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: transparent;
+      transition: all 0.2s;
+    }
+
+    .pin-dot.filled {
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .lock-error {
+      color: var(--red);
+      font-size: 12px;
+      font-family: var(--mono);
+      letter-spacing: 1px;
+      height: 18px;
+      text-align: center;
+    }
+
+    .numpad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 216px;
+    }
+
+    .num-btn {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 20px;
+      font-family: var(--mono);
+      padding: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      user-select: none;
+    }
+
+    .num-btn:hover {
+      background: #1a2535;
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+    }
+
+    .num-btn:active {
+      transform: scale(0.93);
+    }
+
+    /* UNLOCKED VIEW */
+    #unlockedView {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 900px;
+      padding: 40px;
+    }
+
+    .nt-time {
+      font-family: var(--mono);
+      font-size: 140px;
+      background: linear-gradient(135deg, #00d4ff 0%, #00ff88 50%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      letter-spacing: 6px;
+      font-weight: 900;
+      filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 80px rgba(0, 255, 136, 0.4));
+      animation: glow 3s ease-in-out infinite;
+      text-align: center;
+      line-height: 1;
+      width: 100%;
+    }
+
+    @keyframes glow {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.6)) drop-shadow(0 0 80px rgba(0, 255, 136, 0.4));
+      }
+
+      50% {
+        filter: drop-shadow(0 0 60px rgba(0, 212, 255, 0.8)) drop-shadow(0 0 100px rgba(0, 255, 136, 0.6));
+      }
+    }
+
+    .nt-date {
+      font-family: var(--ui);
+      font-size: 28px;
+      background: linear-gradient(90deg, #ff8844 0%, #ffaa00 50%, #ff8844 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 3px;
+      margin-top: 15px;
+      text-align: center;
+      font-weight: 700;
+      filter: drop-shadow(0 0 20px rgba(255, 136, 68, 0.5));
+    }
+
+    .nt-badge {
+      font-size: 16px;
+      letter-spacing: 3px;
+      margin-top: 12px;
+      padding: 10px 24px;
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 255, 136, 0.1) 100%);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 30px;
+      box-shadow: 0 0 30px rgba(0, 212, 255, 0.3), inset 0 0 20px rgba(0, 255, 136, 0.1);
+      font-weight: 700;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .nt-badge span {
+      color: var(--green);
+      text-shadow: 0 0 10px var(--green);
+    }
+
+    .stats-strip {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .nt-stat {
+      background: linear-gradient(135deg, rgba(12, 18, 25, 0.8) 0%, rgba(26, 37, 53, 0.6) 100%);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 12px;
+      padding: 18px 28px;
+      text-align: center;
+      min-width: 140px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 212, 255, 0.2);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s;
+    }
+
+    .nt-stat:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 212, 255, 0.4);
+      border-color: rgba(0, 212, 255, 0.6);
+    }
+
+    .nt-stat-num {
+      font-family: var(--mono);
+      font-size: 36px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #00d4ff 0%, #33ddff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.6));
+    }
+
+    .nt-stat-num.g {
+      background: linear-gradient(135deg, #00ff88 0%, #33ffaa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.6));
+    }
+
+    .nt-stat-num.r {
+      background: linear-gradient(135deg, #ff3860 0%, #ff6680 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 15px rgba(255, 56, 96, 0.6));
+    }
+
+    .nt-stat-label {
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      margin-top: 8px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .search-bar {
+      display: flex;
+      width: 100%;
+      max-width: 600px;
+      gap: 12px;
+    }
+
+    .search-bar input {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(12, 18, 25, 0.9) 0%, rgba(26, 37, 53, 0.7) 100%);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 12px;
+      color: var(--text);
+      padding: 16px 22px;
+      font-family: var(--mono);
+      font-size: 15px;
+      outline: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0, 212, 255, 0.05);
+    }
+
+    .search-bar input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 4px 30px rgba(0, 212, 255, 0.4), inset 0 0 30px rgba(0, 212, 255, 0.1);
+    }
+
+    .search-bar input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-bar button {
+      background: linear-gradient(135deg, #00d4ff 0%, #00ff88 100%);
+      border: none;
+      border-radius: 12px;
+      color: #000;
+      padding: 16px 28px;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: 900;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+    }
+
+    .search-bar button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(0, 212, 255, 0.6);
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .ql-btn {
+      background: linear-gradient(135deg, rgba(12, 18, 25, 0.8) 0%, rgba(26, 37, 53, 0.6) 100%);
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 12px 24px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: var(--ui);
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .ql-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4);
+    }
+
+    .lock-again-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: var(--mono);
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+
+    .lock-again-btn:hover {
+      color: var(--red);
+      border-color: var(--red);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- LOCKED VIEW -->
+  <div id="lockView">
+    <div class="nt-logo">BABA<span>SITARAM</span></div>
+    <div class="shield-icon">🛡️</div>
+    <div class="lock-subtitle">PROTECTED NEW TAB — PIN ENTER KARO</div>
+    <div class="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+    </div>
+    <div class="lock-error" id="lockError"></div>
+    <div class="numpad">
+      <button class="num-btn" data-n="1">1</button>
+      <button class="num-btn" data-n="2">2</button>
+      <button class="num-btn" data-n="3">3</button>
+      <button class="num-btn" data-n="4">4</button>
+      <button class="num-btn" data-n="5">5</button>
+      <button class="num-btn" data-n="6">6</button>
+      <button class="num-btn" data-n="7">7</button>
+      <button class="num-btn" data-n="8">8</button>
+      <button class="num-btn" data-n="9">9</button>
+      <button class="num-btn" data-n="C" style="color:#ff8844">C</button>
+      <button class="num-btn" data-n="0">0</button>
+      <button class="num-btn" data-n="OK" style="color:#00ff88;font-size:15px">✓</button>
+    </div>
+  </div>
+
+  <!-- UNLOCKED VIEW -->
+  <div id="unlockedView">
+    <div>
+      <div class="nt-time" id="ntTime">00:00</div>
+      <div class="nt-date" id="ntDate">—</div>
+      <div class="nt-badge">🛡️ <span>BABASITARAM</span> SHIELD ACTIVE</div>
+    </div>
+    <div class="stats-strip">
+      <div class="nt-stat">
+        <div class="nt-stat-num" id="ntAds">0</div>
+        <div class="nt-stat-label">Ads Blocked</div>
+      </div>
+      <div class="nt-stat" id="ipStat" style="cursor:pointer;">
+        <div class="nt-stat-num g" id="ipBadge">ON</div>
+        <div class="nt-stat-label">IP Masking</div>
+      </div>
+      <div class="nt-stat" id="adStat" style="cursor:pointer;">
+        <div class="nt-stat-num g" id="adBadge">ON</div>
+        <div class="nt-stat-label">Ad Block</div>
+      </div>
+      <div class="nt-stat">
+        <div class="nt-stat-num r" id="ntBurns">0</div>
+        <div class="nt-stat-label">Burns Done</div>
+      </div>
+    </div>
+    <div class="search-bar">
+      <input type="text" id="searchIn" placeholder="Google mein search karo...">
+      <button id="searchBtn">🔍</button>
+    </div>
+    <div class="quick-links">
+      <a class="ql-btn" href="https://google.com" target="_self">🌐 Google</a>
+      <a class="ql-btn" href="https://youtube.com" target="_self">▶️ YouTube</a>
+      <a class="ql-btn" href="https://gmail.com" target="_self">✉️ Gmail</a>
+    </div>
+
+    <div style="width:100%;max-width:600px;margin-top:20px;">
+      <div
+        style="font-family:var(--mono);font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;text-align:center;">
+        🔒 Trusted Whitelisted Domains</div>
+      <div id="ntWhitelist" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+        <!-- Whitelist sites will appear here -->
+      </div>
+    </div>
+
+    <button class="lock-again-btn" id="lockAgainBtn">🔒 Lock Again</button>
+  </div>
+
+  <script src="newtab.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060a10;color:#c8d8e8;font-family:'Share Tech Mono',monospace;display:flex;align-items:center;justify-content:center;min-height:100vh;}
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+.box{background:#0c1219;border:1px solid rgba(0,212,255,0.4);border-radius:12px;padding:40px;text-align:center;width:360px;box-shadow:0 0 40px rgba(0,212,255,0.1);}
+.icon{font-size:52px;margin-bottom:16px;}
+.title{font-size:18px;color:#00d4ff;letter-spacing:3px;margin-bottom:8px;}
+.site{font-size:13px;color:#ff8844;margin-bottom:24px;}
+.dots{display:flex;gap:12px;justify-content:center;margin:16px 0;}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid #1a2535;background:transparent;transition:all 0.2s;}
+.dot.filled{background:#00d4ff;border-color:#00d4ff;box-shadow:0 0 8px #00d4ff;}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:200px;margin:16px auto;}
+.num{background:#0c1219;border:1px solid #1a2535;border-radius:6px;color:#c8d8e8;font-size:18px;padding:12px;cursor:pointer;transition:all 0.15s;}
+.num:hover{background:#1a2535;border-color:#00d4ff;color:#00d4ff;}
+.num:active{transform:scale(0.94);}
+.err{color:#ff3860;font-size:11px;height:18px;margin-top:8px;}
+.back{background:none;border:1px solid #1a2535;color:#4a6080;padding:8px 20px;border-radius:4px;cursor:pointer;font-size:11px;margin-top:16px;letter-spacing:1px;}
+.back:hover{color:#00d4ff;border-color:#00d4ff;}
+</style></head><body>
+<div class="box">
+  <div class="icon">🔐</div>
+  <div class="title">VAULT PROTECTED</div>
+  <div class="site" id="siteName">Loading...</div>
+  <div class="dots"><div class="dot" id="v0"></div><div class="dot" id="v1"></div><div class="dot" id="v2"></div><div class="dot" id="v3"></div></div>
+  <div class="err" id="err"></div>
+  <div class="numpad">
+    <button class="num" data-n="1">1</button><button class="num" data-n="2">2</button><button class="num" data-n="3">3</button>
+    <button class="num" data-n="4">4</button><button class="num" data-n="5">5</button><button class="num" data-n="6">6</button>
+    <button class="num" data-n="7">7</button><button class="num" data-n="8">8</button><button class="num" data-n="9">9</button>
+    <button class="num" data-n="C" style="color:#ff8844">C</button>
+    <button class="num" data-n="0">0</button>
+    <button class="num" data-n="OK" style="color:#00ff88;font-size:14px">✓</button>
+  </div>
+  <button class="back" id="backBtn">← BACK</button>
+</div>
+<script src="vault-blocked.js"></script></body></html>

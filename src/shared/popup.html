@@ -1,0 +1,592 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#060a10;--panel:#0c1219;--border:#1a2535;--accent:#00d4ff;--red:#ff3860;--green:#00ff88;--gold:#ffcc00;--orange:#ff8c00;--text:#c8d8e8;--muted:#4a6080;--mono:'Share Tech Mono',monospace;--ui:'Rajdhani',sans-serif}
+html,body{width:420px;min-height:520px;background:var(--bg);color:var(--text);font-family:var(--ui);font-size:14px}
+
+/* LOCK */
+#lockScreen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px}
+#lockScreen.hidden{display:none}
+.lock-icon{font-size:44px}.lock-title{font-family:var(--mono);font-size:13px;letter-spacing:3px;color:var(--accent);text-shadow:0 0 10px var(--accent)}
+.pin-dots{display:flex;gap:12px;margin:4px 0}
+.pin-dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--border);background:transparent;transition:all 0.2s}
+.pin-dot.filled{background:var(--accent);border-color:var(--accent);box-shadow:0 0 8px var(--accent)}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:196px}
+.num-btn{background:var(--panel);border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:17px;font-family:var(--mono);padding:11px;cursor:pointer;transition:all 0.15s;text-align:center}
+.num-btn:hover{background:#1a2535;border-color:var(--accent);color:var(--accent)}
+.num-btn:active{transform:scale(0.94)}
+.lock-error{color:var(--red);font-size:11px;font-family:var(--mono);letter-spacing:1px;height:16px}
+.lock-hint{font-size:10px;color:var(--muted);font-family:var(--mono)}
+.skip-pin-btn{background:none;border:1px solid var(--border);border-radius:4px;color:var(--muted);font-size:10px;padding:5px 12px;cursor:pointer;font-family:var(--mono);letter-spacing:1px;transition:all 0.2s;margin-top:2px}
+.skip-pin-btn:hover{color:var(--accent);border-color:var(--accent)}
+
+/* MAIN */
+#mainApp{display:none}
+.header{background:linear-gradient(135deg,#060e1a,#0a1628);padding:10px 14px 8px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--green),var(--gold),var(--accent),transparent);animation:scan 3s linear infinite}
+@keyframes scan{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.header-top{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--mono);font-size:13px;color:var(--accent);letter-spacing:2px;text-shadow:0 0 8px var(--accent)}
+.logo span{color:var(--green)}
+.v-badge{background:linear-gradient(90deg,#00d4ff,#00ff88);color:#000;font-family:var(--mono);font-size:9px;padding:2px 6px;border-radius:2px;font-weight:900;letter-spacing:1px}
+.status-bar{display:flex;align-items:center;gap:5px;margin-top:3px;font-size:10px;color:var(--muted);font-family:var(--mono)}
+.status-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* STATS ROW */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border)}
+.stat-cell{background:var(--panel);padding:7px 4px;text-align:center}
+.stat-num{font-family:var(--mono);font-size:19px;color:var(--accent);line-height:1}
+.stat-num.g{color:var(--green)}.stat-num.gold{color:var(--gold)}.stat-num.r{color:var(--red)}
+.stat-label{font-size:8px;letter-spacing:0.5px;color:var(--muted);text-transform:uppercase;margin-top:2px}
+
+/* TABS */
+.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--border);overflow-x:auto}
+.tabs::-webkit-scrollbar{height:0}
+.tab{flex:0 0 auto;padding:7px 10px;text-align:center;cursor:pointer;font-size:9px;letter-spacing:0.5px;text-transform:uppercase;color:var(--muted);transition:all 0.2s;font-weight:600;border-bottom:2px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--text)}.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* SECTIONS */
+.section{padding:8px 10px}
+.sec-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.sec-title{font-size:9px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;font-family:var(--mono)}
+.log-box{background:#050810;border:1px solid var(--border);border-radius:4px;height:110px;overflow-y:auto;padding:7px;font-family:var(--mono);font-size:10px}
+.log-entry{padding:2px 0;border-bottom:1px solid rgba(26,37,53,0.5);color:var(--green);line-height:1.5}
+.log-empty{color:var(--muted);text-align:center;padding:30px 0;font-size:10px}
+.input-row{display:flex;gap:5px;margin-bottom:7px}
+input[type=text]{flex:1;background:#050810;border:1px solid var(--border);border-radius:4px;color:var(--text);padding:6px 9px;font-family:var(--mono);font-size:11px;outline:none;transition:border-color 0.2s}
+input[type=text]:focus{border-color:var(--accent)}
+input[type=text]::placeholder{color:var(--muted)}
+.btn-add{background:var(--accent);color:#000;border:none;border-radius:4px;padding:6px 11px;font-weight:700;cursor:pointer;font-size:11px;letter-spacing:1px;transition:all 0.2s}
+.btn-add:hover{background:#33ddff}
+.wl-list{background:#050810;border:1px solid var(--border);border-radius:4px;height:90px;overflow-y:auto}
+.wl-item{display:flex;align-items:center;gap:7px;padding:5px 9px;border-bottom:1px solid var(--border)}
+.wl-url{flex:1;font-family:var(--mono);font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wl-del{background:none;border:1px solid rgba(255,56,96,0.3);color:var(--red);border-radius:3px;padding:1px 5px;cursor:pointer;font-size:10px;transition:all 0.2s}
+.wl-del:hover{background:var(--red);color:white}
+.empty-msg{color:var(--muted);text-align:center;padding:24px 0;font-family:var(--mono);font-size:10px}
+
+/* SETTINGS */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--panel);border:1px solid var(--border);border-radius:5px;margin-bottom:5px}
+.setting-info{flex:1;padding-right:8px}
+.setting-name{font-weight:700;font-size:12px;color:var(--text)}
+.setting-desc{font-size:9px;color:var(--muted);margin-top:1px}
+.toggle{position:relative;width:36px;height:19px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--border);border-radius:20px;cursor:pointer;transition:0.3s}
+.slider::before{content:'';position:absolute;width:13px;height:13px;left:3px;top:3px;background:var(--muted);border-radius:50%;transition:0.3s}
+input:checked+.slider{background:rgba(0,212,255,0.2);border:1px solid var(--accent)}
+input:checked+.slider::before{transform:translateX(17px);background:var(--accent);box-shadow:0 0 6px var(--accent)}
+.child-toggle input:checked+.slider{background:rgba(0,255,136,0.2);border:1px solid var(--green)}
+.child-toggle input:checked+.slider::before{background:var(--green);box-shadow:0 0 6px var(--green)}
+.timer-row{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--panel);border:1px solid var(--border);border-radius:5px;margin-bottom:5px}
+select{background:#050810;border:1px solid var(--border);border-radius:4px;color:var(--text);padding:3px 6px;font-family:var(--mono);font-size:10px;outline:none;cursor:pointer}
+select:focus{border-color:var(--orange)}
+.setting-row.clickable{cursor:pointer;transition:border-color 0.2s}
+.setting-row.clickable:hover{border-color:var(--accent)}
+
+/* WEEKLY CARDS */
+.weekly-card{background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:9px;margin-bottom:6px}
+.week-title{font-size:9px;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase;font-family:var(--mono);margin-bottom:7px}
+.week-stat{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid var(--border)}
+.week-stat:last-child{border-bottom:none}
+.week-val{font-family:var(--mono);font-size:13px;color:var(--accent)}
+
+/* ACTIONS */
+.actions{padding:0 10px 6px;display:flex;gap:5px}
+.btn-util{flex:1;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--panel);color:var(--muted);cursor:pointer;font-family:var(--ui);font-size:9px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;transition:all 0.2s}
+.btn-util:hover{color:var(--text);border-color:var(--accent)}
+
+/* FIRE */
+.fire-zone{padding:0 10px 10px}
+.btn-fire{width:100%;padding:10px;background:linear-gradient(135deg,#1a0510,#200810);border:1px solid rgba(255,56,96,0.4);border-radius:5px;color:var(--red);font-family:var(--ui);font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+.btn-fire:hover{background:linear-gradient(135deg,#300818,#380c10);border-color:var(--red);box-shadow:0 0 18px rgba(255,56,96,0.25)}
+.btn-fire.burning{animation:burnShake 0.1s infinite}
+@keyframes burnShake{0%,100%{transform:translateX(-1px)}50%{transform:translateX(1px)}}
+
+/* MODALS */
+.modal{display:none;position:fixed;inset:0;background:rgba(6,10,16,0.94);align-items:center;justify-content:center;z-index:100;backdrop-filter:blur(3px)}
+.modal-box{background:var(--panel);border:1px solid rgba(255,56,96,0.5);border-radius:8px;padding:18px;width:280px;text-align:center;box-shadow:0 0 40px rgba(255,56,96,0.2)}
+.modal-icon{font-size:30px;margin-bottom:7px;animation:shake2 0.3s infinite}
+@keyframes shake2{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+.modal-title{font-size:14px;font-weight:700;color:var(--red);letter-spacing:2px;margin-bottom:5px}
+.modal-desc{font-size:10px;color:var(--muted);margin-bottom:13px;line-height:1.6}
+.modal-btns{display:flex;gap:7px}
+.modal-yes{flex:1;padding:8px;background:var(--red);border:none;border-radius:4px;color:white;font-weight:700;cursor:pointer;font-size:11px;letter-spacing:1px}
+.modal-yes:hover{background:#ff5070}
+.modal-no{flex:1;padding:8px;background:var(--panel);border:1px solid var(--border);border-radius:4px;color:var(--text);font-weight:600;cursor:pointer;font-size:11px}
+.modal-no:hover{border-color:var(--accent);color:var(--accent)}
+.pin-modal{display:none;position:fixed;inset:0;background:rgba(6,10,16,0.96);align-items:center;justify-content:center;z-index:200}
+.pin-modal-box{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:22px;width:250px;text-align:center}
+.pin-modal-title{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--accent);margin-bottom:14px}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.daily-hclr{background:rgba(255,56,96,0.12);border:1px solid rgba(255,56,96,0.35);color:#ff6680;border-radius:4px;padding:2px 6px;font-size:9px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.daily-hclr:hover{background:rgba(255,56,96,0.28)!important;color:#ff3860}
+.pro-card{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px}
+.pro-card-title{font-size:9px;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;font-family:var(--mono);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.tag-badge{background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.3);color:var(--accent);font-size:8px;padding:1px 5px;border-radius:2px;letter-spacing:1px}
+.btn-pro{padding:7px 12px;border-radius:4px;font-family:var(--mono);font-size:10px;cursor:pointer;letter-spacing:1px;transition:all 0.2s}
+.btn-danger{background:rgba(255,56,96,0.12);border:1px solid rgba(255,56,96,0.35);color:#ff6680}
+.btn-danger:hover{background:rgba(255,56,96,0.25)}
+.btn-safe{background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);color:#00ff88}
+.btn-safe:hover{background:rgba(0,255,136,0.2)}
+.btn-warn{background:rgba(255,140,0,0.1);border:1px solid rgba(255,140,0,0.3);color:#ff8c00}
+.btn-warn:hover{background:rgba(255,140,0,0.2)}
+.bar-row{margin-bottom:5px}
+.bar-label{display:flex;justify-content:space-between;margin-bottom:2px;font-size:9px;font-family:var(--mono)}
+.bar-bg{background:var(--border);border-radius:2px;height:4px}
+.bar-fill{height:4px;border-radius:2px;transition:width 0.4s}
+</style></head><body>
+
+<!-- PIN LOCK -->
+<div id="lockScreen">
+  <div class="lock-icon">🔐</div>
+  <div class="lock-title">BABASITARAM PRO v9.1</div>
+  <div class="pin-dots"><div class="pin-dot" id="d0"></div><div class="pin-dot" id="d1"></div><div class="pin-dot" id="d2"></div><div class="pin-dot" id="d3"></div></div>
+  <div class="lock-error" id="lockError"></div>
+  <div class="numpad" id="mainNumpad">
+    <button class="num-btn" data-n="1">1</button><button class="num-btn" data-n="2">2</button><button class="num-btn" data-n="3">3</button>
+    <button class="num-btn" data-n="4">4</button><button class="num-btn" data-n="5">5</button><button class="num-btn" data-n="6">6</button>
+    <button class="num-btn" data-n="7">7</button><button class="num-btn" data-n="8">8</button><button class="num-btn" data-n="9">9</button>
+    <button class="num-btn" data-n="C" style="color:#ff8844">C</button><button class="num-btn" data-n="0">0</button><button class="num-btn" data-n="OK" style="color:#00ff88;font-size:14px">✓</button>
+  </div>
+  <div class="lock-hint" id="lockHint">Enter 4-digit PIN</div>
+  <button class="skip-pin-btn" id="noPinBtn">🔓 Skip / No PIN</button>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp">
+  <div class="header">
+    <div class="header-top">
+      <div class="logo">BABA<span>SITARAM</span></div>
+      <div class="v-badge">PRO v9.2.2</div>
+    </div>
+    <div class="status-bar">
+      <div class="status-dot"></div>
+      <span id="timerStatus">SHIELD ACTIVE — ALL SYSTEMS GO</span>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-cell"><div class="stat-num" id="adCount">0</div><div class="stat-label">Ads Killed</div></div>
+    <div class="stat-cell"><div class="stat-num r" id="monitorThreats">0</div><div class="stat-label">Trackers</div></div>
+    <div class="stat-cell"><div class="stat-num g" id="guardStat">ON</div><div class="stat-label">Guard</div></div>
+    <div class="stat-cell"><div class="stat-num gold" id="wlCount">0</div><div class="stat-label">Fireproof</div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="monitor">📡 Monitor</div>
+    <div class="tab" data-tab="pro">🛡️ PRO</div>
+    <div class="tab" data-tab="log">📋 Logs</div>
+    <div class="tab" data-tab="whitelist">🔥 Fireproof</div>
+    <div class="tab" data-tab="stats">📊 Stats</div>
+    <div class="tab" data-tab="v8">⚡ v8</div>
+    <div class="tab" data-tab="settings">⚙️ Set</div>
+  </div>
+
+  <!-- MONITOR TAB -->
+  <div class="tab-content active" id="tab-monitor">
+    <div class="section">
+      <div class="sec-header">
+        <span class="sec-title" style="color:#38bdf8">⚡ Live Monitor</span>
+        <button class="btn-util" id="resetCountMonitor" style="flex:0;padding:2px 8px;font-size:8px">RESET</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:5px">
+        <div style="background:#050810;border:1px solid #1a3050;border-radius:6px;padding:8px;text-align:center">
+          <div style="font-size:8px;color:#38bdf8;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Ads Killed</div>
+          <div id="monitorAdCount" style="font-size:26px;font-weight:bold;color:#38bdf8;font-family:monospace">0</div>
+        </div>
+        <div style="background:#050810;border:1px solid #1a3050;border-radius:6px;padding:8px;text-align:center">
+          <div style="font-size:8px;color:#00ff88;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">This Week</div>
+          <div id="monitorWeekAds" style="font-size:26px;font-weight:bold;color:#00ff88;font-family:monospace">0</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:6px">
+        <div style="background:#050810;border:1px solid #2a1500;border-radius:6px;padding:8px;text-align:center">
+          <div style="font-size:8px;color:#ff8844;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Trackers Blocked</div>
+          <div id="monTrackersGlobal" style="font-size:26px;font-weight:bold;color:#ff8844;font-family:monospace">0</div>
+          <div style="font-size:8px;color:var(--muted);margin-top:2px">This page: <span id="monitorSiteTrackers" style="color:#ff8844">—</span></div>
+        </div>
+        <div style="background:#050810;border:1px solid #1a2a10;border-radius:6px;padding:8px;text-align:center">
+          <div style="font-size:8px;color:#ffcc00;letter-spacing:1px;text-transform:uppercase;margin-bottom:3px">Privacy Grade</div>
+          <div id="monitorGrade" style="font-size:26px;font-weight:bold;color:#ffcc00;font-family:monospace">—</div>
+          <div style="font-size:8px;color:var(--muted);margin-top:2px" id="monitorGradeSite">Current page</div>
+        </div>
+      </div>
+
+      <!-- Shields -->
+      <div style="background:#050810;border:1px solid #1a3050;border-radius:5px;padding:7px;margin-bottom:6px">
+        <div style="font-size:8px;color:#38bdf8;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">🛡️ Active Shields</div>
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <div style="display:flex;align-items:center;gap:6px" id="adKillerShieldStatus"><div style="width:6px;height:6px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;flex-shrink:0;animation:pulse 2s infinite"></div><span style="font-size:10px">● YouTube Ad-Killer: <strong style="color:#00ff88">ACTIVE</strong></span></div>
+          <div style="display:flex;align-items:center;gap:6px" id="ipShieldStatus"><div style="width:6px;height:6px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;flex-shrink:0;animation:pulse 2s infinite"></div><span style="font-size:10px">● IP Shield: <strong style="color:#00ff88">HIDDEN</strong></span></div>
+          <div style="display:flex;align-items:center;gap:6px" id="zeroAdShieldStatus"><div style="width:6px;height:6px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;flex-shrink:0;animation:pulse 2s infinite"></div><span style="font-size:10px">● Zero-Ad Engine (41 rules): <strong style="color:#00ff88">RUNNING</strong></span></div>
+          <div style="display:flex;align-items:center;gap:6px" id="trackerShieldStatus"><div style="width:6px;height:6px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;flex-shrink:0;animation:pulse 2s infinite"></div><span style="font-size:10px">● Tracker Blocker: <strong style="color:#00ff88">RUNNING</strong></span></div>
+          <div style="display:flex;align-items:center;gap:6px" id="antiFingerShieldStatus"><div style="width:6px;height:6px;border-radius:50%;background:#00ff88;box-shadow:0 0 5px #00ff88;flex-shrink:0;animation:pulse 2s infinite"></div><span style="font-size:10px">● Anti-Fingerprint: <strong style="color:#00ff88">ACTIVE</strong></span></div>
+          <div style="display:flex;align-items:center;gap:6px" id="historyGuardStatus"><div style="width:6px;height:6px;border-radius:50%;background:#00ff88;flex-shrink:0"></div><span style="font-size:10px">● History Guard: <strong style="color:#00ff88">ON</strong></span></div>
+        </div>
+      </div>
+
+      <!-- ✨ NEW: Quick Actions -->
+      <div style="background:#050810;border:1px solid #2a1a00;border-radius:5px;padding:7px;margin-bottom:6px">
+        <div style="font-size:8px;color:#ffcc00;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">⚡ Quick Actions</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <button class="btn-pro btn-danger" id="disableSiteBtn" style="flex:1;padding:4px 6px;font-size:9px">⛔ Disable Site</button>
+          <button class="btn-pro btn-warn" id="fixSiteBtn" style="flex:1;padding:4px 6px;font-size:9px">🛠️ Fix Site</button>
+          <button class="btn-pro btn-safe" id="clearBreakageBtn" style="flex:1;padding:4px 6px;font-size:9px">🧹 Clear Bypass</button>
+        </div>
+        <div style="font-size:8px;color:var(--muted);margin-top:4px">Disable = full off, Fix = cosmetic only, Clear = reset all breakage fixes</div>
+      </div>
+
+      <!-- Per-site trackers -->
+      <div style="background:#050810;border:1px solid #2a1500;border-radius:5px;padding:7px;margin-bottom:6px">
+        <div style="font-size:8px;color:#ff8844;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">🎯 Per-Site Trackers</div>
+        <div id="trackerDomainStatsList"><div style="color:var(--muted);font-size:10px;text-align:center;padding:10px">Browse to see data</div></div>
+      </div>
+
+      <!-- Payment sites -->
+      <div style="background:#050810;border:1px solid #2a1a00;border-radius:5px;padding:7px;margin-bottom:6px">
+        <div style="font-size:8px;color:#ffcc00;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">💳 Payment/Medical Sites</div>
+        <div id="paymentSitesList"><div style="font-size:10px;color:var(--muted);text-align:center;padding:8px">No visits yet</div></div>
+      </div>
+
+      <!-- Monitor whitelist -->
+      <div style="background:#050810;border:1px solid var(--border);border-radius:5px;padding:7px;margin-bottom:6px">
+        <div style="font-size:8px;color:#ffcc00;letter-spacing:1px;text-transform:uppercase;margin-bottom:5px">🔒 Trusted Domains</div>
+        <div id="monitorWList" style="display:flex;flex-wrap:wrap;gap:4px;max-height:60px;overflow-y:auto"><div style="font-size:10px;color:var(--muted);text-align:center;width:100%;padding:6px">No trusted sites</div></div>
+      </div>
+
+      <div style="font-size:8px;font-weight:700;color:#4a6080;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">🔴 LIVE ACTIVITY LOG</div>
+      <div class="log-box" id="monitorLogBox" style="height:80px"><div class="log-empty">Waiting...</div></div>
+    </div>
+  </div>
+
+  <!-- PRO TAB -->
+  <div class="tab-content" id="tab-pro">
+    <div class="section">
+      <!-- (PRO tab content unchanged — same as before) -->
+      <!-- Element Picker -->
+      <div class="pro-card">
+        <div class="pro-card-title">🎯 Element Picker <span class="tag-badge">v8 NEW</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Right-click any element → block it permanently</div>
+        <button class="btn-pro btn-warn" id="startPickerBtn" style="width:100%;padding:8px;margin-bottom:8px">🎯 Start Element Picker (Current Tab)</button>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:5px">Saved custom rules: <span id="customRulesCount" style="color:var(--accent)">0</span></div>
+        <div id="customRulesList" style="background:#050810;border:1px solid var(--border);border-radius:4px;max-height:90px;overflow-y:auto">
+          <div style="color:var(--muted);font-size:10px;text-align:center;padding:10px">No custom rules</div>
+        </div>
+        <button class="btn-pro btn-danger" id="clearAllRulesBtn" style="width:100%;margin-top:6px;padding:5px">🗑️ Clear All Rules</button>
+      </div>
+
+      <!-- Vault -->
+      <div class="pro-card">
+        <div class="pro-card-title">🔐 Vault Mode <span class="tag-badge">NEW</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Sites that only open with a PIN</div>
+        <div class="input-row">
+          <input type="text" id="vaultIn" placeholder="e.g. gmail.com" style="font-size:10px;padding:5px 8px">
+          <button class="btn-add" id="vaultAddBtn" style="font-size:10px;padding:5px 9px;background:#00d4ff">+ADD</button>
+        </div>
+        <div id="vaultList" style="background:#050810;border:1px solid var(--border);border-radius:4px;max-height:80px;overflow-y:auto"></div>
+      </div>
+
+      <!-- Cookie Cleaner -->
+      <div class="pro-card">
+        <div class="pro-card-title">🍪 Cookie Cleaner <span class="tag-badge">NEW</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="font-size:9px;color:var(--muted)">Total cookies: <span id="cookieTotal" style="color:var(--accent)">—</span></div>
+          <div style="display:flex;gap:5px">
+            <button class="btn-pro btn-danger" id="cleanAllCookiesBtn">🗑️ Clean All</button>
+            <button class="btn-pro btn-safe" id="refreshCookiesBtn">↻ Refresh</button>
+          </div>
+        </div>
+        <div id="cookieList" style="background:#050810;border:1px solid var(--border);border-radius:4px;max-height:100px;overflow-y:auto">
+          <div style="color:var(--muted);font-size:10px;text-align:center;padding:12px">↻ Click Refresh to load</div>
+        </div>
+      </div>
+
+      <!-- Time Limit -->
+      <div class="pro-card">
+        <div class="pro-card-title">⏰ Site Time Limit <span class="tag-badge">NEW</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Set a daily time limit per site</div>
+        <div style="display:flex;gap:5px;margin-bottom:6px">
+          <input type="text" id="timeLimitSite" placeholder="site.com" style="flex:1;font-size:10px;padding:5px 8px">
+          <select id="timeLimitMin" style="font-size:10px;padding:5px">
+            <option value="15">15 min</option><option value="30">30 min</option>
+            <option value="45">45 min</option><option value="60" selected>1 hour</option>
+            <option value="90">90 min</option><option value="120">2 hours</option>
+          </select>
+          <button class="btn-add" id="timeLimitAddBtn" style="font-size:10px;padding:5px 9px;background:#ff8c00;color:#000">SET</button>
+        </div>
+        <div id="timeLimitList" style="background:#050810;border:1px solid var(--border);border-radius:4px;max-height:90px;overflow-y:auto">
+          <div style="color:var(--muted);font-size:10px;text-align:center;padding:10px">No limits set</div>
+        </div>
+      </div>
+
+      <!-- Breach Alert -->
+      <div class="pro-card">
+        <div class="pro-card-title">🚨 Breach Alert <span class="tag-badge">NEW</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Check if your email has been in a data breach</div>
+        <div class="input-row">
+          <input type="text" id="breachEmail" placeholder="your@email.com" style="font-size:10px;padding:5px 8px">
+          <button class="btn-add" id="breachCheckBtn" style="font-size:10px;padding:5px 9px;background:#ff8c00;color:#000">CHECK</button>
+        </div>
+        <div id="breachResult" style="font-size:10px;color:var(--muted);min-height:24px;padding:4px 0;font-family:var(--mono)">Enter email and check...</div>
+      </div>
+
+      <!-- Focus Mode -->
+      <div class="pro-card">
+        <div class="pro-card-title">🎯 Focus Mode <span class="tag-badge" style="background:rgba(255,204,0,0.15);border-color:rgba(255,204,0,0.4);color:#ffcc00">NEW v8</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Only whitelisted sites will open — everything else blocked</div>
+        <div id="focusStatus" style="font-size:10px;color:var(--muted);margin-bottom:8px;font-family:var(--mono)">Status: OFF</div>
+        <div style="display:flex;gap:5px;margin-bottom:6px">
+          <select id="focusDuration" style="flex:1;font-size:10px;padding:5px">
+            <option value="15">15 min</option>
+            <option value="30" selected>30 min</option>
+            <option value="60">1 hour</option>
+            <option value="120">2 hours</option>
+            <option value="0">∞ No limit</option>
+          </select>
+          <button class="btn-pro btn-safe" id="focusOnBtn" style="flex:1">🎯 Start Focus</button>
+          <button class="btn-pro btn-danger" id="focusOffBtn" style="flex:1">✕ Stop</button>
+        </div>
+      </div>
+
+      <!-- Filter List Sync -->
+      <div class="pro-card">
+        <div class="pro-card-title">🛡️ Filter List Sync <span class="tag-badge" style="background:rgba(255,204,0,0.15);border-color:rgba(255,204,0,0.4);color:#ffcc00">NEW v8</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:6px">EasyList + EasyPrivacy — uBlock-level blocking</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <div style="font-size:9px;color:var(--muted)">Dynamic rules: <span id="dynamicRuleCount" style="color:var(--accent)">0</span></div>
+          <div style="font-size:9px;color:var(--muted)">Last sync: <span id="lastSyncTime" style="color:var(--gold)">Never</span></div>
+        </div>
+        <div id="filterSyncStatus" style="font-size:9px;color:var(--muted);font-family:var(--mono);margin-bottom:6px">Status: Not synced yet</div>
+        <div id="filterSyncBar" style="display:none;margin-bottom:6px">
+          <div class="bar-bg"><div class="bar-fill" id="filterSyncProgress" style="background:linear-gradient(90deg,#00d4ff,#00ff88);width:0%;transition:width 0.5s"></div></div>
+        </div>
+        <div style="display:flex;gap:5px">
+          <button class="btn-pro btn-safe" id="filterSyncNowBtn" style="flex:1">⬇️ Sync Now</button>
+          <button class="btn-pro btn-warn" id="filterSyncClearBtn" style="flex:1">🗑️ Clear Dynamic Rules</button>
+        </div>
+      </div>
+
+      <!-- Custom Block Rules -->
+      <div class="pro-card">
+        <div class="pro-card-title">🎯 Custom Block Rules <span class="tag-badge" style="background:rgba(255,204,0,0.15);border-color:rgba(255,204,0,0.4);color:#ffcc00">NEW v8</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Block specific elements on current site using CSS selectors</div>
+        <div style="display:flex;gap:5px;margin-bottom:4px">
+          <input type="text" id="customRuleSite" placeholder="site.com" style="width:90px;font-size:10px;padding:5px 7px;flex-shrink:0">
+          <input type="text" id="customRuleSelector" placeholder=".ad-banner, #sidebar-ad" style="flex:1;font-size:10px;padding:5px 7px">
+          <button class="btn-add" id="customRuleAddBtn" style="font-size:10px;padding:5px 9px;background:#ff8c00;color:#000">+ADD</button>
+        </div>
+        <div id="customRulesListManual" style="background:#050810;border:1px solid var(--border);border-radius:4px;max-height:80px;overflow-y:auto">
+          <div style="color:var(--muted);font-size:10px;text-align:center;padding:10px">No custom rules</div>
+        </div>
+      </div>
+
+      <!-- Weekly Report -->
+      <div class="pro-card">
+        <div class="pro-card-title">📊 Weekly Privacy Report <span class="tag-badge">NEW</span></div>
+        <div id="reportCard" style="font-size:10px;color:var(--muted)">Loading report...</div>
+        <div style="display:flex;gap:5px;margin-top:8px">
+          <button class="btn-pro btn-safe" id="refreshReportBtn" style="flex:1">↻ Refresh</button>
+          <button class="btn-pro btn-warn" id="exportReportBtn" style="flex:1">⬇️ Export CSV</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOG TAB -->
+  <div class="tab-content" id="tab-log">
+    <div class="section">
+      <div class="sec-header">
+        <span class="sec-title">Activity Feed</span>
+        <div style="display:flex;gap:5px">
+          <button class="btn-util" id="exportLogsBtn" style="flex:0;padding:2px 8px;font-size:8px;border-color:rgba(0,212,255,0.4);color:var(--accent)">⬇️ CSV</button>
+          <button class="btn-util" id="clearLogs" style="flex:0;padding:2px 8px;font-size:8px">CLEAR</button>
+        </div>
+      </div>
+      <div class="log-box" id="logBox"><div class="log-empty">Waiting for activity...</div></div>
+    </div>
+  </div>
+
+  <!-- FIREPROOF TAB -->
+  <div class="tab-content" id="tab-whitelist">
+    <div class="section">
+      <div class="sec-title" style="margin-bottom:4px;color:var(--green)">🔥 My Sites Fireproof</div>
+      <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Add → Auto: Trusted + Daily + Fireproof (safe from Burn/Exit Clear)</div>
+      <div class="input-row">
+        <input type="text" id="dailyIn" placeholder="e.g. gmail.com or https://digipayweb.csccloud.in/">
+        <button class="btn-add" id="addDailyBtn" style="background:var(--green);color:#000">+SAVE</button>
+      </div>
+      <div id="dailyList" style="margin-top:6px"></div>
+      <button id="clearAllDailyHistoryBtn" style="width:100%;padding:7px;margin-top:7px;background:rgba(255,56,96,0.1);border:1px solid rgba(255,56,96,0.4);color:#ff6680;border-radius:4px;font-weight:700;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:1px">🗑️ CLEAR ALL HISTORY</button>
+      <button id="launchDailyBtn" style="width:100%;padding:9px;margin-top:6px;background:linear-gradient(90deg,#00ff88,#00d4ff);color:#000;border:none;border-radius:4px;font-weight:bold;cursor:pointer;font-family:var(--mono);font-size:11px">⚡ LAUNCH ALL SITES</button>
+    </div>
+  </div>
+
+  <!-- STATS TAB -->
+  <div class="tab-content" id="tab-stats">
+    <div class="section">
+      <div class="weekly-card">
+        <div class="week-title">📅 This Week</div>
+        <div class="week-stat"><span>🚫 Ads Destroyed</span><span class="week-val" id="wAds">0</span></div>
+        <div class="week-stat"><span>🔍 Trackers Blocked</span><span class="week-val" id="wTrackers" style="color:#ff8844">0</span></div>
+        <div class="week-stat"><span>🔥 Emergency Burns</span><span class="week-val" id="wBurns">0</span></div>
+        <div class="week-stat"><span>📆 Week</span><span class="week-val" id="wKey" style="color:var(--muted);font-size:10px">—</span></div>
+      </div>
+      <div class="weekly-card">
+        <div class="week-title">🏆 All Time</div>
+        <div class="week-stat"><span>Total Ads Blocked</span><span class="week-val" id="allAds">0</span></div>
+        <div class="week-stat"><span>Total Trackers Blocked</span><span class="week-val" id="allTrackers" style="color:#ff8844">0</span></div>
+      </div>
+      <div class="weekly-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <div class="week-title" style="margin-bottom:0">🎯 Ads Per Site</div>
+          <button id="resetDomainStatsBtn" style="background:none;border:1px solid rgba(255,56,96,0.3);color:#ff6680;border-radius:3px;padding:2px 6px;font-size:8px;cursor:pointer;font-family:var(--mono)">RESET</button>
+        </div>
+        <div id="domainStatsList" style="max-height:120px;overflow-y:auto"></div>
+      </div>
+    </div>
+    <div class="actions"><button class="btn-util" id="resetCountStats">🔄 Reset Counter</button></div>
+  </div>
+
+  <!-- SETTINGS TAB -->
+  <div class="tab-content" id="tab-settings">
+    <div class="section" style="padding-bottom:4px">
+      <!-- Existing settings -->
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🛡️ Global Ad-Blocker</div><div class="setting-desc">YouTube + all sites ads block</div></div><label class="toggle"><input type="checkbox" id="toggleAdBlocker" checked><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🕵️ IP Privacy (WebRTC)</div><div class="setting-desc">IP hide + WebRTC leak block</div></div><label class="toggle"><input type="checkbox" id="toggleIPPrivacy" checked><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🔒 Force HTTPS</div><div class="setting-desc">HTTP sites auto-redirect (disable if site blocks)</div></div><label class="toggle"><input type="checkbox" id="toggleHTTPS" checked><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🔥 Exit Auto-Clear</div><div class="setting-desc">Auto-wipe history, cache, cookies on Chrome close (Daily workspace safe)</div></div><label class="toggle"><input type="checkbox" id="toggleExitClear"><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🛡️ Fireproof Daily Workspace</div><div class="setting-desc">Preserve cookies/storage for daily domains, clear the rest</div></div><label class="toggle"><input type="checkbox" id="toggleFireproofDaily"><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🛡️ History Guard</div><div class="setting-desc">Auto-delete non-whitelisted history</div></div><label class="toggle"><input type="checkbox" id="toggleGuard" checked><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🍪 Cookie Auto-Cleaner</div><div class="setting-desc">Delete non-whitelisted cookies on idle</div></div><label class="toggle"><input type="checkbox" id="toggleCookieCleaner"><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🌙 Nightly History Clear</div><div class="setting-desc">Auto-clear at midnight (whitelist safe)</div></div><label class="toggle"><input type="checkbox" id="toggleNightlyClear"><span class="slider"></span></label></div>
+      <div class="setting-row child-toggle"><div class="setting-info"><div class="setting-name">👶 Child Protection</div><div class="setting-desc">Adult sites block</div></div><label class="toggle child-toggle"><input type="checkbox" id="toggleChild"><span class="slider"></span></label></div>
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🔔 Skip Notifications</div><div class="setting-desc">Notify on every ad block</div></div><label class="toggle"><input type="checkbox" id="toggleNotify"><span class="slider"></span></label></div>
+
+      <!-- ✨ NEW: Auto-Disable Payment Sites toggle -->
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🔁 Auto-Disable Payment Sites</div><div class="setting-desc">Auto-disable extension on payment/banking sites</div></div><label class="toggle"><input type="checkbox" id="toggleAutoDisablePayment" checked><span class="slider"></span></label></div>
+
+      <div class="setting-row"><div class="setting-info"><div class="setting-name">🔒 Site Lock (PC Leave)</div><div class="setting-desc">All sites require PIN</div></div><label class="toggle"><input type="checkbox" id="toggleSiteLock"><span class="slider"></span></label></div>
+      <div class="setting-row" id="passwordRow" style="display:none;flex-direction:column;align-items:stretch;border-left:3px solid var(--accent);background:rgba(0,212,255,0.05)">
+        <div class="setting-info" style="margin-bottom:6px"><div class="setting-name">🔑 Master Security Active</div><div class="setting-desc">Master BABA PIN will be used</div></div>
+        <button id="relockAllBtn" style="padding:8px;background:var(--red);color:#fff;border:none;border-radius:4px;font-weight:700;font-size:10px;cursor:pointer;margin-bottom:6px">🔒 Lock All Sites Now</button>
+        <button id="changePinBtnQuick" style="padding:7px;background:var(--panel);color:var(--accent);border:1px solid var(--accent);border-radius:4px;font-weight:700;font-size:9px;cursor:pointer">🔐 CHANGE MASTER PIN</button>
+        <div id="lockPasswordStatus" style="font-size:9px;margin-top:5px;text-align:center;color:var(--muted)"></div>
+      </div>
+
+      <div class="timer-row"><div class="setting-info"><div class="setting-name">🕐 Auto History Wipe</div><div class="setting-desc">Timer-based history wipe only — no Burn</div></div><select id="autoBurnSelect"><option value="0">OFF</option><option value="-1">🔴 Live</option><option value="1">1 min</option><option value="5">5 min</option><option value="10">10 min</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">1 hr</option><option value="720">Every 12 Hours</option><option value="1440">Every Day</option><option value="10080">Every Week</option></select></div>
+      <div class="timer-row"><div class="setting-info"><div class="setting-name">🔓 PIN Session Time</div><div class="setting-desc">How long before PIN is required again</div></div><select id="pinSessionSelect"><option value="0">Always</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">1 hr</option><option value="480">8 hr</option></select></div>
+      <div class="setting-row clickable" id="changePinRow"><div class="setting-info"><div class="setting-name">🔐 Change PIN</div><div class="setting-desc">Set/update 4-digit PIN</div></div><span style="color:var(--muted);font-size:18px">›</span></div>
+
+      <!-- Backup / Restore -->
+      <div style="margin-top:8px;background:var(--panel);border:1px solid var(--border);border-radius:5px;padding:9px">
+        <div style="font-size:9px;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;font-family:var(--mono);margin-bottom:7px">💾 Backup &amp; Restore</div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:6px">Includes: Sites, Fireproof, Vault, Time Limits, Custom Rules, PIN</div>
+        <div style="display:flex;gap:5px;margin-bottom:5px">
+          <button class="btn-pro btn-safe" id="exportSettingsBtn" style="flex:1;padding:6px;font-size:10px">⬇️ Export Backup</button>
+          <button class="btn-pro btn-warn" id="importSettingsBtn" style="flex:1;padding:6px;font-size:10px">⬆️ Import Backup</button>
+          <input type="file" id="importFileInput" accept=".json" style="display:none">
+        </div>
+        <div id="backupStatus" style="font-size:9px;color:var(--muted);font-family:var(--mono);min-height:14px"></div>
+        <div style="font-size:9px;color:var(--muted);margin:7px 0 5px">☁️ Cloud Sync (Google Account)</div>
+        <div style="display:flex;gap:5px">
+          <button class="btn-pro btn-safe" id="cloudPushBtn" style="flex:1;padding:6px;font-size:10px">☁️ Push to Cloud</button>
+          <button class="btn-pro btn-warn" id="cloudPullBtn" style="flex:1;padding:6px;font-size:10px">⬇️ Pull from Cloud</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- V8 TAB -->
+  <div class="tab-content" id="tab-v8">
+    <div class="section">
+      <!-- Focus Mode -->
+      <div class="pro-card" style="border-color:rgba(255,140,0,0.35)">
+        <div class="pro-card-title">🎯 Focus Mode <span class="tag-badge" style="background:rgba(255,140,0,0.1);border-color:rgba(255,140,0,0.3);color:#ff8c00">Deep Work</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Only trusted sites open — everything else blocked</div>
+        <div id="focusStatusBox" style="background:#050810;border:1px solid var(--border);border-radius:4px;padding:7px;margin-bottom:7px;display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:9px;color:#ff8c00;font-weight:bold">FOCUS ACTIVE</span>
+            <span id="focusCountdown" style="font-family:var(--mono);font-size:16px;color:#ff8c00">00:00</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:5px;margin-bottom:6px">
+          <select id="focusMinsSelect" style="flex:1;font-size:10px;padding:6px">
+            <option value="25">25 min (Pomodoro)</option>
+            <option value="45">45 min</option>
+            <option value="60">1 hour</option>
+            <option value="90">90 min</option>
+            <option value="120">2 hours</option>
+          </select>
+          <button class="btn-add" id="focusStartBtn" style="background:#ff8c00;color:#000;font-size:10px;padding:6px 12px">START</button>
+        </div>
+        <button class="btn-pro btn-danger" id="focusStopBtn" style="width:100%;display:none">⏹ STOP FOCUS MODE</button>
+      </div>
+
+      <!-- Tab Isolation -->
+      <div class="pro-card" style="border-color:rgba(0,212,255,0.3)">
+        <div class="pro-card-title">🛡️ Tab Isolation <span class="tag-badge">Cross-site Block</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">One tab's data won't leak to another. 3rd-party cookies blocked.</div>
+        <div class="setting-row" style="margin-bottom:0;border-color:rgba(0,212,255,0.2)">
+          <div class="setting-info">
+            <div class="setting-name">Tab Cookie Isolation</div>
+            <div class="setting-desc">Cross-site tracking completely disabled</div>
+          </div>
+          <label class="toggle"><input type="checkbox" id="toggleTabIsolation"><span class="slider"></span></label>
+        </div>
+      </div>
+
+      <!-- DNS over HTTPS -->
+      <div class="pro-card" style="border-color:rgba(255,204,0,0.3)">
+        <div class="pro-card-title">🔒 DNS-over-HTTPS <span class="tag-badge" style="color:#ffcc00;border-color:rgba(255,204,0,0.3)">ISP Blind</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px">Your ISP can't see where you're browsing</div>
+        <div style="display:flex;gap:5px;margin-bottom:6px">
+          <select id="dohProvider" style="flex:1;font-size:10px;padding:5px">
+            <option value="off">OFF (default)</option>
+            <option value="cloudflare">Cloudflare 1.1.1.1 (Fast)</option>
+            <option value="google">Google 8.8.8.8</option>
+            <option value="quad9">Quad9 (Privacy-focused)</option>
+          </select>
+          <button class="btn-add" id="dohApplyBtn" style="background:#ffcc00;color:#000;font-size:10px;padding:5px 10px">SET</button>
+        </div>
+        <div id="dohStatus" style="font-size:9px;color:var(--muted);font-family:var(--mono)">Will be applied in Chrome DNS settings</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIRE ZONE -->
+  <div class="fire-zone">
+    <button class="btn-fire" id="fireBtn">🔥 EMERGENCY BURN</button>
+  </div>
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal" id="confirmModal">
+  <div class="modal-box">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title">CONFIRM BURN</div>
+    <div class="modal-desc">History, cookies, cache — all deleted.<br><strong style="color:#ff3860">This cannot be undone!</strong></div>
+    <div class="modal-btns"><button class="modal-yes" id="confirmYes">🔥 BURN IT</button><button class="modal-no" id="confirmNo">CANCEL</button></div>
+  </div>
+</div>
+
+<!-- PIN MODAL -->
+<div class="pin-modal" id="pinModal">
+  <div class="pin-modal-box">
+    <div class="pin-modal-title" id="pinModalTitle">SET NEW PIN — STEP 1</div>
+    <div class="pin-dots" style="justify-content:center;margin:10px 0"><div class="pin-dot" id="md0"></div><div class="pin-dot" id="md1"></div><div class="pin-dot" id="md2"></div><div class="pin-dot" id="md3"></div></div>
+    <div class="lock-error" id="pinModalError"></div>
+    <div class="numpad" style="margin:10px auto 0">
+      <button class="num-btn modal-num" data-n="1">1</button><button class="num-btn modal-num" data-n="2">2</button><button class="num-btn modal-num" data-n="3">3</button>
+      <button class="num-btn modal-num" data-n="4">4</button><button class="num-btn modal-num" data-n="5">5</button><button class="num-btn modal-num" data-n="6">6</button>
+      <button class="num-btn modal-num" data-n="7">7</button><button class="num-btn modal-num" data-n="8">8</button><button class="num-btn modal-num" data-n="9">9</button>
+      <button class="num-btn modal-num" data-n="C" style="color:#ff8844">C</button><button class="num-btn modal-num" data-n="0">0</button><button class="num-btn modal-num" data-n="OK" style="color:#00ff88">✓</button>
+    </div>
+    <button class="skip-pin-btn" id="cancelPinModal" style="margin-top:10px">Cancel</button>
+  </div>
+</div>
+
+<script src="popup.js"></script></body></html>

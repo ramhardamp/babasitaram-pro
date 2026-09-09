@@ -1,0 +1,23 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060a10;color:#c8d8e8;font-family:'Share Tech Mono',monospace;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px}
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+.icon{font-size:56px}
+.title{font-size:18px;color:#00d4ff;letter-spacing:3px}
+.site{color:#ff8844;font-size:13px}
+.msg{color:#4a6080;font-size:11px;text-align:center;line-height:1.7;max-width:320px}
+.timer{font-size:32px;color:#00ff88;font-family:monospace;letter-spacing:4px}
+.btn{padding:10px 24px;border-radius:6px;font-family:monospace;font-size:11px;cursor:pointer;letter-spacing:1px;margin-top:8px;border:1px solid rgba(0,212,255,0.4);background:rgba(0,212,255,0.1);color:#00d4ff;transition:all 0.2s}
+.btn:hover{background:rgba(0,212,255,0.2)}
+.btn-end{border-color:rgba(255,56,96,0.4);background:rgba(255,56,96,0.1);color:#ff3860}
+.btn-end:hover{background:rgba(255,56,96,0.25)}
+</style></head><body>
+<div class="icon">🎯</div>
+<div class="title">FOCUS MODE ON</div>
+<div class="site" id="blockedSite">Blocked</div>
+<div class="timer" id="timer">--:--</div>
+<div class="msg">Focus mode is active.<br>Only whitelisted sites can be opened.<br>Distraction blocked! 💪</div>
+<button class="btn">← Go Back</button>
+<button class="btn btn-end">🔚 End Focus Mode</button>
+<script src="focus-blocked.js"></script></body></html>

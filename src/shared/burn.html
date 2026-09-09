@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>TERMINATED — BABASITARAM</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ff4400;
+    }
+
+    #fire-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 40px;
+      border: 1px solid #ff440055;
+      border-radius: 10px;
+      box-shadow: 0 0 50px rgba(255, 68, 0, 0.3);
+      backdrop-filter: blur(10px);
+      max-width: 500px;
+      width: 90%;
+      animation: glitch-entry 0.5s ease-out;
+    }
+
+    @keyframes glitch-entry {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+        filter: hue-rotate(90deg);
+      }
+
+      100% {
+        transform: scale(1);
+        opacity: 1;
+        filter: hue-rotate(0deg);
+      }
+    }
+
+    .title {
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 10px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 15px #ff4400;
+      animation: text-flicker 2s infinite;
+    }
+
+    @keyframes text-flicker {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+
+      55% {
+        opacity: 1;
+        text-shadow: 0 0 30px #ff4400, 0 0 5px #fff;
+      }
+
+      56% {
+        opacity: 0.9;
+      }
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #ffaa00;
+      margin-bottom: 30px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .status-box {
+      text-align: left;
+      margin: 20px auto;
+      max-width: 300px;
+    }
+
+    .status-row {
+      font-size: 13px;
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0.4;
+      transition: all 0.3s;
+    }
+
+    .status-row.active {
+      opacity: 1;
+      color: #fff;
+      text-shadow: 0 0 8px #ffaa00;
+    }
+
+    .status-row.done {
+      opacity: 0.8;
+      color: #00ff88;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: #333;
+    }
+
+    .active .dot {
+      background: #ffaa00;
+      box-shadow: 0 0 10px #ffaa00;
+      animation: pulse 1s infinite;
+    }
+
+    .done .dot {
+      background: #00ff88;
+      box-shadow: 0 0 10px #00ff88;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.3);
+      }
+    }
+
+    .progress-container {
+      width: 100%;
+      height: 4px;
+      background: #111;
+      margin: 20px 0;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid #ff440022;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff0000, #ffaa00, #fff);
+      box-shadow: 0 0 20px #ff4400;
+      transition: width 0.3s ease;
+    }
+
+    .burn-flare {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      background: #fff;
+      border-radius: 50%;
+      z-index: 100;
+      box-shadow: 0 0 100px 50px #fff, 0 0 200px 100px #ff4400;
+      display: none;
+      opacity: 0;
+    }
+
+    .smoke {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      z-index: 2;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="fire-canvas"></canvas>
+  <div class="smoke"></div>
+
+  <div class="content">
+    <div class="title">TERMINATED</div>
+    <div class="subtitle">BABA SITARAM SHIELD — EMERGENCY ERASE</div>
+
+    <div class="status-box" id="statusBox">
+      <div class="status-row" id="row0">
+        <div class="dot"></div> Wiping History Entries...
+      </div>
+      <div class="status-row" id="row1">
+        <div class="dot"></div> Destroying Tracking Cookies...
+      </div>
+      <div class="status-row" id="row2">
+        <div class="dot"></div> Flushing Volatile Cache...
+      </div>
+      <div class="status-row" id="row3">
+        <div class="dot"></div> Killing Active Sessions...
+      </div>
+      <div class="status-row" id="row4">
+        <div class="dot"></div> Closing Vulnerable Tabs...
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div style="font-size: 10px; color: #444; margin-top: 10px;">
+      ALL DATA PERMANENTLY DELETED. NO RECOVERY POSSIBLE.
+    </div>
+  </div>
+
+  <div class="burn-flare" id="burnFlare"></div>
+
+  <script src="burn.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#060a10;color:#c8d8e8;font-family:'Share Tech Mono',monospace;display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:0}
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+.wrap{text-align:center;padding:40px;max-width:420px}
+.icon{font-size:56px;margin-bottom:16px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.title{font-size:20px;color:#00d4ff;letter-spacing:4px;margin-bottom:8px}
+.site{font-size:14px;color:#ff8c00;margin-bottom:16px;word-break:break-all}
+.msg{font-size:11px;color:#4a6080;line-height:1.8;margin-bottom:24px}
+.timer{font-size:36px;color:#ff3860;font-weight:bold;margin-bottom:16px;font-family:monospace}
+.btn{padding:10px 24px;border-radius:5px;font-family:monospace;font-size:11px;cursor:pointer;letter-spacing:1px;border:none;margin:4px}
+.btn-back{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.4);color:#00d4ff}
+.btn-back:hover{background:rgba(0,212,255,0.2)}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="icon">🎯</div>
+  <div class="title">FOCUS MODE</div>
+  <div class="site" id="siteName">Blocked Site</div>
+  <div class="msg">You are currently in Focus Mode.<br>Only trusted sites are allowed.<br>Stay focused — no distractions! 💪</div>
+  <div class="timer" id="focusTimer">--:--</div>
+  <div style="font-size:9px;color:#4a6080;margin-bottom:16px">FOCUS SESSION REMAINING</div>
+  <button class="btn btn-back">← Go Back</button>
+</div>
+<script src="focus-mode-page.js"></script></body></html>

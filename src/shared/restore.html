@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BABASITARAM PRO — Restore Backup</title>
+<style>
+  :root{--bg:#060a10;--panel:#0c1219;--border:#1a2535;--accent:#00d4ff;--red:#ff3860;--green:#00ff88;--gold:#ffcc00;--orange:#ff8c00;--text:#c8d8e8;--muted:#4a6080;--mono:'Share Tech Mono',monospace;--ui:'Rajdhani',sans-serif}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--ui),Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:32px;max-width:420px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.5)}
+  h1{font-family:var(--mono);font-size:16px;color:var(--accent);letter-spacing:2px;margin:0 0 6px;text-shadow:0 0 10px var(--accent)}
+  .sub{font-size:12px;color:var(--muted);margin-bottom:20px;line-height:1.5}
+  .drop{border:2px dashed var(--border);border-radius:8px;padding:24px;text-align:center;cursor:pointer;transition:0.2s;margin-bottom:16px}
+  .drop:hover,.drop.drag{border-color:var(--accent);background:rgba(0,212,255,0.05)}
+  .drop .icon{font-size:32px;margin-bottom:8px}
+  .drop .label{font-size:13px;color:var(--text)}
+  .drop .hint{font-size:10px;color:var(--muted);margin-top:4px;font-family:var(--mono)}
+  #fileInput{display:none}
+  #fileName{font-size:11px;color:var(--accent);font-family:var(--mono);margin-bottom:12px;min-height:14px;word-break:break-all}
+  button.primary{width:100%;background:linear-gradient(135deg,#00d4ff,#00a8cc);color:#000;border:none;padding:12px;border-radius:8px;font-size:14px;font-weight:bold;letter-spacing:1px;cursor:pointer;transition:0.2s}
+  button.primary:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 15px rgba(0,212,255,0.4)}
+  button.primary:disabled{opacity:0.4;cursor:not-allowed}
+  #status{font-size:11px;font-family:var(--mono);margin-top:14px;min-height:16px;text-align:center}
+  .close-hint{font-size:10px;color:var(--muted);text-align:center;margin-top:16px}
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>⬆️ RESTORE BACKUP</h1>
+    <div class="sub">
+      This opens in its own tab instead of the popup, because Firefox closes extension
+      popups the instant a file picker dialog opens — which is why restoring a backup
+      from the popup used to fail silently there.
+    </div>
+    <div class="drop" id="dropZone">
+      <div class="icon">📂</div>
+      <div class="label">Click to choose a backup file</div>
+      <div class="hint">or drag &amp; drop a .json file here</div>
+    </div>
+    <input type="file" id="fileInput" accept=".json,application/json">
+    <div id="fileName"></div>
+    <button class="primary" id="importBtn" disabled>IMPORT SETTINGS</button>
+    <div id="status"></div>
+    <div class="close-hint">You can close this tab and reopen the extension popup once done.</div>
+  </div>
+<script src="restore.js"></script>
+</body>
+</html>
