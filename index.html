@@ -597,15 +597,20 @@
             display: inline-block;
             margin-top: 12px;
             padding: 8px 20px;
-            background: var(--accent);
-            color: #000;
             border-radius: 6px;
             font-weight: 600;
             font-size: 13px;
             transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
         }
 
-        .install-btn:hover {
+        .install-btn.default {
+            background: var(--accent);
+            color: #000;
+        }
+
+        .install-btn.default:hover {
             background: #33ddff;
             transform: scale(1.05);
         }
@@ -1186,7 +1191,7 @@
     </section>
 
     <!-- ============================================================
-    INSTALL SECTION — FULLY FIXED WITH CHROME OFFLINE DOWNLOAD
+    INSTALL SECTION — FULLY FIXED
     ============================================================ -->
     <section class="install" id="install">
         <div class="container">
@@ -1202,7 +1207,10 @@
                     <div class="browser-icon">🦊</div>
                     <h4>Firefox</h4>
                     <div class="status">✅ Available</div>
-                    <a href="https://addons.mozilla.org/addon/babasitaram-pro" target="_blank" rel="noopener" class="install-btn" data-hi="Firefox में जोड़ें" data-en="Add to Firefox">Firefox में जोड़ें</a>
+                    <a href="https://addons.mozilla.org/addon/babasitaram-pro" target="_blank" rel="noopener" class="install-btn default">
+                        <span class="lang-hi active">Firefox में जोड़ें</span>
+                        <span class="lang-en">Add to Firefox</span>
+                    </a>
                 </div>
                 
                 <!-- Microsoft Edge -->
@@ -1210,15 +1218,21 @@
                     <div class="browser-icon">🟦</div>
                     <h4>Microsoft Edge</h4>
                     <div class="status">✅ Available</div>
-                    <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener" class="install-btn" data-hi="Edge Store से लें" data-en="Get from Edge Store">Edge Store से लें</a>
+                    <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener" class="install-btn default">
+                        <span class="lang-hi active">Edge Store से लें</span>
+                        <span class="lang-en">Get from Edge Store</span>
+                    </a>
                 </div>
                 
-                <!-- Chrome — OFFLINE DOWNLOAD -->
+                <!-- Chrome — OFFLINE DOWNLOAD (FIXED) -->
                 <div class="install-card animate-on-scroll">
                     <div class="browser-icon">🌐</div>
                     <h4>Google Chrome</h4>
                     <div class="status" style="color: var(--gold);">📦 Offline Install</div>
-                    <a href="https://github.com/user-attachments/files/31998047/BABASITARAM_PRO_CHROME.FIREFOX.zip" target="_blank" rel="noopener" class="install-btn chrome" data-hi="📥 ZIP डाउनलोड करें" data-en="📥 Download ZIP">📥 ZIP डाउनलोड करें</a>
+                    <a href="https://github.com/user-attachments/files/31998047/BABASITARAM_PRO_CHROME.FIREFOX.zip" target="_blank" rel="noopener" download class="install-btn chrome">
+                        <span class="lang-hi active">📥 ZIP डाउनलोड करें</span>
+                        <span class="lang-en">📥 Download ZIP</span>
+                    </a>
                     
                     <!-- Offline Installation Guide -->
                     <div class="install-guide">
@@ -1244,7 +1258,10 @@
                     <h4 class="lang-hi active">मैन्युअल इंस्टॉल</h4>
                     <h4 class="lang-en">Manual Install</h4>
                     <div class="status">⚡ Developer Mode</div>
-                    <a href="https://github.com/ramhardamp/babasitaram-pro/releases/latest" target="_blank" rel="noopener" class="install-btn" data-hi="ZIP डाउनलोड करें" data-en="Download ZIP">ZIP डाउनलोड करें</a>
+                    <a href="https://github.com/ramhardamp/babasitaram-pro/releases/latest" target="_blank" rel="noopener" class="install-btn default">
+                        <span class="lang-hi active">ZIP डाउनलोड करें</span>
+                        <span class="lang-en">Download ZIP</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1416,7 +1433,7 @@
     </footer>
 
     <!-- ============================================================
-    LANGUAGE SWITCHER SCRIPT — FIXED
+    LANGUAGE SWITCHER SCRIPT
     ============================================================ -->
     <script>
         function switchLang(lang) {
@@ -1433,22 +1450,34 @@
                 el.classList.toggle('active', lang === 'en');
             });
 
-            // Update all elements with data-hi / data-en attributes
-            document.querySelectorAll('[data-hi][data-en]').forEach(el => {
-                if (lang === 'hi' && el.dataset.hi) {
-                    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
-                        el.textContent = el.dataset.hi;
-                    } else {
-                        el.innerHTML = el.dataset.hi;
-                    }
-                } else if (lang === 'en' && el.dataset.en) {
-                    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
-                        el.textContent = el.dataset.en;
-                    } else {
-                        el.innerHTML = el.dataset.en;
-                    }
+            // Update nav links with data attributes
+            document.querySelectorAll('.nav-links a[data-hi][data-en]').forEach(el => {
+                if (lang === 'hi') {
+                    el.innerHTML = el.dataset.hi;
+                } else {
+                    el.innerHTML = el.dataset.en;
                 }
             });
+
+            // Update nav CTA
+            const cta = document.querySelector('.nav-cta');
+            if (cta) {
+                if (lang === 'hi') {
+                    cta.innerHTML = 'डाउनलोड';
+                } else {
+                    cta.innerHTML = 'Download';
+                }
+            }
+
+            // Update hero button
+            const heroBtn = document.querySelector('.hero-buttons .btn-primary');
+            if (heroBtn) {
+                if (lang === 'hi') {
+                    heroBtn.innerHTML = '⬇️ एक्सटेंशन इंस्टॉल करें';
+                } else {
+                    heroBtn.innerHTML = '⬇️ Install Extension';
+                }
+            }
 
             // Save preference
             localStorage.setItem('baba-lang', lang);
