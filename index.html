@@ -1,5 +1,1500 @@
-<!-- Replace this: -->
-<div class="screenshot-placeholder">📊</div>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BABASITARAM PRO — Privacy & Productivity Shield</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    
+    <style>
+        /* ============================================================
+               RESET & BASE
+            ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<!-- With this: -->
-<img src="assets/screenshots/dashboard.png" alt="Monitor Dashboard" style="width:100%;border-radius:8px;border:1px solid var(--border);" />
+        :root {
+            --bg-primary: #060a10;
+            --bg-secondary: #0c1219;
+            --bg-card: #0f1a24;
+            --border: #1a2a3a;
+            --text-primary: #e8f0f8;
+            --text-secondary: #8aa0b8;
+            --text-muted: #4a6080;
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.3);
+            --gold: #ffcc00;
+            --orange: #ff8c00;
+            --red: #ff3860;
+            --green: #00ff88;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --mono: 'Share Tech Mono', monospace;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================================
+               LANGUAGE SWITCHER
+            ============================================================ */
+        .lang-switcher {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-right: 12px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+        }
+
+        .lang-btn:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #000;
+        }
+
+        /* ============================================================
+               LANGUAGE HIDE/SHOW — FIXED
+            ============================================================ */
+        .lang-hi,
+        .lang-en {
+            display: none !important;
+        }
+
+        .lang-hi.active,
+        .lang-en.active {
+            display: block !important;
+        }
+
+        .lang-hi.active.inline,
+        .lang-en.active.inline {
+            display: inline !important;
+        }
+
+        .lang-hi.active.flex,
+        .lang-en.active.flex {
+            display: flex !important;
+        }
+
+        .lang-hi.active.grid,
+        .lang-en.active.grid {
+            display: grid !important;
+        }
+
+        .lang-hi.active.text,
+        .lang-en.active.text {
+            display: inline-block !important;
+        }
+
+        /* ============================================================
+               SCROLLBAR
+            ============================================================ */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* ============================================================
+               ANIMATIONS
+            ============================================================ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scanLine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================================
+               HEADER / NAV
+            ============================================================ */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            background: rgba(6, 10, 16, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--mono);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .logo img {
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+        }
+
+        .logo span {
+            color: var(--green);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: #000 !important;
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .nav-cta:hover {
+            background: #33ddff;
+            transform: scale(1.05);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ============================================================
+               HERO
+            ============================================================ */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center top, rgba(0, 212, 255, 0.06), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-logo {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 72px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .highlight-gold {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(16px, 1.5vw, 22px);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 36px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent), #00a8cc);
+            color: #000;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--text-primary);
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 48px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-family: var(--mono);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .hero-stat .label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ============================================================
+               FEATURES
+            ============================================================ */
+        .features {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px 24px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--green));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 212, 255, 0.3);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 14px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* ============================================================
+               INSTALL SECTION
+            ============================================================ */
+        .install {
+            padding: 80px 0;
+            background: var(--bg-primary);
+        }
+
+        .install-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .install-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .install-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .install-card .browser-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .install-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .install-card .status {
+            font-size: 12px;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .install-card .status.pending {
+            color: var(--orange);
+        }
+
+        .install-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: var(--accent);
+            color: #000;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+
+        .install-btn:hover {
+            background: #33ddff;
+            transform: scale(1.05);
+        }
+
+        .install-btn.soon {
+            background: var(--border);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .install-btn.soon:hover {
+            transform: none;
+            background: var(--border);
+        }
+
+        .install-btn.chrome {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            color: #000;
+        }
+
+        .install-btn.chrome:hover {
+            box-shadow: 0 4px 20px rgba(255, 204, 0, 0.4);
+            transform: scale(1.05);
+        }
+
+        .install-guide {
+            margin-top: 12px;
+            text-align: left;
+            background: var(--bg-primary);
+            border-radius: 6px;
+            padding: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .install-guide p {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .install-guide ol {
+            font-size: 11px;
+            color: var(--text-muted);
+            padding-left: 18px;
+            line-height: 1.8;
+        }
+
+        .install-guide code {
+            background: var(--bg-card);
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-family: var(--mono);
+            font-size: 10px;
+        }
+
+        /* ============================================================
+               SCREENSHOTS
+            ============================================================ */
+        .screenshots {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .screenshot-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+
+        .screenshot-placeholder {
+            background: var(--bg-primary);
+            border-radius: 8px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: var(--text-muted);
+            border: 1px dashed var(--border);
+        }
+
+        .screenshot-item p {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ============================================================
+               PRIVACY
+            ============================================================ */
+        .privacy {
+            padding: 80px 0;
+            background: var(--bg-primary);
+        }
+
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .privacy-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .privacy-item .icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .privacy-item h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .privacy-item p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* ============================================================
+               DONATION
+            ============================================================ */
+        .donation {
+            padding: 80px 0;
+            background: var(--bg-secondary);
+        }
+
+        .donation-box {
+            background: var(--bg-card);
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--orange), var(--gold));
+            animation: scanLine 3s linear infinite;
+        }
+
+        .donation-box h3 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .donation-box .subtitle {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 24px;
+        }
+
+        .upi-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 16px 0 20px;
+        }
+
+        .upi-qr {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid var(--gold);
+            width: 160px;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .upi-qr img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .upi-details {
+            text-align: left;
+            min-width: 200px;
+        }
+
+        .upi-details .upi-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .upi-details .upi-id {
+            font-family: var(--mono);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin: 4px 0 8px;
+        }
+
+        .upi-details .upi-apps {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .upi-details .app-tag {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .donation-box .developer-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .donation-box .developer-role {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .donation-box .coffee-note {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 16px;
+            font-style: italic;
+        }
+
+        /* ============================================================
+               CONTACT / EMAIL
+            ============================================================ */
+        .contact-email {
+            text-align: center;
+            padding: 20px 0 0;
+        }
+
+        .contact-email a {
+            color: var(--accent);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .contact-email a:hover {
+            color: var(--green);
+        }
+
+        /* ============================================================
+               FOOTER
+            ============================================================ */
+        .footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .footer a {
+            color: var(--accent);
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--green);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* ============================================================
+               RESPONSIVE
+            ============================================================ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                gap: 12px;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--bg-primary);
+                padding: 20px 24px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .hero-stats {
+                gap: 20px;
+            }
+
+            .donation-box {
+                padding: 24px 16px;
+            }
+
+            .upi-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .upi-details {
+                text-align: center;
+            }
+
+            .upi-details .upi-apps {
+                justify-content: center;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upi-qr {
+                width: 140px;
+                height: 140px;
+            }
+
+            .upi-details .upi-id {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
+    <nav class="navbar" role="navigation">
+        <div class="container">
+            <div class="nav-left">
+                <a href="#" class="logo">
+                    <img src="icon128.png" alt="BABASITARAM PRO Logo" />
+                    BABA<span>SITARAM</span>
+                </a>
+            </div>
+            
+            <div style="display:flex;align-items:center;gap:8px;">
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="hi" onclick="switchLang('hi')">🇮🇳 हिंदी</button>
+                    <button class="lang-btn" data-lang="en" onclick="switchLang('en')">🇬🇧 English</button>
+                </div>
+                
+                <button class="hamburger" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#features" data-hi="सुविधाएँ" data-en="Features">सुविधाएँ</a></li>
+                <li><a href="#install" data-hi="इंस्टॉल" data-en="Install">इंस्टॉल</a></li>
+                <li><a href="#privacy" data-hi="प्राइवेसी" data-en="Privacy">प्राइवेसी</a></li>
+                <li><a href="#donate" data-hi="सहयोग" data-en="Support">सहयोग</a></li>
+                <li><a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener">GitHub</a></li>
+                <li><a href="#install" class="nav-cta" data-hi="डाउनलोड" data-en="Download">डाउनलोड</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ============================================================
+    HERO
+    ============================================================ -->
+    <section class="hero" id="home">
+        <div class="container">
+            <img src="icon128.png" alt="BABASITARAM PRO" class="hero-logo" />
+            
+            <div class="hero-badge lang-hi active">🔥 अब Firefox और Edge पर उपलब्ध</div>
+            <div class="hero-badge lang-en">🔥 Now Available on Firefox &amp; Edge</div>
+            
+            <h1>
+                <span class="lang-hi active">अल्टीमेट<br /><span class="highlight">प्राइवेसी</span> &amp; <span class="highlight-gold">प्रोडक्टिविटी</span> शील्ड</span>
+                <span class="lang-en">Ultimate<br /><span class="highlight">Privacy</span> &amp; <span class="highlight-gold">Productivity</span> Shield</span>
+            </h1>
+            
+            <p class="lang-hi active">
+                1,00,000+ विज्ञापनों और ट्रैकर्स को ब्लॉक करें, संवेदनशील साइटों को लॉक करें,
+                फोकस मोड सक्षम करें, और एक क्लिक में अपना डेटा साफ़ करें —
+                बिना किसी डेटा कलेक्शन के।
+            </p>
+            <p class="lang-en">
+                Block 100,000+ ads and trackers, lock sensitive sites,
+                enable focus mode, and clear your data with one click —
+                all with zero data collection.
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="#install" class="btn-primary" data-hi="⬇️ एक्सटेंशन इंस्टॉल करें" data-en="⬇️ Install Extension">⬇️ एक्सटेंशन इंस्टॉल करें</a>
+                <a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener" class="btn-secondary">🐙 GitHub</a>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="number">100k+</div>
+                    <div class="label lang-hi active">विज्ञापन नियम</div>
+                    <div class="label lang-en">Ad Rules</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">⚡</div>
+                    <div class="label lang-hi active">शून्य डेटा संग्रह</div>
+                    <div class="label lang-en">Zero Data Collection</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="number">🔥</div>
+                    <div class="label lang-hi active">एक क्लिक क्लियर</div>
+                    <div class="label lang-en">One-Click Burn</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FEATURES
+    ============================================================ -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2 class="lang-hi active">⚡ सुविधाएँ</h2>
+                <h2 class="lang-en">⚡ Features</h2>
+                <p class="lang-hi active">आपकी प्राइवेसी और प्रोडक्टिविटी के लिए ज़रूरी सब कुछ</p>
+                <p class="lang-en">Everything you need to protect your privacy and boost productivity</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="lang-hi active">विज्ञापन और ट्रैकर ब्लॉकिंग</h3>
+                    <h3 class="lang-en">Ad &amp; Tracker Blocking</h3>
+                    <p class="lang-hi active">1,00,000+ विज्ञापन और ट्रैकर डोमेन ब्लॉक करता है। कोई स्लोडाउन नहीं।</p>
+                    <p class="lang-en">Blocks 100,000+ ad and tracker domains. No slowdown.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="lang-hi active">साइट लॉक और वॉल्ट</h3>
+                    <h3 class="lang-en">Site Lock &amp; Vault</h3>
+                    <p class="lang-hi active">किसी भी साइट को 4-अंकीय PIN से सुरक्षित करें।</p>
+                    <p class="lang-en">Protect any site behind a 4-digit PIN.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="lang-hi active">फोकस मोड</h3>
+                    <h3 class="lang-en">Focus Mode</h3>
+                    <p class="lang-hi active">निर्धारित समय के लिए ध्यान भटकाने वाली साइटों को ब्लॉक करें।</p>
+                    <p class="lang-en">Block distracting sites for a set period.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">⏰</div>
+                    <h3 class="lang-hi active">समय सीमा</h3>
+                    <h3 class="lang-en">Time Limits</h3>
+                    <p class="lang-hi active">किसी भी डोमेन पर दैनिक समय सीमा सेट करें।</p>
+                    <p class="lang-en">Set daily time caps on any domain.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🔥</div>
+                    <h3 class="lang-hi active">आपातकालीन बर्न</h3>
+                    <h3 class="lang-en">Emergency Burn</h3>
+                    <p class="lang-hi active">एक क्लिक में इतिहास, कुकीज़ और कैश साफ़ करें।</p>
+                    <p class="lang-en">One click wipes history, cookies, and cache.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🚨</div>
+                    <h3 class="lang-hi active">ब्रीच अलर्ट</h3>
+                    <h3 class="lang-en">Breach Alert</h3>
+                    <p class="lang-hi active">जाँचें कि आपका ईमेल किसी डेटा ब्रीच में है या नहीं।</p>
+                    <p class="lang-en">Check if your email is in a data breach.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🧩</div>
+                    <h3 class="lang-hi active">टैब आइसोलेशन</h3>
+                    <h3 class="lang-en">Tab Isolation</h3>
+                    <p class="lang-hi active">टैब के बीच क्रॉस-साइट ट्रैकिंग रोकें।</p>
+                    <p class="lang-en">Prevent cross-site tracking between tabs.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="lang-hi active">एलिमेंट पिकर</h3>
+                    <h3 class="lang-en">Element Picker</h3>
+                    <p class="lang-hi active">किसी भी एलिमेंट को हमेशा के लिए छिपाएँ।</p>
+                    <p class="lang-en">Hide any element permanently.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="lang-hi active">साप्ताहिक रिपोर्ट</h3>
+                    <h3 class="lang-en">Weekly Report</h3>
+                    <p class="lang-hi active">एक नज़र में देखें क्या ब्लॉक हुआ। CSV में एक्सपोर्ट करें।</p>
+                    <p class="lang-en">See what's been blocked at a glance. Export as CSV.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    INSTALL SECTION — FULLY FIXED WITH CHROME OFFLINE DOWNLOAD
+    ============================================================ -->
+    <section class="install" id="install">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2 class="lang-hi active">📥 BABASITARAM PRO इंस्टॉल करें</h2>
+                <h2 class="lang-en">📥 Install BABASITARAM PRO</h2>
+                <p class="lang-hi active">मुफ्त। कोई अकाउंट नहीं। कोई शर्त नहीं।</p>
+                <p class="lang-en">Free. No account required. No catch.</p>
+            </div>
+            <div class="install-grid">
+                <!-- Firefox -->
+                <div class="install-card animate-on-scroll">
+                    <div class="browser-icon">🦊</div>
+                    <h4>Firefox</h4>
+                    <div class="status">✅ Available</div>
+                    <a href="https://addons.mozilla.org/addon/babasitaram-pro" target="_blank" rel="noopener" class="install-btn" data-hi="Firefox में जोड़ें" data-en="Add to Firefox">Firefox में जोड़ें</a>
+                </div>
+                
+                <!-- Microsoft Edge -->
+                <div class="install-card animate-on-scroll">
+                    <div class="browser-icon">🟦</div>
+                    <h4>Microsoft Edge</h4>
+                    <div class="status">✅ Available</div>
+                    <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener" class="install-btn" data-hi="Edge Store से लें" data-en="Get from Edge Store">Edge Store से लें</a>
+                </div>
+                
+                <!-- Chrome — OFFLINE DOWNLOAD -->
+                <div class="install-card animate-on-scroll">
+                    <div class="browser-icon">🌐</div>
+                    <h4>Google Chrome</h4>
+                    <div class="status" style="color: var(--gold);">📦 Offline Install</div>
+                    <a href="https://github.com/user-attachments/files/31998047/BABASITARAM_PRO_CHROME.FIREFOX.zip" target="_blank" rel="noopener" class="install-btn chrome" data-hi="📥 ZIP डाउनलोड करें" data-en="📥 Download ZIP">📥 ZIP डाउनलोड करें</a>
+                    
+                    <!-- Offline Installation Guide -->
+                    <div class="install-guide">
+                        <p class="lang-hi active">🔧 Chrome में Offline Install कैसे करें:</p>
+                        <p class="lang-en">🔧 How to Install Offline in Chrome:</p>
+                        <ol>
+                            <li class="lang-hi active">ZIP फ़ाइल डाउनलोड करें और <strong>एक्सट्रैक्ट</strong> करें</li>
+                            <li class="lang-en">Download the ZIP file and <strong>extract</strong> it</li>
+                            <li>Chrome में <code>chrome://extensions</code> खोलें</li>
+                            <li class="lang-hi active">ऊपर दाएँ कोने में <strong>"Developer mode"</strong> ON करें</li>
+                            <li class="lang-en">Turn ON <strong>"Developer mode"</strong> in the top-right corner</li>
+                            <li class="lang-hi active"><strong>"Load unpacked"</strong> पर क्लिक करें और एक्सट्रैक्ट की गई फ़ोल्डर Select करें</li>
+                            <li class="lang-en">Click <strong>"Load unpacked"</strong> and select the extracted folder</li>
+                            <li class="lang-hi active">✅ Extension Installed! अब यह हमेशा के लिए काम करेगा।</li>
+                            <li class="lang-en">✅ Extension Installed! It will work permanently.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <!-- Manual Install -->
+                <div class="install-card animate-on-scroll">
+                    <div class="browser-icon">📦</div>
+                    <h4 class="lang-hi active">मैन्युअल इंस्टॉल</h4>
+                    <h4 class="lang-en">Manual Install</h4>
+                    <div class="status">⚡ Developer Mode</div>
+                    <a href="https://github.com/ramhardamp/babasitaram-pro/releases/latest" target="_blank" rel="noopener" class="install-btn" data-hi="ZIP डाउनलोड करें" data-en="Download ZIP">ZIP डाउनलोड करें</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    SCREENSHOTS
+    ============================================================ -->
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2 class="lang-hi active">📸 स्क्रीनशॉट</h2>
+                <h2 class="lang-en">📸 Screenshots</h2>
+                <p class="lang-hi active">BABASITARAM PRO को एक्शन में देखें</p>
+                <p class="lang-en">See BABASITARAM PRO in action</p>
+            </div>
+            <div class="screenshots-grid">
+                <div class="screenshot-item animate-on-scroll">
+                    <div class="screenshot-placeholder">📊</div>
+                    <p><span class="lang-hi active">📡 मॉनिटर डैशबोर्ड</span><span class="lang-en">📡 Monitor Dashboard</span></p>
+                </div>
+                <div class="screenshot-item animate-on-scroll">
+                    <div class="screenshot-placeholder">🛡️</div>
+                    <p><span class="lang-hi active">🚫 विज्ञापन ब्लॉकिंग</span><span class="lang-en">🚫 Ad Blocking</span></p>
+                </div>
+                <div class="screenshot-item animate-on-scroll">
+                    <div class="screenshot-placeholder">🔒</div>
+                    <p><span class="lang-hi active">🔐 वॉल्ट और साइट लॉक</span><span class="lang-en">🔐 Vault &amp; Site Lock</span></p>
+                </div>
+                <div class="screenshot-item animate-on-scroll">
+                    <div class="screenshot-placeholder">🎯</div>
+                    <p><span class="lang-hi active">⏳ फोकस मोड</span><span class="lang-en">⏳ Focus Mode</span></p>
+                </div>
+                <div class="screenshot-item animate-on-scroll">
+                    <div class="screenshot-placeholder">🔥</div>
+                    <p><span class="lang-hi active">🧨 इमरजेंसी बर्न</span><span class="lang-en">🧨 Emergency Burn</span></p>
+                </div>
+                <div class="screenshot-item animate-on-scroll">
+                    <div class="screenshot-placeholder">🚨</div>
+                    <p><span class="lang-hi active">📧 ब्रीच अलर्ट</span><span class="lang-en">📧 Breach Alert</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PRIVACY
+    ============================================================ -->
+    <section class="privacy" id="privacy">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2 class="lang-hi active">🔐 प्राइवेसी बाय डिज़ाइन</h2>
+                <h2 class="lang-en">🔐 Privacy by Design</h2>
+                <p class="lang-hi active">आपका डेटा आपके डिवाइस पर रहता है — हम इसे नहीं देखते।</p>
+                <p class="lang-en">Your data stays on your device — we never see it.</p>
+            </div>
+            <div class="privacy-grid">
+                <div class="privacy-item animate-on-scroll">
+                    <div class="icon">💾</div>
+                    <h4 class="lang-hi active">लोकल स्टोरेज</h4>
+                    <h4 class="lang-en">Local Storage</h4>
+                    <p class="lang-hi active">सभी सेटिंग्स, व्हाइटलिस्ट, वॉल्ट, PIN स्थानीय रूप से स्टोर होती हैं।</p>
+                    <p class="lang-en">All settings, whitelist, vault, PIN stored locally.</p>
+                </div>
+                <div class="privacy-item animate-on-scroll">
+                    <div class="icon">🚫</div>
+                    <h4 class="lang-hi active">कोई डेटा कलेक्शन नहीं</h4>
+                    <h4 class="lang-en">No Data Collection</h4>
+                    <p class="lang-hi active">हम आपका कोई डेटा कलेक्ट, स्टोर या ट्रांसमिट नहीं करते।</p>
+                    <p class="lang-en">We don't collect, store, or transmit your data.</p>
+                </div>
+                <div class="privacy-item animate-on-scroll">
+                    <div class="icon">🔗</div>
+                    <h4 class="lang-hi active">फ़िल्टर लिस्ट</h4>
+                    <h4 class="lang-en">Filter Lists</h4>
+                    <p class="lang-hi active">फ़िल्टर लिस्ट पब्लिक सोर्स से डाउनलोड होती हैं — कोई ब्राउज़िंग डेटा नहीं भेजा जाता।</p>
+                    <p class="lang-en">Filter lists downloaded from public sources — no browsing data sent.</p>
+                </div>
+                <div class="privacy-item animate-on-scroll">
+                    <div class="icon">📧</div>
+                    <h4 class="lang-hi active">ब्रीच अलर्ट</h4>
+                    <h4 class="lang-en">Breach Alert</h4>
+                    <p class="lang-hi active">केवल टाइप किया गया ईमेल haveibeenpwned.com को भेजा जाता है — हमें नहीं।</p>
+                    <p class="lang-en">Only the email you type is sent to haveibeenpwned.com — never to us.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    DONATION
+    ============================================================ -->
+    <section class="donation" id="donate">
+        <div class="container">
+            <div class="donation-box animate-on-scroll">
+                <h3 class="lang-hi active">☕ इस प्रोजेक्ट को सपोर्ट करें</h3>
+                <h3 class="lang-en">☕ Support This Project</h3>
+                
+                <p class="subtitle lang-hi active">
+                    अगर BABASITARAM PRO आपको विज्ञापनों से बचा रहा है, आपकी प्राइवेसी की रक्षा कर रहा है,
+                    या आप इसे जीवित रखना चाहते हैं — तो डेवलपर को कॉफी पिलाना एक सराहनीय तरीका है।
+                </p>
+                <p class="subtitle lang-en">
+                    If BABASITARAM PRO is saving you from ads, protecting your privacy, or you just want to help keep it alive —
+                    buying the developer a coffee is a genuinely appreciated way to say thanks.
+                </p>
+
+                <div class="upi-container">
+                    <div class="upi-qr">
+                        <img src="upi-qr.png" alt="UPI QR Code - Totalpay@upi" />
+                    </div>
+                    <div class="upi-details">
+                        <div class="upi-label">💳 UPI ID</div>
+                        <div class="upi-id">Totalpay@upi</div>
+                        <div class="upi-apps">
+                            <span class="app-tag">📱 Google Pay</span>
+                            <span class="app-tag">📱 PhonePe</span>
+                            <span class="app-tag">📱 Paytm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="developer-name">VIKRAM SINGH RAJPUT</div>
+                <div class="developer-role lang-hi active">डेवलपर और मेंटेनर</div>
+                <div class="developer-role lang-en">Developer &amp; Maintainer</div>
+
+                <p class="coffee-note lang-hi active">
+                    हर कॉफी फ़िल्टर-लिस्ट मेंटेनेंस, बग फिक्स और नई सुविधाओं के लिए जाती है।<br />
+                    ❤️ आपके सहयोग के लिए धन्यवाद!
+                </p>
+                <p class="coffee-note lang-en">
+                    Every coffee funds filter-list maintenance, bug fixes, and new features.<br />
+                    ❤️ Thank you for your support!
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    CONTACT / EMAIL
+    ============================================================ -->
+    <div class="container contact-email">
+        <p>
+            📧 <span class="lang-hi active">संपर्क करें</span><span class="lang-en">Contact</span>:
+            <a href="mailto:ramhardamp@gmail.com">ramhardamp@gmail.com</a>
+        </p>
+    </div>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy Policy</a>
+                <a href="https://github.com/ramhardamp/babasitaram-pro/issues" target="_blank" rel="noopener">Report Bug</a>
+                <a href="mailto:ramhardamp@gmail.com">Contact</a>
+            </div>
+            <p>
+                <span class="lang-hi active">❤️ सुरक्षित, तेज़ और अधिक निजी ब्राउज़िंग अनुभव के लिए बनाया गया।</span>
+                <span class="lang-en">❤️ Made for a safer, faster, and more private browsing experience.</span><br />
+                &copy; 2026 BABASITARAM PRO — 
+                <span class="lang-hi active">MIT लाइसेंस के तहत</span>
+                <span class="lang-en">Licensed under</span>
+                <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- ============================================================
+    LANGUAGE SWITCHER SCRIPT — FIXED
+    ============================================================ -->
+    <script>
+        function switchLang(lang) {
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Show/hide all language-specific content
+            document.querySelectorAll('.lang-hi').forEach(el => {
+                el.classList.toggle('active', lang === 'hi');
+            });
+            document.querySelectorAll('.lang-en').forEach(el => {
+                el.classList.toggle('active', lang === 'en');
+            });
+
+            // Update all elements with data-hi / data-en attributes
+            document.querySelectorAll('[data-hi][data-en]').forEach(el => {
+                if (lang === 'hi' && el.dataset.hi) {
+                    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+                        el.textContent = el.dataset.hi;
+                    } else {
+                        el.innerHTML = el.dataset.hi;
+                    }
+                } else if (lang === 'en' && el.dataset.en) {
+                    if (el.childNodes.length === 1 && el.childNodes[0].nodeType === 3) {
+                        el.textContent = el.dataset.en;
+                    } else {
+                        el.innerHTML = el.dataset.en;
+                    }
+                }
+            });
+
+            // Save preference
+            localStorage.setItem('baba-lang', lang);
+        }
+
+        // Restore saved language preference
+        document.addEventListener('DOMContentLoaded', function() {
+            const saved = localStorage.getItem('baba-lang');
+            if (saved === 'en' || saved === 'hi') {
+                switchLang(saved);
+            } else {
+                // Default to Hindi
+                switchLang('hi');
+            }
+        });
+    </script>
+
+    <!-- ============================================================
+    SCROLL ANIMATION
+    ============================================================ -->
+    <script>
+        (function() {
+            const elements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            elements.forEach(el => observer.observe(el));
+
+            // Close mobile menu on link click
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    document.querySelector('.nav-links')?.classList.remove('open');
+                    document.querySelector('.hamburger')?.classList.remove('open');
+                });
+            });
+        })();
+    </script>
+
+</body>
+</html>
