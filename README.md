@@ -270,7 +270,7 @@ Get it straight from your browser's store:
 
 Or grab the latest build directly:
 
-📦 **[Download Latest Release](https://github.com/yourusername/babasitaram-pro/releases/latest)**
+📦 **[Download Latest Release](https://github.com/ramhardamp/babasitaram-pro/releases/tag/v9.2.4)**
 
 <sub>Prefer to build it yourself? See "Building From Source" below.</sub>
 
