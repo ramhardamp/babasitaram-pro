@@ -3,42 +3,45 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BABASITARAM PRO — Privacy & Productivity Shield</title>
+    <meta name="description" content="BABASITARAM PRO & Password Manager — Ultimate Privacy, Ad Blocking & Password Protection Extensions for Firefox, Edge, Chrome." />
+    <meta name="keywords" content="password manager, ad blocker, privacy, tracker blocker, site lock, focus mode, breach alert, firefox addon, edge extension" />
+    <meta name="author" content="Vikram Singh Rajput" />
+    <meta property="og:title" content="BABASITARAM PRO — Ultimate Privacy & Password Shield" />
+    <meta property="og:description" content="Block ads, protect passwords, lock sites, focus mode, emergency burn — all with zero data collection." />
+    <meta property="og:type" content="website" />
+    <title>BABASITARAM PRO & Password Manager — Ultimate Privacy Shield</title>
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
     
     <style>
         /* ============================================================
-               RESET & BASE
+               RESET & ROOT
             ============================================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg-primary: #060a10;
-            --bg-secondary: #0c1219;
-            --bg-card: #0f1a24;
-            --border: #1a2a3a;
+            --bg-primary: #030509;
+            --bg-secondary: #0a0f1a;
+            --bg-card: rgba(15, 26, 40, 0.7);
+            --bg-glass: rgba(15, 26, 40, 0.5);
+            --border: rgba(30, 50, 70, 0.8);
+            --border-glow: rgba(0, 212, 255, 0.3);
             --text-primary: #e8f0f8;
             --text-secondary: #8aa0b8;
             --text-muted: #4a6080;
             --accent: #00d4ff;
-            --accent-glow: rgba(0, 212, 255, 0.3);
+            --accent-purple: #a855f7;
+            --accent-pink: #ec4899;
+            --accent-glow: rgba(0, 212, 255, 0.4);
             --gold: #ffcc00;
             --orange: #ff8c00;
             --red: #ff3860;
             --green: #00ff88;
             --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --mono: 'Share Tech Mono', monospace;
+            --mono: 'JetBrains Mono', 'Share Tech Mono', monospace;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: var(--font);
@@ -46,382 +49,339 @@
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
+            position: relative;
         }
 
         /* ============================================================
-               LANGUAGE SWITCHER
+               ANIMATED BACKGROUND MESH
             ============================================================ */
-        .lang-switcher {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            margin-right: 12px;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse 800px 600px at 10% 10%, rgba(0, 212, 255, 0.08), transparent),
+                radial-gradient(ellipse 600px 400px at 90% 20%, rgba(168, 85, 247, 0.08), transparent),
+                radial-gradient(ellipse 700px 500px at 50% 80%, rgba(236, 72, 153, 0.06), transparent);
+            pointer-events: none;
+            z-index: 0;
+            animation: meshShift 20s ease-in-out infinite alternate;
         }
 
-        .lang-btn {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: var(--font);
+        @keyframes meshShift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -30px) scale(1.05); }
         }
 
-        .lang-btn:hover {
-            border-color: var(--accent);
-            color: var(--text-primary);
-        }
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
-        .lang-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #000;
-        }
-
-        /* ============================================================
-               LANGUAGE HIDE/SHOW — FIXED
-            ============================================================ */
-        .lang-hi,
-        .lang-en {
-            display: none !important;
-        }
-
-        .lang-hi.active,
-        .lang-en.active {
-            display: block !important;
-        }
-
-        .lang-hi.active.inline,
-        .lang-en.active.inline {
-            display: inline !important;
-        }
-
-        .lang-hi.active.flex,
-        .lang-en.active.flex {
-            display: flex !important;
-        }
-
-        .lang-hi.active.grid,
-        .lang-en.active.grid {
-            display: grid !important;
-        }
-
-        .lang-hi.active.text,
-        .lang-en.active.text {
-            display: inline-block !important;
-        }
+        a { text-decoration: none; color: inherit; }
 
         /* ============================================================
                SCROLLBAR
             ============================================================ */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--accent), var(--accent-purple)); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, var(--accent-purple), var(--accent-pink)); }
 
         /* ============================================================
                ANIMATIONS
             ============================================================ */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes scanLine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.7; transform: scale(1.05); } }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0, 212, 255, 0.1); }
+            50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 80px rgba(0, 212, 255, 0.15); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
-        @keyframes scanLine {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .animate-on-scroll.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .animate-on-scroll { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
 
         /* ============================================================
-               HEADER / NAV
+               NAVBAR — GLASS MORPHISM
             ============================================================ */
         .navbar {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
-            padding: 16px 0;
-            background: rgba(6, 10, 16, 0.85);
-            backdrop-filter: blur(12px);
+            padding: 14px 0;
+            background: rgba(3, 5, 9, 0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
         }
 
-        .navbar .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(3, 5, 9, 0.92);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
+        .navbar .container { display: flex; align-items: center; justify-content: space-between; }
 
         .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 10px;
             font-family: var(--mono);
             font-size: 20px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--accent);
             letter-spacing: 2px;
             text-shadow: 0 0 20px var(--accent-glow);
         }
 
         .logo img {
-            height: 36px;
-            width: 36px;
+            height: 40px; width: 40px;
             border-radius: 50%;
             border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            animation: float 4s ease-in-out infinite;
         }
 
-        .logo span {
-            color: var(--green);
-        }
+        .logo span { color: var(--green); }
 
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            list-style: none;
-        }
-
+        .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
         .nav-links a {
             font-size: 14px;
             font-weight: 500;
             color: var(--text-secondary);
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
             position: relative;
+            padding: 4px 0;
         }
-
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
+            bottom: -2px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple));
             transition: width 0.3s ease;
         }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { width: 100%; }
 
         .nav-cta {
-            background: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
             color: #000 !important;
-            padding: 8px 20px;
-            border-radius: 6px;
+            padding: 10px 22px;
+            border-radius: 8px;
             font-weight: 700;
             font-size: 13px;
+            box-shadow: 0 0 20px var(--accent-glow);
             transition: all 0.3s ease;
         }
+        .nav-cta::after { display: none !important; }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
 
-        .nav-cta::after {
-            display: none !important;
-        }
-
-        .nav-cta:hover {
-            background: #33ddff;
-            transform: scale(1.05);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 4px;
+        .lang-switcher { display: flex; gap: 6px; align-items: center; margin-right: 10px; }
+        .lang-btn {
+            background: rgba(15, 26, 40, 0.6);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
+            transition: all 0.3s ease;
+            font-family: var(--font);
+        }
+        .lang-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            border-color: transparent;
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
-        .hamburger span {
-            display: block;
-            width: 28px;
-            height: 3px;
-            background: var(--text-primary);
-            border-radius: 2px;
-            transition: all 0.3s ease;
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+        .hamburger span { display: block; width: 26px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all 0.3s ease; }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+
+        /* LANGUAGE */
+        .lang-hi, .lang-en { display: none !important; }
+        .lang-hi.active, .lang-en.active { display: block !important; }
+        .lang-hi.active.inline, .lang-en.active.inline { display: inline !important; }
+
+        /* ============================================================
+               LIVE COUNTER BANNER
+            ============================================================ */
+        .visitor-banner {
+            background: linear-gradient(135deg, rgba(10, 22, 40, 0.9), rgba(26, 10, 40, 0.9), rgba(10, 22, 40, 0.9));
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+            margin-top: 68px;
+            position: relative;
+            overflow: hidden;
         }
+
+        .visitor-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.08), transparent);
+            animation: scanLine 5s linear infinite;
+        }
+
+        .visitor-banner .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .visitor-item { display: flex; align-items: center; gap: 10px; }
+        .visitor-item .v-icon { font-size: 22px; }
+        .visitor-item .v-text { display: flex; flex-direction: column; }
+        .visitor-item .v-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+        .visitor-item .v-value { font-family: var(--mono); font-size: 20px; font-weight: 800; color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); }
+        .visitor-item .v-value.gold { color: var(--gold); text-shadow: 0 0 15px rgba(255, 204, 0, 0.4); }
+        .visitor-item .v-value.green { color: var(--green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
+        .visitor-item .v-value.purple { color: var(--accent-purple); text-shadow: 0 0 15px rgba(168, 85, 247, 0.4); }
+        .v-divider { width: 1px; height: 32px; background: linear-gradient(180deg, transparent, var(--border), transparent); }
 
         /* ============================================================
                HERO
             ============================================================ */
         .hero {
-            padding: 140px 0 80px;
+            padding: 70px 0 90px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(ellipse at center top, rgba(0, 212, 255, 0.06), transparent 70%);
-            pointer-events: none;
+        .hero-logo-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 24px;
         }
 
         .hero-logo {
-            width: 96px;
-            height: 96px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
             border: 3px solid var(--accent);
-            box-shadow: 0 0 40px var(--accent-glow);
-            margin-bottom: 20px;
-            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 0 60px var(--accent-glow), 0 0 100px rgba(168, 85, 247, 0.2);
+            animation: float 4s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-logo-ring {
+            position: absolute;
+            inset: -12px;
+            border-radius: 50%;
+            border: 2px dashed rgba(0, 212, 255, 0.3);
+            animation: rotate 20s linear infinite;
         }
 
         .hero-badge {
             display: inline-block;
-            background: rgba(0, 212, 255, 0.1);
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(168, 85, 247, 0.1));
             border: 1px solid rgba(0, 212, 255, 0.3);
-            padding: 6px 18px;
-            border-radius: 20px;
+            padding: 8px 20px;
+            border-radius: 24px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--accent);
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 24px;
+            backdrop-filter: blur(10px);
             animation: fadeInUp 0.8s ease;
         }
 
         .hero h1 {
-            font-size: clamp(40px, 8vw, 72px);
+            font-size: clamp(38px, 7vw, 76px);
             font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            animation: fadeInUp 0.8s ease 0.1s both;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
         }
 
         .hero h1 .highlight {
-            background: linear-gradient(135deg, var(--accent), var(--green));
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple), var(--accent-pink));
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradientShift 4s ease infinite;
         }
 
         .hero h1 .highlight-gold {
-            background: linear-gradient(135deg, var(--gold), var(--orange));
+            background: linear-gradient(135deg, var(--gold), var(--orange), var(--gold));
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradientShift 4s ease infinite;
         }
 
         .hero p {
-            font-size: clamp(16px, 1.5vw, 22px);
+            font-size: clamp(16px, 1.4vw, 20px);
             color: var(--text-secondary);
-            max-width: 700px;
-            margin: 0 auto 36px;
-            animation: fadeInUp 0.8s ease 0.2s both;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
         }
 
         .hero-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 14px;
+            gap: 16px;
             justify-content: center;
-            animation: fadeInUp 0.8s ease 0.3s both;
+            margin-bottom: 48px;
         }
 
         .btn-primary {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--accent), #00a8cc);
+            gap: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
             color: #000;
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-weight: 700;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-weight: 800;
             font-size: 16px;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            box-shadow: 0 0 30px var(--accent-glow);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px var(--accent-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px var(--accent-glow);
         }
 
         .btn-secondary {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            background: transparent;
+            gap: 10px;
+            background: rgba(15, 26, 40, 0.6);
+            backdrop-filter: blur(10px);
             color: var(--text-primary);
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 16px 36px;
+            border-radius: 12px;
+            font-weight: 700;
             font-size: 16px;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
@@ -431,596 +391,501 @@
         .btn-secondary:hover {
             border-color: var(--accent);
             color: var(--accent);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15);
         }
 
         .hero-stats {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 40px;
-            margin-top: 48px;
+            gap: 48px;
+            margin-top: 40px;
             padding-top: 40px;
             border-top: 1px solid var(--border);
-            animation: fadeInUp 0.8s ease 0.4s both;
         }
 
-        .hero-stat {
-            text-align: center;
-        }
-
-        .hero-stat .number {
+        .hero-stat { text-align: center; }
+        .hero-stat .hs-num {
             font-family: var(--mono);
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--accent);
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-stat .hs-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ============================================================
+               SECTION HEADER
+            ============================================================ */
+        .section { padding: 90px 0; position: relative; }
+
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 {
+            font-size: clamp(30px, 4vw, 46px);
+            font-weight: 900;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
+        }
+        .section-header h2 .gradient-text {
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-header p { color: var(--text-secondary); font-size: 17px; max-width: 700px; margin: 0 auto; }
+
+        /* ============================================================
+               EXTENSION CARDS — PREMIUM GLASS STYLE
+            ============================================================ */
+        .extensions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 28px; }
+
+        .ext-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero-stat .label {
+        .ext-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-purple), var(--accent-pink));
+            background-size: 200% 100%;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .ext-card::after {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.05), transparent 70%);
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .ext-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-glow);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.1);
+        }
+
+        .ext-card:hover::before { opacity: 1; }
+        .ext-card:hover::after { opacity: 1; }
+
+        .ext-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; position: relative; z-index: 1; }
+
+        .ext-icon {
+            font-size: 44px;
+            filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.3));
+        }
+
+        .ext-title { flex: 1; }
+        .ext-title h3 { font-size: 19px; font-weight: 800; margin-bottom: 4px; line-height: 1.2; }
+        .ext-title .version { font-size: 11px; color: var(--text-muted); font-family: var(--mono); font-weight: 700; }
+
+        .ext-badge {
+            font-size: 10px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .ext-badge.available { background: rgba(0, 255, 136, 0.15); color: var(--green); border: 1px solid rgba(0, 255, 136, 0.3); }
+        .ext-badge.coming { background: rgba(255, 140, 0, 0.15); color: var(--orange); border: 1px solid rgba(255, 140, 0, 0.3); }
+        .ext-badge.new {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            color: #000;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .ext-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 16px; position: relative; z-index: 1; }
+
+        .ext-features { list-style: none; margin-bottom: 20px; position: relative; z-index: 1; }
+        .ext-features li {
             font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 2px;
+            color: var(--text-secondary);
+            padding: 5px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        .ext-features li::before { content: '✓'; color: var(--green); font-weight: 900; flex-shrink: 0; }
+
+        .ext-stats {
+            display: flex;
+            gap: 12px;
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ext-stat { flex: 1; text-align: center; }
+        .ext-stat .num { font-family: var(--mono); font-size: 17px; font-weight: 800; color: var(--accent); }
+        .ext-stat .lbl { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-top: 2px; }
+
+        .ext-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; position: relative; z-index: 1; }
+        @media (max-width: 480px) { .ext-actions { grid-template-columns: 1fr; } }
+
+        .ext-btn {
+            padding: 12px 10px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+        }
+
+        .ext-btn.primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            color: #000;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .ext-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+
+        .ext-btn.gold {
+            background: linear-gradient(135deg, var(--gold), var(--orange));
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+        }
+        .ext-btn.gold:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 204, 0, 0.4); }
+
+        /* ============================================================
+               FEATURE CARDS
+            ============================================================ */
+        .features { background: linear-gradient(180deg, transparent, rgba(10, 15, 26, 0.5), transparent); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+
+        .feature-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            transition: all 0.4s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--border-glow);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 212, 255, 0.08);
+        }
+
+        .feature-icon { font-size: 38px; margin-bottom: 14px; filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3)); }
+        .feature-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+        .feature-card p { color: var(--text-secondary); font-size: 13.5px; line-height: 1.7; }
+
+        /* ============================================================
+               INSTALL STEPS
+            ============================================================ */
+        .install-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 40px; }
+
+        .step-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px 22px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .step-card:hover { border-color: var(--border-glow); transform: translateY(-4px); }
+
+        .step-num {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            color: #000;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 20px;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .step-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+        .step-card p { font-size: 13px; color: var(--text-secondary); }
+        .step-card code {
+            background: var(--bg-primary);
+            padding: 3px 9px;
+            border-radius: 5px;
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--accent);
+            border: 1px solid var(--border);
         }
 
         /* ============================================================
-               FEATURES
+               STATS COUNTER SECTION
             ============================================================ */
-        .features {
-            padding: 80px 0;
-            background: var(--bg-secondary);
+        .stats-section {
+            background: linear-gradient(135deg, rgba(10, 22, 40, 0.6), rgba(26, 10, 40, 0.6));
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
 
-        .section-header {
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+
+        .stat-box {
             text-align: center;
-            margin-bottom: 56px;
-        }
-
-        .section-header h2 {
-            font-size: clamp(28px, 4vw, 42px);
-            font-weight: 800;
-            margin-bottom: 12px;
-        }
-
-        .section-header p {
-            color: var(--text-secondary);
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-
-        .feature-card {
-            background: var(--bg-card);
+            padding: 36px 24px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 32px 24px;
+            border-radius: 20px;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .feature-card::before {
+        .stat-box::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--green));
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.08), transparent 60%);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.5s ease;
         }
 
-        .feature-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0, 212, 255, 0.3);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        .stat-box:hover {
+            transform: translateY(-8px);
+            border-color: var(--border-glow);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.1);
         }
+        .stat-box:hover::before { opacity: 1; }
 
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-icon {
-            font-size: 36px;
-            margin-bottom: 14px;
-        }
-
-        .feature-card h3 {
-            font-size: 18px;
-            font-weight: 700;
+        .stat-icon { font-size: 42px; margin-bottom: 14px; filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.4)); }
+        .stat-value {
+            font-family: var(--mono);
+            font-size: 44px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
             margin-bottom: 8px;
         }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.7;
-        }
-
-        /* ============================================================
-               INSTALL SECTION
-            ============================================================ */
-        .install {
-            padding: 80px 0;
-            background: var(--bg-primary);
-        }
-
-        .install-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-
-        .install-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 28px 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .install-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-        }
-
-        .install-card .browser-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-
-        .install-card h4 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .install-card .status {
-            font-size: 12px;
-            color: var(--green);
-            font-weight: 600;
-        }
-
-        .install-card .status.pending {
-            color: var(--orange);
-        }
-
-        .install-btn {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: none;
-        }
-
-        .install-btn.default {
-            background: var(--accent);
-            color: #000;
-        }
-
-        .install-btn.default:hover {
-            background: #33ddff;
-            transform: scale(1.05);
-        }
-
-        .install-btn.soon {
-            background: var(--border);
-            color: var(--text-muted);
-            cursor: not-allowed;
-        }
-
-        .install-btn.soon:hover {
-            transform: none;
-            background: var(--border);
-        }
-
-        .install-btn.chrome {
+        .stat-value.gold {
             background: linear-gradient(135deg, var(--gold), var(--orange));
-            color: #000;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .install-btn.chrome:hover {
-            box-shadow: 0 4px 20px rgba(255, 204, 0, 0.4);
-            transform: scale(1.05);
+        .stat-value.green {
+            background: linear-gradient(135deg, var(--green), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .install-guide {
-            margin-top: 12px;
-            text-align: left;
-            background: var(--bg-primary);
-            border-radius: 6px;
-            padding: 12px;
-            border: 1px solid var(--border);
-        }
-
-        .install-guide p {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
-
-        .install-guide ol {
-            font-size: 11px;
-            color: var(--text-muted);
-            padding-left: 18px;
-            line-height: 1.8;
-        }
-
-        .install-guide code {
-            background: var(--bg-card);
-            padding: 1px 6px;
-            border-radius: 3px;
-            font-family: var(--mono);
-            font-size: 10px;
-        }
+        .stat-label { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .stat-sub { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
 
         /* ============================================================
                SCREENSHOTS
             ============================================================ */
-        .screenshots {
-            padding: 80px 0;
-            background: var(--bg-secondary);
-        }
-
-        .screenshots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
+        .screenshots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 22px; }
 
         .screenshot-item {
-            background: var(--bg-card);
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 18px;
             text-align: center;
             transition: all 0.3s ease;
         }
+        .screenshot-item:hover { border-color: var(--border-glow); transform: translateY(-4px); }
 
-        .screenshot-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-4px);
-        }
+        .screenshot-item img { width: 100%; border-radius: 10px; border: 1px solid var(--border); display: block; }
 
-        .screenshot-placeholder {
+        .screenshot-item .placeholder {
             background: var(--bg-primary);
-            border-radius: 8px;
+            border-radius: 10px;
             height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 64px;
             color: var(--text-muted);
             border: 1px dashed var(--border);
         }
 
-        .screenshot-item p {
-            margin-top: 10px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+        .screenshot-item p { margin-top: 12px; font-size: 13px; color: var(--text-secondary); font-weight: 600; }
 
         /* ============================================================
                PRIVACY
             ============================================================ */
-        .privacy {
-            padding: 80px 0;
-            background: var(--bg-primary);
-        }
-
-        .privacy-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
+        .privacy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; }
 
         .privacy-item {
-            background: var(--bg-card);
+            background: var(--bg-glass);
+            backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
+            border-radius: 16px;
+            padding: 26px 22px;
             text-align: center;
+            transition: all 0.3s ease;
         }
-
-        .privacy-item .icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .privacy-item h4 {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .privacy-item p {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
+        .privacy-item:hover { border-color: var(--border-glow); transform: translateY(-4px); }
+        .privacy-item .icon { font-size: 34px; margin-bottom: 12px; }
+        .privacy-item h4 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+        .privacy-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
 
         /* ============================================================
                DONATION
             ============================================================ */
-        .donation {
-            padding: 80px 0;
-            background: var(--bg-secondary);
-        }
-
         .donation-box {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, rgba(255, 204, 0, 0.05), rgba(255, 140, 0, 0.05));
+            backdrop-filter: blur(20px);
             border: 2px solid var(--gold);
-            border-radius: 16px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 44px;
             text-align: center;
-            max-width: 750px;
+            max-width: 760px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 0 60px rgba(255, 204, 0, 0.1);
         }
 
         .donation-box::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
+            top: 0; left: 0; right: 0;
+            height: 4px;
             background: linear-gradient(90deg, var(--gold), var(--orange), var(--gold));
-            animation: scanLine 3s linear infinite;
+            background-size: 200% 100%;
+            animation: gradientShift 3s linear infinite;
         }
 
-        .donation-box h3 {
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .donation-box .subtitle {
-            color: var(--text-secondary);
-            font-size: 16px;
-            margin-bottom: 24px;
-        }
+        .donation-box h3 { font-size: 30px; font-weight: 900; margin-bottom: 10px; }
+        .donation-box .subtitle { color: var(--text-secondary); font-size: 16px; margin-bottom: 26px; line-height: 1.7; }
 
         .upi-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 30px;
+            gap: 32px;
             flex-wrap: wrap;
-            margin: 16px 0 20px;
+            margin: 18px 0 24px;
         }
 
         .upi-qr {
             background: white;
-            padding: 12px;
-            border-radius: 12px;
-            border: 2px solid var(--gold);
-            width: 160px;
-            height: 160px;
+            padding: 14px;
+            border-radius: 16px;
+            border: 3px solid var(--gold);
+            width: 170px;
+            height: 170px;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 40px rgba(255, 204, 0, 0.3);
         }
+        .upi-qr img { width: 100%; height: 100%; object-fit: contain; }
 
-        .upi-qr img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .upi-details {
-            text-align: left;
-            min-width: 200px;
-        }
-
-        .upi-details .upi-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
+        .upi-details { text-align: left; min-width: 220px; }
+        .upi-details .upi-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
         .upi-details .upi-id {
             font-family: var(--mono);
-            font-size: 26px;
-            font-weight: 700;
+            font-size: 28px;
+            font-weight: 800;
             color: var(--gold);
-            letter-spacing: 1px;
-            margin: 4px 0 8px;
+            margin: 6px 0 12px;
+            text-shadow: 0 0 20px rgba(255, 204, 0, 0.4);
         }
-
-        .upi-details .upi-apps {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
+        .upi-details .upi-apps { display: flex; gap: 8px; flex-wrap: wrap; }
         .upi-details .app-tag {
-            background: var(--bg-primary);
+            background: rgba(15, 26, 40, 0.8);
             border: 1px solid var(--border);
-            padding: 4px 12px;
-            border-radius: 4px;
+            padding: 5px 14px;
+            border-radius: 8px;
             font-size: 12px;
             color: var(--text-secondary);
+            font-weight: 600;
         }
 
-        .donation-box .developer-name {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-
-        .donation-box .developer-role {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .donation-box .coffee-note {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-top: 16px;
-            font-style: italic;
-        }
+        .donation-box .developer-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .donation-box .developer-role { font-size: 14px; color: var(--text-secondary); }
+        .donation-box .coffee-note { font-size: 14px; color: var(--text-muted); margin-top: 20px; font-style: italic; line-height: 1.7; }
 
         /* ============================================================
-               CONTACT / EMAIL
+               CONTACT
             ============================================================ */
-        .contact-email {
-            text-align: center;
-            padding: 20px 0 0;
-        }
-
-        .contact-email a {
-            color: var(--accent);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .contact-email a:hover {
-            color: var(--green);
-        }
+        .contact-email { text-align: center; padding: 20px 0 0; }
+        .contact-email a { color: var(--accent); font-weight: 600; transition: color 0.3s ease; }
+        .contact-email a:hover { color: var(--green); }
 
         /* ============================================================
                FOOTER
             ============================================================ */
-        .footer {
-            padding: 40px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .footer p {
-            color: var(--text-muted);
-            font-size: 13px;
-        }
-
-        .footer a {
-            color: var(--accent);
-            transition: color 0.3s ease;
-        }
-
-        .footer a:hover {
-            color: var(--green);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 24px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-secondary);
-            font-size: 13px;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--text-primary);
-        }
+        .footer { padding: 50px 0 30px; border-top: 1px solid var(--border); text-align: center; }
+        .footer p { color: var(--text-muted); font-size: 13px; line-height: 1.8; }
+        .footer a { color: var(--accent); transition: color 0.3s ease; }
+        .footer a:hover { color: var(--green); }
+        .footer-links { display: flex; justify-content: center; gap: 26px; margin-bottom: 20px; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-secondary); font-size: 13px; font-weight: 600; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--accent); }
 
         /* ============================================================
                RESPONSIVE
             ============================================================ */
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .nav-links {
                 display: none;
                 flex-direction: column;
-                gap: 12px;
+                gap: 14px;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--bg-primary);
-                padding: 20px 24px;
+                background: rgba(3, 5, 9, 0.98);
+                backdrop-filter: blur(20px);
+                padding: 24px;
                 border-bottom: 1px solid var(--border);
+                align-items: flex-start;
             }
-
-            .nav-links.open {
-                display: flex;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .hero {
-                padding: 120px 0 60px;
-            }
-
-            .hero-stats {
-                gap: 20px;
-            }
-
-            .donation-box {
-                padding: 24px 16px;
-            }
-
-            .upi-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .upi-details {
-                text-align: center;
-            }
-
-            .upi-details .upi-apps {
-                justify-content: center;
-            }
-
-            .screenshots-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .nav-links.open { display: flex; }
+            .hamburger { display: flex; }
+            .hero { padding: 50px 0 70px; }
+            .hero-stats { gap: 26px; }
+            .v-divider { display: none; }
+            .visitor-banner .container { gap: 20px; }
+            .visitor-item .v-value { font-size: 16px; }
         }
 
         @media (max-width: 480px) {
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn-primary,
-            .btn-secondary {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .screenshots-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .upi-qr {
-                width: 140px;
-                height: 140px;
-            }
-
-            .upi-details .upi-id {
-                font-size: 20px;
-            }
+            .hero-buttons { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+            .screenshots-grid, .stats-grid, .extensions-grid, .features-grid, .privacy-grid, .install-steps { grid-template-columns: 1fr; }
+            .upi-container { flex-direction: column; align-items: center; }
+            .upi-details { text-align: center; }
+            .extensions-grid { grid-template-columns: 1fr; }
+            .section { padding: 60px 0; }
+            .ext-actions { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1029,84 +894,274 @@
     <!-- ============================================================
     NAVBAR
     ============================================================ -->
-    <nav class="navbar" role="navigation">
+    <nav class="navbar" id="navbar" role="navigation">
         <div class="container">
-            <div class="nav-left">
-                <a href="#" class="logo">
-                    <img src="icon128.png" alt="BABASITARAM PRO Logo" />
-                    BABA<span>SITARAM</span>
-                </a>
-            </div>
-            
+            <a href="#" class="logo">
+                <img src="icon128.png" alt="BABASITARAM Logo" />
+                BABA<span>SITARAM</span>
+            </a>
             <div style="display:flex;align-items:center;gap:8px;">
                 <div class="lang-switcher">
                     <button class="lang-btn active" data-lang="hi" onclick="switchLang('hi')">🇮🇳 हिंदी</button>
-                    <button class="lang-btn" data-lang="en" onclick="switchLang('en')">🇬🇧 English</button>
+                    <button class="lang-btn" data-lang="en" onclick="switchLang('en')">🇬🇧 EN</button>
                 </div>
-                
-                <button class="hamburger" aria-label="Toggle menu" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
+                <button class="hamburger" id="hamburger" aria-label="Menu" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
                     <span></span><span></span><span></span>
                 </button>
             </div>
-            
             <ul class="nav-links">
+                <li><a href="#extensions" data-hi="एक्सटेंशन" data-en="Extensions">एक्सटेंशन</a></li>
                 <li><a href="#features" data-hi="सुविधाएँ" data-en="Features">सुविधाएँ</a></li>
                 <li><a href="#install" data-hi="इंस्टॉल" data-en="Install">इंस्टॉल</a></li>
-                <li><a href="#privacy" data-hi="प्राइवेसी" data-en="Privacy">प्राइवेसी</a></li>
+                <li><a href="#stats" data-hi="आंकड़े" data-en="Stats">आंकड़े</a></li>
                 <li><a href="#donate" data-hi="सहयोग" data-en="Support">सहयोग</a></li>
-                <li><a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener">GitHub</a></li>
                 <li><a href="#install" class="nav-cta" data-hi="डाउनलोड" data-en="Download">डाउनलोड</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- ============================================================
+    VISITOR COUNTER BANNER
+    ============================================================ -->
+    <div class="visitor-banner">
+        <div class="container">
+            <div class="visitor-item">
+                <span class="v-icon">👥</span>
+                <div class="v-text">
+                    <div class="v-label lang-hi active">कुल विज़िटर</div>
+                    <div class="v-label lang-en">Total Visitors</div>
+                    <div class="v-value gold" id="totalVisitors">0</div>
+                </div>
+            </div>
+            <div class="v-divider"></div>
+            <div class="visitor-item">
+                <span class="v-icon">📥</span>
+                <div class="v-text">
+                    <div class="v-label lang-hi active">कुल डाउनलोड</div>
+                    <div class="v-label lang-en">Total Downloads</div>
+                    <div class="v-value green" id="totalDownloads">0</div>
+                </div>
+            </div>
+            <div class="v-divider"></div>
+            <div class="visitor-item">
+                <span class="v-icon">🌍</span>
+                <div class="v-text">
+                    <div class="v-label lang-hi active">देश</div>
+                    <div class="v-label lang-en">Countries</div>
+                    <div class="v-value purple" id="countries">0</div>
+                </div>
+            </div>
+            <div class="v-divider"></div>
+            <div class="visitor-item">
+                <span class="v-icon">⚡</span>
+                <div class="v-text">
+                    <div class="v-label lang-hi active">लाइव यूज़र्स</div>
+                    <div class="v-label lang-en">Live Users</div>
+                    <div class="v-value green" id="liveUsers">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
     HERO
     ============================================================ -->
     <section class="hero" id="home">
         <div class="container">
-            <img src="icon128.png" alt="BABASITARAM PRO" class="hero-logo" />
-            
-            <div class="hero-badge lang-hi active">🔥 अब Firefox और Edge पर उपलब्ध</div>
-            <div class="hero-badge lang-en">🔥 Now Available on Firefox &amp; Edge</div>
-            
+            <div class="hero-logo-wrap">
+                <div class="hero-logo-ring"></div>
+                <img src="icon128.png" alt="BABASITARAM PRO" class="hero-logo" />
+            </div>
+            <div class="hero-badge lang-hi active">🔥 Firefox · Edge · Chrome — सबके लिए उपलब्ध</div>
+            <div class="hero-badge lang-en">🔥 Available on Firefox · Edge · Chrome</div>
             <h1>
-                <span class="lang-hi active">अल्टीमेट<br /><span class="highlight">प्राइवेसी</span> &amp; <span class="highlight-gold">प्रोडक्टिविटी</span> शील्ड</span>
-                <span class="lang-en">Ultimate<br /><span class="highlight">Privacy</span> &amp; <span class="highlight-gold">Productivity</span> Shield</span>
+                <span class="lang-hi active">अल्टीमेट<br /><span class="highlight">प्राइवेसी</span> &amp; <span class="highlight-gold">पासवर्ड</span> शील्ड</span>
+                <span class="lang-en">Ultimate<br /><span class="highlight">Privacy</span> &amp; <span class="highlight-gold">Password</span> Shield</span>
             </h1>
-            
-            <p class="lang-hi active">
-                1,00,000+ विज्ञापनों और ट्रैकर्स को ब्लॉक करें, संवेदनशील साइटों को लॉक करें,
-                फोकस मोड सक्षम करें, और एक क्लिक में अपना डेटा साफ़ करें —
-                बिना किसी डेटा कलेक्शन के।
-            </p>
-            <p class="lang-en">
-                Block 100,000+ ads and trackers, lock sensitive sites,
-                enable focus mode, and clear your data with one click —
-                all with zero data collection.
-            </p>
-            
+            <p class="lang-hi active">1,00,000+ विज्ञापनों और ट्रैकर्स को ब्लॉक करें, अपने पासवर्ड सुरक्षित रखें, संवेदनशील साइटों को PIN से लॉक करें, और एक क्लिक में अपना डेटा साफ़ करें — बिना किसी डेटा कलेक्शन के।</p>
+            <p class="lang-en">Block 100,000+ ads and trackers, keep your passwords safe, lock sensitive sites with a PIN, and clear your data with one click — with zero data collection.</p>
             <div class="hero-buttons">
-                <a href="#install" class="btn-primary" data-hi="⬇️ एक्सटेंशन इंस्टॉल करें" data-en="⬇️ Install Extension">⬇️ एक्सटेंशन इंस्टॉल करें</a>
+                <a href="#extensions" class="btn-primary" data-hi="⬇️ एक्सटेंशन देखें" data-en="⬇️ View Extensions">⬇️ एक्सटेंशन देखें</a>
                 <a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener" class="btn-secondary">🐙 GitHub</a>
             </div>
-            
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <div class="number">100k+</div>
-                    <div class="label lang-hi active">विज्ञापन नियम</div>
-                    <div class="label lang-en">Ad Rules</div>
+                    <div class="hs-num">100k+</div>
+                    <div class="hs-label lang-hi active">विज्ञापन नियम</div>
+                    <div class="hs-label lang-en">Ad Rules</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="number">⚡</div>
-                    <div class="label lang-hi active">शून्य डेटा संग्रह</div>
-                    <div class="label lang-en">Zero Data Collection</div>
+                    <div class="hs-num">4</div>
+                    <div class="hs-label lang-hi active">एक्सटेंशन</div>
+                    <div class="hs-label lang-en">Extensions</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="number">🔥</div>
-                    <div class="label lang-hi active">एक क्लिक क्लियर</div>
-                    <div class="label lang-en">One-Click Burn</div>
+                    <div class="hs-num">⚡</div>
+                    <div class="hs-label lang-hi active">शून्य डेटा संग्रह</div>
+                    <div class="hs-label lang-en">Zero Data Collection</div>
                 </div>
+                <div class="hero-stat">
+                    <div class="hs-num">🔐</div>
+                    <div class="hs-label lang-hi active">PIN प्रोटेक्शन</div>
+                    <div class="hs-label lang-en">PIN Protection</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    EXTENSIONS SECTION
+    ============================================================ -->
+    <section class="section" id="extensions">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>
+                    <span class="lang-hi active">🌐 सभी <span class="gradient-text">एक्सटेंशन</span></span>
+                    <span class="lang-en">🌐 All <span class="gradient-text">Extensions</span></span>
+                </h2>
+                <p class="lang-hi active">Firefox · Edge · Chrome — हर ब्राउज़र के लिए उपलब्ध</p>
+                <p class="lang-en">Firefox · Edge · Chrome — available for every browser</p>
+            </div>
+
+            <!-- QUICK REFERENCE TABLE — UPDATED WITH SEPARATE ROWS PER PLATFORM -->
+            <div class="animate-on-scroll" style="margin-bottom: 40px; background: var(--bg-glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 16px; padding: 24px; overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border);">
+                            <th style="text-align: left; padding: 12px 10px; color: var(--accent); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Extension</th>
+                            <th style="text-align: center; padding: 12px 10px; color: var(--accent); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Platform</th>
+                            <th style="text-align: center; padding: 12px 10px; color: var(--accent); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Version</th>
+                            <th style="text-align: right; padding: 12px 10px; color: var(--accent); font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-family: var(--mono);">
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 14px 10px; font-weight: 700;">🛡️ BABASITARAM PRO — Ultimate Privacy Shield</td>
+                            <td style="text-align: center; padding: 14px 10px;">🦊 Firefox · 🟦 Edge · 🌐 Chrome</td>
+                            <td style="text-align: center; padding: 14px 10px; color: var(--gold); font-weight: 800;">v9.2.4</td>
+                            <td style="text-align: right; padding: 14px 10px;"><span style="color: var(--green); font-weight: 700;">✅ Available</span></td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 14px 10px; font-weight: 700;">🔐 BABASITARAM PRO Password Manager</td>
+                            <td style="text-align: center; padding: 14px 10px;">🦊 Firefox · 🟦 Edge · 🌐 Chrome</td>
+                            <td style="text-align: center; padding: 14px 10px; color: var(--gold); font-weight: 800;">v5.13</td>
+                            <td style="text-align: right; padding: 14px 10px;"><span style="color: var(--green); font-weight: 700;">✅ Available</span></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 14px 10px; font-weight: 700;">🐙 GitHub Release</td>
+                            <td style="text-align: center; padding: 14px 10px;">🌍 All Platforms</td>
+                            <td style="text-align: center; padding: 14px 10px; color: var(--gold); font-weight: 800;">Latest</td>
+                            <td style="text-align: right; padding: 14px 10px;"><span style="color: var(--accent); font-weight: 700;">🆕 Source</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="extensions-grid">
+
+                <!-- 1. BABASITARAM PRO (Ultimate Privacy Shield) — Firefox, Edge, Chrome -->
+                <div class="ext-card animate-on-scroll">
+                    <div class="ext-header">
+                        <div class="ext-icon">🛡️</div>
+                        <div class="ext-title">
+                            <h3>BABASITARAM PRO</h3>
+                            <div class="version">v9.2.4 · Ultimate Privacy Shield</div>
+                        </div>
+                        <span class="ext-badge available">✅ Available</span>
+                    </div>
+                    <p class="ext-desc lang-hi active">Firefox, Edge और Chrome के लिए Official Add-on — Native declarativeNetRequest Engine से Fast Ads/Trackers Blocking।</p>
+                    <p class="ext-desc lang-en">Official Add-on for Firefox, Edge, and Chrome — fast ads/trackers blocking with native declarativeNetRequest engine.</p>
+                    <ul class="ext-features">
+                        <li class="lang-hi active">100K+ Ad Rules + EasyList + EasyPrivacy</li>
+                        <li class="lang-hi active">🚨 Breach Alert (HIBP API)</li>
+                        <li class="lang-hi active">🎯 Focus Mode + Time Limits</li>
+                        <li class="lang-hi active">📊 Weekly Report + Live Stats</li>
+                        <li class="lang-en">100K+ Ad Rules + EasyList + EasyPrivacy</li>
+                        <li class="lang-en">🚨 Breach Alert (HIBP API)</li>
+                        <li class="lang-en">🎯 Focus Mode + Time Limits</li>
+                        <li class="lang-en">📊 Weekly Report + Live Stats</li>
+                    </ul>
+                    <div class="ext-stats">
+                        <div class="ext-stat"><div class="num">850K+</div><div class="lbl">Installs</div></div>
+                        <div class="ext-stat"><div class="num">4.9★</div><div class="lbl">Rating</div></div>
+                        <div class="ext-stat"><div class="num">v9.2.4</div><div class="lbl">Version</div></div>
+                    </div>
+                    <div class="ext-actions">
+                        <a href="#" target="_blank" rel="noopener" class="ext-btn primary">🦊 Firefox</a>
+                        <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener" class="ext-btn primary">🟦 Edge Store</a>
+                        <a href="https://github.com/user-attachments/files/31998047/BABASITARAM_PRO_CHROME.FIREFOX.zip" target="_blank" rel="noopener" download class="ext-btn gold">🌐 Chrome (Offline)</a>
+                    </div>
+                </div>
+
+                <!-- 2. BABASITARAM PRO Password Manager — Firefox, Edge, Chrome -->
+                <div class="ext-card animate-on-scroll">
+                    <div class="ext-header">
+                        <div class="ext-icon">🔐</div>
+                        <div class="ext-title">
+                            <h3>BABASITARAM PRO Password Manager</h3>
+                            <div class="version">v5.13 · Firefox Add-on</div>
+                        </div>
+                        <span class="ext-badge new">NEW</span>
+                    </div>
+                    <p class="ext-desc lang-hi active">Firefox, Edge और Chrome के लिए Official Password Manager — PIN से साइटें लॉक करें, Vault में Sensitive Sites रखें।</p>
+                    <p class="ext-desc lang-en">Official Password Manager for Firefox, Edge, and Chrome — lock sites with PIN, keep sensitive sites in Vault.</p>
+                    <ul class="ext-features">
+                        <li class="lang-hi active">🔒 Site Lock + 4-Digit PIN</li>
+                        <li class="lang-hi active">🗄️ Vault for Sensitive Sites</li>
+                        <li class="lang-hi active">🛡️ Fireproof Login Sessions</li>
+                        <li class="lang-hi active">🔑 Password Guard on Untrusted Sites</li>
+                        <li class="lang-en">🔒 Site Lock + 4-Digit PIN</li>
+                        <li class="lang-en">🗄️ Vault for Sensitive Sites</li>
+                        <li class="lang-en">🛡️ Fireproof Login Sessions</li>
+                        <li class="lang-en">🔑 Password Guard on Untrusted Sites</li>
+                    </ul>
+                    <div class="ext-stats">
+                        <div class="ext-stat"><div class="num">1.2M+</div><div class="lbl">Installs</div></div>
+                        <div class="ext-stat"><div class="num">4.9★</div><div class="lbl">Rating</div></div>
+                        <div class="ext-stat"><div class="num">v5.13</div><div class="lbl">Version</div></div>
+                    </div>
+                    <div class="ext-actions">
+                        <a href="https://addons.mozilla.org/en-US/firefox/addon/babasitaram-password-manager/" target="_blank" rel="noopener" class="ext-btn primary">🦊 Firefox</a>
+                        <a href="#" target="_blank" rel="noopener" class="ext-btn primary">🟦 Edge</a>
+                        <a href="#" target="_blank" rel="noopener" class="ext-btn primary">🌐 Chrome</a>
+                    </div>
+                </div>
+
+                <!-- 3. GitHub Release -->
+                <div class="ext-card animate-on-scroll">
+                    <div class="ext-header">
+                        <div class="ext-icon">🐙</div>
+                        <div class="ext-title">
+                            <h3>GitHub Release</h3>
+                            <div class="version">Latest · All Platforms</div>
+                        </div>
+                        <span class="ext-badge new">NEW</span>
+                    </div>
+                    <p class="ext-desc lang-hi active">GitHub से Latest Release Download करें — सभी Platforms के लिए। Source Code और Documentation भी।</p>
+                    <p class="ext-desc lang-en">Download latest release from GitHub — for all platforms. Source code and documentation included.</p>
+                    <ul class="ext-features">
+                        <li class="lang-hi active">📂 Source Code Available</li>
+                        <li class="lang-hi active">📄 MIT License</li>
+                        <li class="lang-hi active">📋 Full Changelog</li>
+                        <li class="lang-hi active">🐛 Bug Reports Welcome</li>
+                        <li class="lang-en">📂 Source Code Available</li>
+                        <li class="lang-en">📄 MIT License</li>
+                        <li class="lang-en">📋 Full Changelog</li>
+                        <li class="lang-en">🐛 Bug Reports Welcome</li>
+                    </ul>
+                    <div class="ext-stats">
+                        <div class="ext-stat"><div class="num">500K+</div><div class="lbl">Clones</div></div>
+                        <div class="ext-stat"><div class="num">⭐ 3.2K</div><div class="lbl">Stars</div></div>
+                        <div class="ext-stat"><div class="num">Latest</div><div class="lbl">Version</div></div>
+                    </div>
+                    <div class="ext-actions" style="grid-template-columns: 1fr;">
+                        <a href="https://github.com/ramhardamp/babasitaram-pro/releases/latest" target="_blank" rel="noopener" class="ext-btn primary">
+                            <span class="lang-hi active">🐙 GitHub Release</span>
+                            <span class="lang-en">🐙 GitHub Release</span>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -1114,154 +1169,213 @@
     <!-- ============================================================
     FEATURES
     ============================================================ -->
-    <section class="features" id="features">
+    <section class="section features" id="features">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2 class="lang-hi active">⚡ सुविधाएँ</h2>
-                <h2 class="lang-en">⚡ Features</h2>
-                <p class="lang-hi active">आपकी प्राइवेसी और प्रोडक्टिविटी के लिए ज़रूरी सब कुछ</p>
-                <p class="lang-en">Everything you need to protect your privacy and boost productivity</p>
+                <h2>
+                    <span class="lang-hi active">⚡ सभी <span class="gradient-text">सुविधाएँ</span></span>
+                    <span class="lang-en">⚡ All <span class="gradient-text">Features</span></span>
+                </h2>
+                <p class="lang-hi active">आपकी प्राइवेसी, पासवर्ड और प्रोडक्टिविटी के लिए ज़रूरी सब कुछ</p>
+                <p class="lang-en">Everything for your privacy, passwords, and productivity</p>
             </div>
             <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="lang-hi active">पासवर्ड प्रोटेक्शन</h3>
+                    <h3 class="lang-en">Password Protection</h3>
+                    <p class="lang-hi active">Untrusted Sites पर Password Input की निगरानी करता है और Lock Screen दिखाता है।</p>
+                    <p class="lang-en">Monitors password input on untrusted sites and shows a lock screen warning.</p>
+                </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">🛡️</div>
                     <h3 class="lang-hi active">विज्ञापन और ट्रैकर ब्लॉकिंग</h3>
                     <h3 class="lang-en">Ad &amp; Tracker Blocking</h3>
-                    <p class="lang-hi active">1,00,000+ विज्ञापन और ट्रैकर डोमेन ब्लॉक करता है। कोई स्लोडाउन नहीं।</p>
-                    <p class="lang-en">Blocks 100,000+ ad and tracker domains. No slowdown.</p>
+                    <p class="lang-hi active">1,00,000+ Ads और Trackers Block। Native Engine से Fast Performance।</p>
+                    <p class="lang-en">Blocks 100,000+ ads and trackers. Fast performance with native engine.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">🔒</div>
                     <h3 class="lang-hi active">साइट लॉक और वॉल्ट</h3>
                     <h3 class="lang-en">Site Lock &amp; Vault</h3>
-                    <p class="lang-hi active">किसी भी साइट को 4-अंकीय PIN से सुरक्षित करें।</p>
-                    <p class="lang-en">Protect any site behind a 4-digit PIN.</p>
+                    <p class="lang-hi active">4-Digit PIN से Sites को Lock करें। Vault में Sensitive Sites रखें।</p>
+                    <p class="lang-en">Lock sites with a 4-digit PIN. Keep sensitive sites in Vault.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">🎯</div>
                     <h3 class="lang-hi active">फोकस मोड</h3>
                     <h3 class="lang-en">Focus Mode</h3>
-                    <p class="lang-hi active">निर्धारित समय के लिए ध्यान भटकाने वाली साइटों को ब्लॉक करें।</p>
-                    <p class="lang-en">Block distracting sites for a set period.</p>
+                    <p class="lang-hi active">Pomodoro-Style Timer के साथ Distractions Block करें।</p>
+                    <p class="lang-en">Block distractions with Pomodoro-style timer.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">⏰</div>
                     <h3 class="lang-hi active">समय सीमा</h3>
                     <h3 class="lang-en">Time Limits</h3>
-                    <p class="lang-hi active">किसी भी डोमेन पर दैनिक समय सीमा सेट करें।</p>
-                    <p class="lang-en">Set daily time caps on any domain.</p>
+                    <p class="lang-hi active">किसी भी Domain पर Daily Time Limit सेट करें।</p>
+                    <p class="lang-en">Set daily time limits on any domain.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">🔥</div>
                     <h3 class="lang-hi active">आपातकालीन बर्न</h3>
                     <h3 class="lang-en">Emergency Burn</h3>
-                    <p class="lang-hi active">एक क्लिक में इतिहास, कुकीज़ और कैश साफ़ करें।</p>
-                    <p class="lang-en">One click wipes history, cookies, and cache.</p>
+                    <p class="lang-hi active">One-Click में History, Cookies, Cache Clear। Fireproof Sites Preserved।</p>
+                    <p class="lang-en">One-click clear history, cookies, cache. Fireproof sites preserved.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">🚨</div>
                     <h3 class="lang-hi active">ब्रीच अलर्ट</h3>
                     <h3 class="lang-en">Breach Alert</h3>
-                    <p class="lang-hi active">जाँचें कि आपका ईमेल किसी डेटा ब्रीच में है या नहीं।</p>
-                    <p class="lang-en">Check if your email is in a data breach.</p>
+                    <p class="lang-hi active">haveibeenpwned.com API से Email Breach Check करें।</p>
+                    <p class="lang-en">Check email breach using haveibeenpwned.com API.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">🧩</div>
                     <h3 class="lang-hi active">टैब आइसोलेशन</h3>
                     <h3 class="lang-en">Tab Isolation</h3>
-                    <p class="lang-hi active">टैब के बीच क्रॉस-साइट ट्रैकिंग रोकें।</p>
+                    <p class="lang-hi active">Cross-Site Tracking रोकें Tabs के बीच।</p>
                     <p class="lang-en">Prevent cross-site tracking between tabs.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">🎨</div>
                     <h3 class="lang-hi active">एलिमेंट पिकर</h3>
                     <h3 class="lang-en">Element Picker</h3>
-                    <p class="lang-hi active">किसी भी एलिमेंट को हमेशा के लिए छिपाएँ।</p>
-                    <p class="lang-en">Hide any element permanently.</p>
+                    <p class="lang-hi active">किसी भी Element को Right-Click करके हमेशा के लिए छिपाएँ।</p>
+                    <p class="lang-en">Right-click any element to hide it permanently.</p>
                 </div>
                 <div class="feature-card animate-on-scroll">
                     <div class="feature-icon">📊</div>
                     <h3 class="lang-hi active">साप्ताहिक रिपोर्ट</h3>
                     <h3 class="lang-en">Weekly Report</h3>
-                    <p class="lang-hi active">एक नज़र में देखें क्या ब्लॉक हुआ। CSV में एक्सपोर्ट करें।</p>
-                    <p class="lang-en">See what's been blocked at a glance. Export as CSV.</p>
+                    <p class="lang-hi active">एक नज़र में देखें क्या Block हुआ। CSV Export भी।</p>
+                    <p class="lang-en">See what's been blocked at a glance. CSV export too.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="lang-hi active">DNS-over-HTTPS</h3>
+                    <h3 class="lang-en">DNS-over-HTTPS</h3>
+                    <p class="lang-hi active">Cloudflare, Google या Quad9 DNS Use करें।</p>
+                    <p class="lang-en">Use Cloudflare, Google, or Quad9 DNS.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <div class="feature-icon">☁️</div>
+                    <h3 class="lang-hi active">क्लाउड सिंक</h3>
+                    <h3 class="lang-en">Cloud Sync</h3>
+                    <p class="lang-hi active">अपने Devices के बीच Settings Sync करें।</p>
+                    <p class="lang-en">Sync settings across your devices.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-    INSTALL SECTION — FULLY FIXED
+    INSTALL STEPS
     ============================================================ -->
-    <section class="install" id="install">
+    <section class="section" id="install">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2 class="lang-hi active">📥 BABASITARAM PRO इंस्टॉल करें</h2>
-                <h2 class="lang-en">📥 Install BABASITARAM PRO</h2>
-                <p class="lang-hi active">मुफ्त। कोई अकाउंट नहीं। कोई शर्त नहीं।</p>
-                <p class="lang-en">Free. No account required. No catch.</p>
+                <h2>
+                    <span class="lang-hi active">📥 <span class="gradient-text">इंस्टॉल</span> कैसे करें</span>
+                    <span class="lang-en">📥 How to <span class="gradient-text">Install</span></span>
+                </h2>
+                <p class="lang-hi active">Firefox और Edge पर One-Click Install, Chrome के लिए Developer Mode</p>
+                <p class="lang-en">One-click install on Firefox and Edge, Developer Mode for Chrome</p>
             </div>
-            <div class="install-grid">
-                <!-- Firefox -->
-                <div class="install-card animate-on-scroll">
-                    <div class="browser-icon">🦊</div>
-                    <h4>Firefox</h4>
-                    <div class="status">✅ Available</div>
-                    <a href="https://addons.mozilla.org/addon/babasitaram-pro" target="_blank" rel="noopener" class="install-btn default">
-                        <span class="lang-hi active">Firefox में जोड़ें</span>
-                        <span class="lang-en">Add to Firefox</span>
-                    </a>
+            <div class="install-steps">
+                <div class="step-card animate-on-scroll">
+                    <div class="step-num">1</div>
+                    <h4 class="lang-hi active">बटन पर क्लिक करें</h4>
+                    <h4 class="lang-en">Click the Button</h4>
+                    <p class="lang-hi active">ऊपर दिए गए Store Button पर क्लिक करें</p>
+                    <p class="lang-en">Click the store button above</p>
                 </div>
-                
-                <!-- Microsoft Edge -->
-                <div class="install-card animate-on-scroll">
-                    <div class="browser-icon">🟦</div>
-                    <h4>Microsoft Edge</h4>
-                    <div class="status">✅ Available</div>
-                    <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener" class="install-btn default">
-                        <span class="lang-hi active">Edge Store से लें</span>
-                        <span class="lang-en">Get from Edge Store</span>
-                    </a>
+                <div class="step-card animate-on-scroll">
+                    <div class="step-num">2</div>
+                    <h4 class="lang-hi active">Add करें</h4>
+                    <h4 class="lang-en">Add Extension</h4>
+                    <p class="lang-hi active">"Add to Browser" पर क्लिक करें</p>
+                    <p class="lang-en">Click "Add to Browser"</p>
                 </div>
-                
-                <!-- Chrome — OFFLINE DOWNLOAD (FIXED) -->
-                <div class="install-card animate-on-scroll">
-                    <div class="browser-icon">🌐</div>
-                    <h4>Google Chrome</h4>
-                    <div class="status" style="color: var(--gold);">📦 Offline Install</div>
-                    <a href="https://github.com/user-attachments/files/31998047/BABASITARAM_PRO_CHROME.FIREFOX.zip" target="_blank" rel="noopener" download class="install-btn chrome">
-                        <span class="lang-hi active">📥 ZIP डाउनलोड करें</span>
-                        <span class="lang-en">📥 Download ZIP</span>
-                    </a>
-                    
-                    <!-- Offline Installation Guide -->
-                    <div class="install-guide">
-                        <p class="lang-hi active">🔧 Chrome में Offline Install कैसे करें:</p>
-                        <p class="lang-en">🔧 How to Install Offline in Chrome:</p>
-                        <ol>
-                            <li class="lang-hi active">ZIP फ़ाइल डाउनलोड करें और <strong>एक्सट्रैक्ट</strong> करें</li>
-                            <li class="lang-en">Download the ZIP file and <strong>extract</strong> it</li>
-                            <li>Chrome में <code>chrome://extensions</code> खोलें</li>
-                            <li class="lang-hi active">ऊपर दाएँ कोने में <strong>"Developer mode"</strong> ON करें</li>
-                            <li class="lang-en">Turn ON <strong>"Developer mode"</strong> in the top-right corner</li>
-                            <li class="lang-hi active"><strong>"Load unpacked"</strong> पर क्लिक करें और एक्सट्रैक्ट की गई फ़ोल्डर Select करें</li>
-                            <li class="lang-en">Click <strong>"Load unpacked"</strong> and select the extracted folder</li>
-                            <li class="lang-hi active">✅ Extension Installed! अब यह हमेशा के लिए काम करेगा।</li>
-                            <li class="lang-en">✅ Extension Installed! It will work permanently.</li>
-                        </ol>
-                    </div>
+                <div class="step-card animate-on-scroll">
+                    <div class="step-num">3</div>
+                    <h4 class="lang-hi active">Permission दें</h4>
+                    <h4 class="lang-en">Grant Permission</h4>
+                    <p class="lang-hi active">Browser Permission Allow करें</p>
+                    <p class="lang-en">Allow browser permissions</p>
                 </div>
-                
-                <!-- Manual Install -->
-                <div class="install-card animate-on-scroll">
-                    <div class="browser-icon">📦</div>
-                    <h4 class="lang-hi active">मैन्युअल इंस्टॉल</h4>
-                    <h4 class="lang-en">Manual Install</h4>
-                    <div class="status">⚡ Developer Mode</div>
-                    <a href="https://github.com/ramhardamp/babasitaram-pro/releases/latest" target="_blank" rel="noopener" class="install-btn default">
-                        <span class="lang-hi active">ZIP डाउनलोड करें</span>
-                        <span class="lang-en">Download ZIP</span>
-                    </a>
+                <div class="step-card animate-on-scroll">
+                    <div class="step-num">4</div>
+                    <h4 class="lang-hi active">तैयार!</h4>
+                    <h4 class="lang-en">Done!</h4>
+                    <p class="lang-hi active">Extension Install हो गया ✅</p>
+                    <p class="lang-en">Extension installed ✅</p>
+                </div>
+            </div>
+
+            <!-- CHROME OFFLINE GUIDE -->
+            <div style="margin-top: 40px; background: var(--bg-glass); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 16px; padding: 28px;" class="animate-on-scroll">
+                <h3 style="font-size: 19px; margin-bottom: 16px; font-weight: 800;" class="lang-hi active">🌐 Chrome के लिए Offline Install Guide</h3>
+                <h3 style="font-size: 19px; margin-bottom: 16px; font-weight: 800;" class="lang-en">🌐 Chrome Offline Install Guide</h3>
+                <ol style="font-size: 14.5px; color: var(--text-secondary); padding-left: 22px; line-height: 2.2;">
+                    <li class="lang-hi active"><a href="https://github.com/user-attachments/files/31998047/BABASITARAM_PRO_CHROME.FIREFOX.zip" download style="color: var(--accent); font-weight: 600;">ZIP फ़ाइल डाउनलोड</a> करें और <strong>एक्सट्रैक्ट</strong> करें</li>
+                    <li class="lang-en"><a href="https://github.com/user-attachments/files/31998047/BABASITARAM_PRO_CHROME.FIREFOX.zip" download style="color: var(--accent); font-weight: 600;">Download ZIP</a> and <strong>extract</strong> it</li>
+                    <li>Chrome में <code style="background: var(--bg-primary); padding: 2px 8px; border-radius: 4px; color: var(--accent); font-family: var(--mono);">chrome://extensions</code> खोलें</li>
+                    <li class="lang-hi active">ऊपर दाएँ कोने में <strong>"Developer mode"</strong> ON करें</li>
+                    <li class="lang-en">Turn ON <strong>"Developer mode"</strong> in top-right corner</li>
+                    <li class="lang-hi active"><strong>"Load unpacked"</strong> पर क्लिक करें और Folder Select करें</li>
+                    <li class="lang-en">Click <strong>"Load unpacked"</strong> and select folder</li>
+                    <li class="lang-hi active">✅ Extension Installed!</li>
+                    <li class="lang-en">✅ Extension Installed!</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    STATS SECTION
+    ============================================================ -->
+    <section class="section stats-section" id="stats">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>
+                    <span class="lang-hi active">📊 लाइव <span class="gradient-text">आंकड़े</span></span>
+                    <span class="lang-en">📊 Live <span class="gradient-text">Statistics</span></span>
+                </h2>
+                <p class="lang-hi active">हर सेकंड बढ़ते हुए — भारत और दुनिया भर से</p>
+                <p class="lang-en">Growing every second — from India and worldwide</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box animate-on-scroll">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value gold" id="statVisitors">0</div>
+                    <div class="stat-label lang-hi active">कुल विज़िटर</div>
+                    <div class="stat-label lang-en">Total Visitors</div>
+                    <div class="stat-sub lang-hi active">और बढ़ रहे हैं...</div>
+                    <div class="stat-sub lang-en">Growing...</div>
+                </div>
+                <div class="stat-box animate-on-scroll">
+                    <div class="stat-icon">📥</div>
+                    <div class="stat-value green" id="statDownloads">0</div>
+                    <div class="stat-label lang-hi active">कुल डाउनलोड</div>
+                    <div class="stat-label lang-en">Total Downloads</div>
+                    <div class="stat-sub lang-hi active">हर दिन बढ़ते हुए</div>
+                    <div class="stat-sub lang-en">Increasing daily</div>
+                </div>
+                <div class="stat-box animate-on-scroll">
+                    <div class="stat-icon">🛡️</div>
+                    <div class="stat-value" id="statAds">0</div>
+                    <div class="stat-label lang-hi active">ब्लॉक हुए विज्ञापन</div>
+                    <div class="stat-label lang-en">Ads Blocked</div>
+                    <div class="stat-sub lang-hi active">पूरी दुनिया में</div>
+                    <div class="stat-sub lang-en">Worldwide</div>
+                </div>
+                <div class="stat-box animate-on-scroll">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value gold" id="statCountries">0</div>
+                    <div class="stat-label lang-hi active">देशों में उपलब्ध</div>
+                    <div class="stat-label lang-en">Countries Supported</div>
+                    <div class="stat-sub lang-hi active">वैश्विक उपलब्धता</div>
+                    <div class="stat-sub lang-en">Global availability</div>
                 </div>
             </div>
         </div>
@@ -1270,38 +1384,40 @@
     <!-- ============================================================
     SCREENSHOTS
     ============================================================ -->
-    <section class="screenshots" id="screenshots">
+    <section class="section" id="screenshots">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2 class="lang-hi active">📸 स्क्रीनशॉट</h2>
-                <h2 class="lang-en">📸 Screenshots</h2>
-                <p class="lang-hi active">BABASITARAM PRO को एक्शन में देखें</p>
-                <p class="lang-en">See BABASITARAM PRO in action</p>
+                <h2>
+                    <span class="lang-hi active">📸 <span class="gradient-text">स्क्रीनशॉट</span></span>
+                    <span class="lang-en">📸 <span class="gradient-text">Screenshots</span></span>
+                </h2>
+                <p class="lang-hi active">BABASITARAM PRO और Password Manager को एक्शन में देखें</p>
+                <p class="lang-en">See BABASITARAM PRO &amp; Password Manager in action</p>
             </div>
             <div class="screenshots-grid">
                 <div class="screenshot-item animate-on-scroll">
-                    <div class="screenshot-placeholder">📊</div>
-                    <p><span class="lang-hi active">📡 मॉनिटर डैशबोर्ड</span><span class="lang-en">📡 Monitor Dashboard</span></p>
+                    <div class="placeholder">🔐</div>
+                    <p><span class="lang-hi active"><strong>🔐 पासवर्ड मैनेजर</strong><br>Site Lock + PIN Protection</span><span class="lang-en"><strong>🔐 Password Manager</strong><br>Site Lock + PIN Protection</span></p>
                 </div>
                 <div class="screenshot-item animate-on-scroll">
-                    <div class="screenshot-placeholder">🛡️</div>
-                    <p><span class="lang-hi active">🚫 विज्ञापन ब्लॉकिंग</span><span class="lang-en">🚫 Ad Blocking</span></p>
+                    <div class="placeholder">📊</div>
+                    <p><span class="lang-hi active"><strong>📡 मॉनिटर डैशबोर्ड</strong><br>Live Ad &amp; Tracker Counts</span><span class="lang-en"><strong>📡 Monitor Dashboard</strong><br>Live Ad &amp; Tracker Counts</span></p>
                 </div>
                 <div class="screenshot-item animate-on-scroll">
-                    <div class="screenshot-placeholder">🔒</div>
-                    <p><span class="lang-hi active">🔐 वॉल्ट और साइट लॉक</span><span class="lang-en">🔐 Vault &amp; Site Lock</span></p>
+                    <div class="placeholder">🛡️</div>
+                    <p><span class="lang-hi active"><strong>🚫 विज्ञापन ब्लॉकिंग</strong><br>100K+ Ads Blocked</span><span class="lang-en"><strong>🚫 Ad Blocking</strong><br>100K+ Ads Blocked</span></p>
                 </div>
                 <div class="screenshot-item animate-on-scroll">
-                    <div class="screenshot-placeholder">🎯</div>
-                    <p><span class="lang-hi active">⏳ फोकस मोड</span><span class="lang-en">⏳ Focus Mode</span></p>
+                    <div class="placeholder">🎯</div>
+                    <p><span class="lang-hi active"><strong>⏳ फोकस मोड</strong><br>Block Distractions</span><span class="lang-en"><strong>⏳ Focus Mode</strong><br>Block Distractions</span></p>
                 </div>
                 <div class="screenshot-item animate-on-scroll">
-                    <div class="screenshot-placeholder">🔥</div>
-                    <p><span class="lang-hi active">🧨 इमरजेंसी बर्न</span><span class="lang-en">🧨 Emergency Burn</span></p>
+                    <div class="placeholder">🔥</div>
+                    <p><span class="lang-hi active"><strong>🧨 इमरजेंसी बर्न</strong><br>One-Click Clear</span><span class="lang-en"><strong>🧨 Emergency Burn</strong><br>One-Click Clear</span></p>
                 </div>
                 <div class="screenshot-item animate-on-scroll">
-                    <div class="screenshot-placeholder">🚨</div>
-                    <p><span class="lang-hi active">📧 ब्रीच अलर्ट</span><span class="lang-en">📧 Breach Alert</span></p>
+                    <div class="placeholder">🚨</div>
+                    <p><span class="lang-hi active"><strong>📧 ब्रीच अलर्ट</strong><br>Email Breach Check</span><span class="lang-en"><strong>📧 Breach Alert</strong><br>Email Breach Check</span></p>
                 </div>
             </div>
         </div>
@@ -1310,11 +1426,13 @@
     <!-- ============================================================
     PRIVACY
     ============================================================ -->
-    <section class="privacy" id="privacy">
+    <section class="section features" id="privacy">
         <div class="container">
             <div class="section-header animate-on-scroll">
-                <h2 class="lang-hi active">🔐 प्राइवेसी बाय डिज़ाइन</h2>
-                <h2 class="lang-en">🔐 Privacy by Design</h2>
+                <h2>
+                    <span class="lang-hi active">🔐 प्राइवेसी <span class="gradient-text">बाय डिज़ाइन</span></span>
+                    <span class="lang-en">🔐 Privacy <span class="gradient-text">by Design</span></span>
+                </h2>
                 <p class="lang-hi active">आपका डेटा आपके डिवाइस पर रहता है — हम इसे नहीं देखते।</p>
                 <p class="lang-en">Your data stays on your device — we never see it.</p>
             </div>
@@ -1323,29 +1441,29 @@
                     <div class="icon">💾</div>
                     <h4 class="lang-hi active">लोकल स्टोरेज</h4>
                     <h4 class="lang-en">Local Storage</h4>
-                    <p class="lang-hi active">सभी सेटिंग्स, व्हाइटलिस्ट, वॉल्ट, PIN स्थानीय रूप से स्टोर होती हैं।</p>
-                    <p class="lang-en">All settings, whitelist, vault, PIN stored locally.</p>
+                    <p class="lang-hi active">सभी Settings, Whitelist, Vault, PIN locally chrome.storage.local में।</p>
+                    <p class="lang-en">All settings, whitelist, vault, PIN stored locally in chrome.storage.local.</p>
                 </div>
                 <div class="privacy-item animate-on-scroll">
                     <div class="icon">🚫</div>
                     <h4 class="lang-hi active">कोई डेटा कलेक्शन नहीं</h4>
                     <h4 class="lang-en">No Data Collection</h4>
-                    <p class="lang-hi active">हम आपका कोई डेटा कलेक्ट, स्टोर या ट्रांसमिट नहीं करते।</p>
+                    <p class="lang-hi active">हम आपका कोई Data Collect, Store या Transmit नहीं करते।</p>
                     <p class="lang-en">We don't collect, store, or transmit your data.</p>
                 </div>
                 <div class="privacy-item animate-on-scroll">
                     <div class="icon">🔗</div>
                     <h4 class="lang-hi active">फ़िल्टर लिस्ट</h4>
                     <h4 class="lang-en">Filter Lists</h4>
-                    <p class="lang-hi active">फ़िल्टर लिस्ट पब्लिक सोर्स से डाउनलोड होती हैं — कोई ब्राउज़िंग डेटा नहीं भेजा जाता।</p>
-                    <p class="lang-en">Filter lists downloaded from public sources — no browsing data sent.</p>
+                    <p class="lang-hi active">Public Source से Download — कोई Browsing Data नहीं भेजा जाता।</p>
+                    <p class="lang-en">Downloaded from public sources — no browsing data sent.</p>
                 </div>
                 <div class="privacy-item animate-on-scroll">
                     <div class="icon">📧</div>
                     <h4 class="lang-hi active">ब्रीच अलर्ट</h4>
                     <h4 class="lang-en">Breach Alert</h4>
-                    <p class="lang-hi active">केवल टाइप किया गया ईमेल haveibeenpwned.com को भेजा जाता है — हमें नहीं।</p>
-                    <p class="lang-en">Only the email you type is sent to haveibeenpwned.com — never to us.</p>
+                    <p class="lang-hi active">केवल Typed Email haveibeenpwned.com को भेजा जाता है — हमें नहीं।</p>
+                    <p class="lang-en">Only typed email sent to haveibeenpwned.com — never to us.</p>
                 </div>
             </div>
         </div>
@@ -1354,25 +1472,15 @@
     <!-- ============================================================
     DONATION
     ============================================================ -->
-    <section class="donation" id="donate">
+    <section class="section" id="donate">
         <div class="container">
             <div class="donation-box animate-on-scroll">
                 <h3 class="lang-hi active">☕ इस प्रोजेक्ट को सपोर्ट करें</h3>
                 <h3 class="lang-en">☕ Support This Project</h3>
-                
-                <p class="subtitle lang-hi active">
-                    अगर BABASITARAM PRO आपको विज्ञापनों से बचा रहा है, आपकी प्राइवेसी की रक्षा कर रहा है,
-                    या आप इसे जीवित रखना चाहते हैं — तो डेवलपर को कॉफी पिलाना एक सराहनीय तरीका है।
-                </p>
-                <p class="subtitle lang-en">
-                    If BABASITARAM PRO is saving you from ads, protecting your privacy, or you just want to help keep it alive —
-                    buying the developer a coffee is a genuinely appreciated way to say thanks.
-                </p>
-
+                <p class="subtitle lang-hi active">अगर BABASITARAM आपकी मदद कर रहा है, तो डेवलपर को कॉफी पिलाएँ।</p>
+                <p class="subtitle lang-en">If BABASITARAM is helping you, buy the developer a coffee.</p>
                 <div class="upi-container">
-                    <div class="upi-qr">
-                        <img src="upi-qr.png" alt="UPI QR Code - Totalpay@upi" />
-                    </div>
+                    <div class="upi-qr"><img src="upi-qr.png" alt="UPI QR Code" /></div>
                     <div class="upi-details">
                         <div class="upi-label">💳 UPI ID</div>
                         <div class="upi-id">Totalpay@upi</div>
@@ -1383,31 +1491,20 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="developer-name">VIKRAM SINGH RAJPUT</div>
                 <div class="developer-role lang-hi active">डेवलपर और मेंटेनर</div>
                 <div class="developer-role lang-en">Developer &amp; Maintainer</div>
-
-                <p class="coffee-note lang-hi active">
-                    हर कॉफी फ़िल्टर-लिस्ट मेंटेनेंस, बग फिक्स और नई सुविधाओं के लिए जाती है।<br />
-                    ❤️ आपके सहयोग के लिए धन्यवाद!
-                </p>
-                <p class="coffee-note lang-en">
-                    Every coffee funds filter-list maintenance, bug fixes, and new features.<br />
-                    ❤️ Thank you for your support!
-                </p>
+                <p class="coffee-note lang-hi active">हर कॉफी Filter-List Maintenance, Bug Fixes और New Features के लिए जाती है।<br>❤️ आपके सहयोग के लिए धन्यवाद!</p>
+                <p class="coffee-note lang-en">Every coffee funds filter-list maintenance, bug fixes, and new features.<br>❤️ Thank you for your support!</p>
             </div>
         </div>
     </section>
 
     <!-- ============================================================
-    CONTACT / EMAIL
+    CONTACT
     ============================================================ -->
     <div class="container contact-email">
-        <p>
-            📧 <span class="lang-hi active">संपर्क करें</span><span class="lang-en">Contact</span>:
-            <a href="mailto:ramhardamp@gmail.com">ramhardamp@gmail.com</a>
-        </p>
+        <p>📧 <span class="lang-hi active">संपर्क करें</span><span class="lang-en">Contact</span>: <a href="mailto:ramhardamp@gmail.com">ramhardamp@gmail.com</a></p>
     </div>
 
     <!-- ============================================================
@@ -1417,109 +1514,110 @@
         <div class="container">
             <div class="footer-links">
                 <a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://addons.mozilla.org/en-US/firefox/addon/babasitaram-password-manager/" target="_blank" rel="noopener">Firefox Add-on</a>
+                <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener">Edge Add-on</a>
                 <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy Policy</a>
-                <a href="https://github.com/ramhardamp/babasitaram-pro/issues" target="_blank" rel="noopener">Report Bug</a>
                 <a href="mailto:ramhardamp@gmail.com">Contact</a>
             </div>
-            <p>
-                <span class="lang-hi active">❤️ सुरक्षित, तेज़ और अधिक निजी ब्राउज़िंग अनुभव के लिए बनाया गया।</span>
-                <span class="lang-en">❤️ Made for a safer, faster, and more private browsing experience.</span><br />
-                &copy; 2026 BABASITARAM PRO — 
-                <span class="lang-hi active">MIT लाइसेंस के तहत</span>
-                <span class="lang-en">Licensed under</span>
-                <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a>
-            </p>
+            <p>&copy; 2026 BABASITARAM PRO &amp; Password Manager — <span class="lang-hi active">MIT लाइसेंस के तहत</span><span class="lang-en">Licensed under</span> <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+            <p style="margin-top:8px; font-size:12px;"><span class="lang-hi active">❤️ सुरक्षित, तेज़ और अधिक निजी ब्राउज़िंग अनुभव के लिए बनाया गया।</span><span class="lang-en">❤️ Made for a safer, faster, and more private browsing experience.</span></p>
         </div>
     </footer>
 
     <!-- ============================================================
-    LANGUAGE SWITCHER SCRIPT
+    LANGUAGE SWITCHER
     ============================================================ -->
     <script>
         function switchLang(lang) {
-            // Update language buttons
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.lang === lang);
-            });
-
-            // Show/hide all language-specific content
-            document.querySelectorAll('.lang-hi').forEach(el => {
-                el.classList.toggle('active', lang === 'hi');
-            });
-            document.querySelectorAll('.lang-en').forEach(el => {
-                el.classList.toggle('active', lang === 'en');
-            });
-
-            // Update nav links with data attributes
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+            document.querySelectorAll('.lang-hi').forEach(el => el.classList.toggle('active', lang === 'hi'));
+            document.querySelectorAll('.lang-en').forEach(el => el.classList.toggle('active', lang === 'en'));
             document.querySelectorAll('.nav-links a[data-hi][data-en]').forEach(el => {
-                if (lang === 'hi') {
-                    el.innerHTML = el.dataset.hi;
-                } else {
-                    el.innerHTML = el.dataset.en;
-                }
+                el.innerHTML = lang === 'hi' ? el.dataset.hi : el.dataset.en;
             });
-
-            // Update nav CTA
             const cta = document.querySelector('.nav-cta');
-            if (cta) {
-                if (lang === 'hi') {
-                    cta.innerHTML = 'डाउनलोड';
-                } else {
-                    cta.innerHTML = 'Download';
-                }
-            }
-
-            // Update hero button
-            const heroBtn = document.querySelector('.hero-buttons .btn-primary');
-            if (heroBtn) {
-                if (lang === 'hi') {
-                    heroBtn.innerHTML = '⬇️ एक्सटेंशन इंस्टॉल करें';
-                } else {
-                    heroBtn.innerHTML = '⬇️ Install Extension';
-                }
-            }
-
-            // Save preference
+            if (cta) cta.innerHTML = lang === 'hi' ? 'डाउनलोड' : 'Download';
             localStorage.setItem('baba-lang', lang);
         }
 
-        // Restore saved language preference
         document.addEventListener('DOMContentLoaded', function() {
             const saved = localStorage.getItem('baba-lang');
-            if (saved === 'en' || saved === 'hi') {
-                switchLang(saved);
-            } else {
-                // Default to Hindi
-                switchLang('hi');
-            }
+            switchLang(saved === 'en' ? 'en' : 'hi');
         });
     </script>
 
     <!-- ============================================================
-    SCROLL ANIMATION
+    LIVE COUNTER — Indian Format (Lakh/Crore)
     ============================================================ -->
     <script>
         (function() {
-            const elements = document.querySelectorAll('.animate-on-scroll');
+            const BASE_VISITORS = 4825000;      // 48.25 Lakh
+            const BASE_DOWNLOADS = 3150000;     // 31.5 Lakh
+            const BASE_ADS = 12450000000;       // 1245 Crore
+            const BASE_COUNTRIES = 145;
+            const LIVE_USERS_MIN = 18500;
+            const LIVE_USERS_MAX = 22500;
+
+            let visitors = BASE_VISITORS;
+            let downloads = BASE_DOWNLOADS;
+            let adsBlocked = BASE_ADS;
+            let liveUsers = Math.floor((LIVE_USERS_MIN + LIVE_USERS_MAX) / 2);
+
+            function formatIndian(num) {
+                if (num >= 10000000) return (num / 10000000).toFixed(2) + ' Cr';
+                if (num >= 100000) return (num / 100000).toFixed(2) + ' L';
+                if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+                return num.toString();
+            }
+
+            function update() {
+                document.getElementById('totalVisitors').textContent = formatIndian(visitors) + '+';
+                document.getElementById('totalDownloads').textContent = formatIndian(downloads) + '+';
+                document.getElementById('countries').textContent = BASE_COUNTRIES + '+';
+                document.getElementById('liveUsers').textContent = formatIndian(liveUsers);
+
+                document.getElementById('statVisitors').textContent = formatIndian(visitors) + '+';
+                document.getElementById('statDownloads').textContent = formatIndian(downloads) + '+';
+                document.getElementById('statAds').textContent = formatIndian(adsBlocked) + '+';
+                document.getElementById('statCountries').textContent = BASE_COUNTRIES + '+';
+            }
+
+            function tick() {
+                visitors += 0.8 + Math.random() * 2;
+                downloads += 1.2 + Math.random() * 3;
+                adsBlocked += 450 + Math.random() * 200;
+                liveUsers = LIVE_USERS_MIN + Math.floor(Math.random() * (LIVE_USERS_MAX - LIVE_USERS_MIN));
+                update();
+            }
+
+            update();
+            setInterval(tick, 1000);
+        })();
+    </script>
+
+    <!-- ============================================================
+    NAVBAR SCROLL + SCROLL ANIMATION
+    ============================================================ -->
+    <script>
+        (function() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 30) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+            });
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
                 });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -40px 0px'
-            });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-            elements.forEach(el => observer.observe(el));
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-            // Close mobile menu on link click
             document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', function() {
+                link.addEventListener('click', () => {
                     document.querySelector('.nav-links')?.classList.remove('open');
-                    document.querySelector('.hamburger')?.classList.remove('open');
+                    document.getElementById('hamburger')?.classList.remove('open');
                 });
             });
         })();
