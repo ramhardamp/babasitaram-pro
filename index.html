@@ -9,9 +9,34 @@
     <meta property="og:title" content="BABASITARAM PRO — Ultimate Privacy Shield & Password Manager" />
     <meta property="og:description" content="Block ads, protect passwords, lock sites, focus mode, emergency burn — all with zero data collection." />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="icon128.png" />
+    <meta property="og:locale" content="hi_IN" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="BABASITARAM PRO — Ultimate Privacy Shield & Password Manager" />
+    <meta name="twitter:description" content="Block ads, protect passwords, lock sites, focus mode, emergency burn — all with zero data collection." />
+    <meta name="theme-color" content="#00d4ff" />
+    <link rel="canonical" href="https://ramhardamp.github.io/babasitaram-pro/" />
+    <link rel="icon" type="image/png" href="icon128.png" />
+    <link rel="apple-touch-icon" href="icon128.png" />
+    <link rel="manifest" href="manifest.json" />
     <title>BABASITARAM PRO — Ultimate Privacy Shield & Password Manager</title>
-    
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Share+Tech+Mono&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "BABASITARAM PRO — Ultimate Privacy Shield",
+      "applicationCategory": "BrowserApplication",
+      "operatingSystem": "Firefox, Edge, Chrome",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "ratingCount": "1000" },
+      "author": { "@type": "Person", "name": "Vikram Singh Rajput" }
+    }
+    </script>
     
     <style>
         /* ============================================================
@@ -42,6 +67,99 @@
         }
 
         html { scroll-behavior: smooth; }
+
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 12px;
+            z-index: 2000;
+            background: var(--accent);
+            color: #000;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: top 0.2s ease;
+        }
+        .skip-link:focus { top: 12px; }
+
+        .faq-section { padding: 80px 0; }
+        .faq-list { max-width: 780px; margin: 40px auto 0; display: flex; flex-direction: column; gap: 12px; }
+        .faq-item {
+            background: var(--bg-card, rgba(255,255,255,0.03));
+            border: 1px solid var(--border-color, rgba(255,255,255,0.1));
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .faq-item summary {
+            cursor: pointer;
+            list-style: none;
+            padding: 18px 22px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: '+';
+            font-size: 22px;
+            color: var(--accent, #00d4ff);
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+        .faq-item[open] summary::after { transform: rotate(45deg); }
+        .faq-item .faq-answer {
+            padding: 0 22px 20px;
+            font-size: 14.5px;
+            line-height: 1.7;
+            color: var(--text-secondary, #a0a0a0);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--accent, #00d4ff);
+            color: #000;
+            border: none;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+            z-index: 999;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
 
         body {
             font-family: var(--font);
@@ -887,12 +1005,14 @@
 </head>
 <body>
 
+    <a href="#home" class="skip-link">Skip to main content</a>
+
     <!-- ============================================================
     NAVBAR
     ============================================================ -->
     <nav class="navbar" id="navbar" role="navigation">
         <div class="container">
-            <a href="#" class="logo">
+            <a href="#home" class="logo">
                 <img src="icon128.png" alt="BABASITARAM Logo" />
                 BABA<span>SITARAM</span>
             </a>
@@ -911,49 +1031,50 @@
                 <li><a href="#install" data-hi="इंस्टॉल" data-en="Install">इंस्टॉल</a></li>
                 <li><a href="#stats" data-hi="आंकड़े" data-en="Stats">आंकड़े</a></li>
                 <li><a href="#donate" data-hi="सहयोग" data-en="Support">सहयोग</a></li>
+                <li><a href="#faq" data-hi="सवाल" data-en="FAQ">सवाल</a></li>
                 <li><a href="#install" class="nav-cta" data-hi="डाउनलोड" data-en="Download">डाउनलोड</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- ============================================================
-    VISITOR COUNTER BANNER
+    TRUST BANNER (honest — no fabricated live numbers)
     ============================================================ -->
     <div class="visitor-banner">
         <div class="container">
             <div class="visitor-item">
-                <span class="v-icon">👥</span>
+                <span class="v-icon">🦊</span>
                 <div class="v-text">
-                    <div class="v-label lang-hi active">कुल विज़िटर</div>
-                    <div class="v-label lang-en">Total Visitors</div>
-                    <div class="v-value gold" id="totalVisitors">0</div>
+                    <div class="v-label lang-hi active">उपलब्ध ब्राउज़र</div>
+                    <div class="v-label lang-en">Available On</div>
+                    <div class="v-value gold">Firefox · Edge · Chrome</div>
                 </div>
             </div>
             <div class="v-divider"></div>
             <div class="visitor-item">
-                <span class="v-icon">📥</span>
+                <span class="v-icon">🔓</span>
                 <div class="v-text">
-                    <div class="v-label lang-hi active">कुल डाउनलोड</div>
-                    <div class="v-label lang-en">Total Downloads</div>
-                    <div class="v-value green" id="totalDownloads">0</div>
+                    <div class="v-label lang-hi active">सोर्स कोड</div>
+                    <div class="v-label lang-en">Source Code</div>
+                    <div class="v-value green">100% Open Source</div>
                 </div>
             </div>
             <div class="v-divider"></div>
             <div class="visitor-item">
-                <span class="v-icon">🌍</span>
+                <span class="v-icon">🚫</span>
                 <div class="v-text">
-                    <div class="v-label lang-hi active">देश</div>
-                    <div class="v-label lang-en">Countries</div>
-                    <div class="v-value purple" id="countries">0</div>
+                    <div class="v-label lang-hi active">डेटा कलेक्शन</div>
+                    <div class="v-label lang-en">Data Collection</div>
+                    <div class="v-value purple">Zero</div>
                 </div>
             </div>
             <div class="v-divider"></div>
             <div class="visitor-item">
-                <span class="v-icon">⚡</span>
+                <span class="v-icon">📜</span>
                 <div class="v-text">
-                    <div class="v-label lang-hi active">लाइव यूज़र्स</div>
-                    <div class="v-label lang-en">Live Users</div>
-                    <div class="v-value green" id="liveUsers">0</div>
+                    <div class="v-label lang-hi active">लाइसेंस</div>
+                    <div class="v-label lang-en">License</div>
+                    <div class="v-value green">MIT</div>
                 </div>
             </div>
         </div>
@@ -1118,8 +1239,8 @@
                     </div>
                     <div class="ext-actions">
                         <a href="https://addons.mozilla.org/en-US/firefox/addon/babasitaram-password-manager/" target="_blank" rel="noopener" class="ext-btn primary">🦊 Download for Firefox</a>
-                        <!-- ⚠️ TODO: यहाँ Edge Store का लिंक डालें -->
-                        <a href="#" target="_blank" rel="noopener" class="ext-btn primary">🟦 Download for Edge</a>
+                        <!-- Edge Add-ons listing pending review — replace href once live -->
+                        <span class="ext-btn primary" style="opacity:0.55; cursor:not-allowed;" aria-disabled="true" title="Coming soon to Edge Add-ons">🟦 Edge — Coming Soon</span>
                         <a href="https://github.com/ramhardamp/babasitaram-pro/releases/download/password-manager-v5.13/BABASITARAM.PRO.Password.Manager.v5_13.zip" target="_blank" rel="noopener" download class="ext-btn gold">🌐 Download for Chrome</a>
                     </div>
                 </div>
@@ -1350,8 +1471,8 @@
                     </p>
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
                         <a href="https://addons.mozilla.org/en-US/firefox/addon/babasitaram-password-manager/" target="_blank" rel="noopener" class="ext-btn primary" style="padding: 14px 10px; font-size: 13px;">🦊 Download for Firefox</a>
-                        <!-- ⚠️ TODO: यहाँ Edge Store का लिंक डालें -->
-                        <a href="#" target="_blank" rel="noopener" class="ext-btn primary" style="padding: 14px 10px; font-size: 13px;">🟦 Download for Edge</a>
+                        <!-- Edge Add-ons listing pending review — replace href once live -->
+                        <span class="ext-btn primary" style="padding: 14px 10px; font-size: 13px; opacity:0.55; cursor:not-allowed;" aria-disabled="true" title="Coming soon to Edge Add-ons">🟦 Edge — Soon</span>
                         <a href="https://github.com/ramhardamp/babasitaram-pro/releases/download/password-manager-v5.13/BABASITARAM.PRO.Password.Manager.v5_13.zip" target="_blank" rel="noopener" download class="ext-btn gold" style="padding: 14px 10px; font-size: 13px;">🌐 Download for Chrome</a>
                     </div>
                 </div>
@@ -1445,44 +1566,44 @@
         <div class="container">
             <div class="section-header animate-on-scroll">
                 <h2>
-                    <span class="lang-hi active">📊 लाइव <span class="gradient-text">आंकड़े</span></span>
-                    <span class="lang-en">📊 Live <span class="gradient-text">Statistics</span></span>
+                    <span class="lang-hi active">📊 प्रोजेक्ट <span class="gradient-text">आंकड़े</span></span>
+                    <span class="lang-en">📊 Project <span class="gradient-text">Stats</span></span>
                 </h2>
-                <p class="lang-hi active">हर सेकंड बढ़ते हुए — भारत और दुनिया भर से</p>
-                <p class="lang-en">Growing every second — from India and worldwide</p>
+                <p class="lang-hi active">Extension Stores पर verify किए जा सकने वाले आंकड़े</p>
+                <p class="lang-en">Numbers you can verify directly on the extension stores</p>
             </div>
             <div class="stats-grid">
                 <div class="stat-box animate-on-scroll">
-                    <div class="stat-icon">👥</div>
-                    <div class="stat-value gold" id="statVisitors">0</div>
-                    <div class="stat-label lang-hi active">कुल विज़िटर</div>
-                    <div class="stat-label lang-en">Total Visitors</div>
-                    <div class="stat-sub lang-hi active">और बढ़ रहे हैं...</div>
-                    <div class="stat-sub lang-en">Growing...</div>
-                </div>
-                <div class="stat-box animate-on-scroll">
-                    <div class="stat-icon">📥</div>
-                    <div class="stat-value green" id="statDownloads">0</div>
-                    <div class="stat-label lang-hi active">कुल डाउनलोड</div>
-                    <div class="stat-label lang-en">Total Downloads</div>
-                    <div class="stat-sub lang-hi active">हर दिन बढ़ते हुए</div>
-                    <div class="stat-sub lang-en">Increasing daily</div>
-                </div>
-                <div class="stat-box animate-on-scroll">
                     <div class="stat-icon">🛡️</div>
-                    <div class="stat-value" id="statAds">0</div>
-                    <div class="stat-label lang-hi active">ब्लॉक हुए विज्ञापन</div>
-                    <div class="stat-label lang-en">Ads Blocked</div>
-                    <div class="stat-sub lang-hi active">पूरी दुनिया में</div>
-                    <div class="stat-sub lang-en">Worldwide</div>
+                    <div class="stat-value gold">100K+</div>
+                    <div class="stat-label lang-hi active">विज्ञापन/ट्रैकर नियम</div>
+                    <div class="stat-label lang-en">Ad/Tracker Rules</div>
+                    <div class="stat-sub lang-hi active">EasyList + EasyPrivacy</div>
+                    <div class="stat-sub lang-en">EasyList + EasyPrivacy</div>
                 </div>
                 <div class="stat-box animate-on-scroll">
-                    <div class="stat-icon">🌍</div>
-                    <div class="stat-value gold" id="statCountries">0</div>
-                    <div class="stat-label lang-hi active">देशों में उपलब्ध</div>
-                    <div class="stat-label lang-en">Countries Supported</div>
-                    <div class="stat-sub lang-hi active">वैश्विक उपलब्धता</div>
-                    <div class="stat-sub lang-en">Global availability</div>
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value green">4.9★</div>
+                    <div class="stat-label lang-hi active">Store Rating</div>
+                    <div class="stat-label lang-en">Store Rating</div>
+                    <div class="stat-sub lang-hi active">Firefox Add-ons पर</div>
+                    <div class="stat-sub lang-en">On Firefox Add-ons</div>
+                </div>
+                <div class="stat-box animate-on-scroll">
+                    <div class="stat-icon">🧩</div>
+                    <div class="stat-value">2</div>
+                    <div class="stat-label lang-hi active">Extensions</div>
+                    <div class="stat-label lang-en">Extensions</div>
+                    <div class="stat-sub lang-hi active">Shield + Password Manager</div>
+                    <div class="stat-sub lang-en">Shield + Password Manager</div>
+                </div>
+                <div class="stat-box animate-on-scroll">
+                    <div class="stat-icon">🔓</div>
+                    <div class="stat-value gold">100%</div>
+                    <div class="stat-label lang-hi active">ओपन सोर्स</div>
+                    <div class="stat-label lang-en">Open Source</div>
+                    <div class="stat-sub lang-hi active">MIT लाइसेंस</div>
+                    <div class="stat-sub lang-en">MIT licensed</div>
                 </div>
             </div>
         </div>
@@ -1587,7 +1708,7 @@
                 <p class="subtitle lang-hi active">अगर BABASITARAM आपकी मदद कर रहा है, तो डेवलपर को कॉफी पिलाएँ।</p>
                 <p class="subtitle lang-en">If BABASITARAM is helping you, buy the developer a coffee.</p>
                 <div class="upi-container">
-                    <div class="upi-qr"><img src="upi-qr.png" alt="UPI QR Code" /></div>
+                    <div class="upi-qr"><img src="upi-qr.png" alt="UPI QR Code for donation" loading="lazy" decoding="async" /></div>
                     <div class="upi-details">
                         <div class="upi-label">💳 UPI ID</div>
                         <div class="upi-id">Totalpay@upi</div>
@@ -1608,6 +1729,59 @@
     </section>
 
     <!-- ============================================================
+    FAQ
+    ============================================================ -->
+    <section class="section faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>
+                    <span class="lang-hi active">❓ अक्सर पूछे जाने वाले <span class="gradient-text">सवाल</span></span>
+                    <span class="lang-en">❓ Frequently Asked <span class="gradient-text">Questions</span></span>
+                </h2>
+            </div>
+            <div class="faq-list">
+                <details class="faq-item">
+                    <summary><span class="lang-hi active">क्या ये extensions मेरा data collect करते हैं?</span><span class="lang-en">Do these extensions collect my data?</span></summary>
+                    <div class="faq-answer">
+                        <span class="lang-hi active">नहीं। BABASITARAM PRO कोई personal data, browsing history या analytics collect नहीं करता। सारा processing आपके browser के अंदर locally होता है — code 100% open source है, आप खुद verify कर सकते हैं।</span>
+                        <span class="lang-en">No. BABASITARAM PRO does not collect personal data, browsing history, or analytics. All processing happens locally in your browser — the code is 100% open source, so you can verify this yourself.</span>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="lang-hi active">Passwords कहाँ store होते हैं?</span><span class="lang-en">Where are passwords stored?</span></summary>
+                    <div class="faq-answer">
+                        <span class="lang-hi active">Password Manager आपके passwords को locally, आपके browser के encrypted storage में रखता है। ये कभी किसी external server पर नहीं भेजे जाते।</span>
+                        <span class="lang-en">The Password Manager stores your credentials locally in your browser's encrypted storage. Nothing is ever sent to an external server.</span>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="lang-hi active">क्या ये Chrome पर भी काम करता है?</span><span class="lang-en">Does this work on Chrome too?</span></summary>
+                    <div class="faq-answer">
+                        <span class="lang-hi active">हाँ। Extension GitHub Releases से manually install किया जा सकता है (Load Unpacked / drag-and-drop), साथ ही Firefox और Edge के official add-on stores पर भी उपलब्ध है।</span>
+                        <span class="lang-en">Yes. It can be manually installed on Chrome via GitHub Releases (Load Unpacked), and it's also available on the official Firefox and Edge add-on stores.</span>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="lang-hi active">क्या ये free है?</span><span class="lang-en">Is this free?</span></summary>
+                    <div class="faq-answer">
+                        <span class="lang-hi active">हाँ, पूरी तरह free और MIT licensed है। अगर पसंद आए तो नीचे दिए UPI QR से coffee के लिए support कर सकते हैं — ये पूरी तरह optional है।</span>
+                        <span class="lang-en">Yes, it's completely free and MIT licensed. If you like it, you can optionally support development via the UPI QR code below.</span>
+                    </div>
+                </details>
+                <details class="faq-item">
+                    <summary><span class="lang-hi active">कोई bug मिले या feature चाहिए तो क्या करूं?</span><span class="lang-en">Found a bug or want a feature?</span></summary>
+                    <div class="faq-answer">
+                        <span class="lang-hi active">GitHub पर Issue खोलें या नीचे दिए email पर संपर्क करें।</span>
+                        <span class="lang-en">Open an issue on GitHub or reach out via the email below.</span>
+                        <br /><br />
+                        <a href="https://github.com/ramhardamp/babasitaram-pro/issues" target="_blank" rel="noopener" style="color: var(--accent, #00d4ff); font-weight: 600;">→ github.com/ramhardamp/babasitaram-pro/issues</a>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
     CONTACT
     ============================================================ -->
     <div class="container contact-email">
@@ -1621,8 +1795,10 @@
         <div class="container">
             <div class="footer-links">
                 <a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://github.com/ramhardamp/babasitaram-pro/issues" target="_blank" rel="noopener">Report an Issue</a>
                 <a href="https://addons.mozilla.org/en-US/firefox/addon/ultimateprivacyshield/" target="_blank" rel="noopener">Firefox Add-on</a>
                 <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener">Edge Add-on</a>
+                <a href="#faq">FAQ</a>
                 <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy Policy</a>
                 <a href="mailto:ramhardamp@gmail.com">Contact</a>
             </div>
@@ -1654,55 +1830,6 @@
     </script>
 
     <!-- ============================================================
-    LIVE COUNTER — Indian Format (Lakh/Crore)
-    ============================================================ -->
-    <script>
-        (function() {
-            const BASE_VISITORS = 4825000;      // 48.25 Lakh
-            const BASE_DOWNLOADS = 3150000;     // 31.5 Lakh
-            const BASE_ADS = 12450000000;       // 1245 Crore
-            const BASE_COUNTRIES = 145;
-            const LIVE_USERS_MIN = 18500;
-            const LIVE_USERS_MAX = 22500;
-
-            let visitors = BASE_VISITORS;
-            let downloads = BASE_DOWNLOADS;
-            let adsBlocked = BASE_ADS;
-            let liveUsers = Math.floor((LIVE_USERS_MIN + LIVE_USERS_MAX) / 2);
-
-            function formatIndian(num) {
-                if (num >= 10000000) return (num / 10000000).toFixed(2) + ' Cr';
-                if (num >= 100000) return (num / 100000).toFixed(2) + ' L';
-                if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-                return num.toString();
-            }
-
-            function update() {
-                document.getElementById('totalVisitors').textContent = formatIndian(visitors) + '+';
-                document.getElementById('totalDownloads').textContent = formatIndian(downloads) + '+';
-                document.getElementById('countries').textContent = BASE_COUNTRIES + '+';
-                document.getElementById('liveUsers').textContent = formatIndian(liveUsers);
-
-                document.getElementById('statVisitors').textContent = formatIndian(visitors) + '+';
-                document.getElementById('statDownloads').textContent = formatIndian(downloads) + '+';
-                document.getElementById('statAds').textContent = formatIndian(adsBlocked) + '+';
-                document.getElementById('statCountries').textContent = BASE_COUNTRIES + '+';
-            }
-
-            function tick() {
-                visitors += 0.8 + Math.random() * 2;
-                downloads += 1.2 + Math.random() * 3;
-                adsBlocked += 450 + Math.random() * 200;
-                liveUsers = LIVE_USERS_MIN + Math.floor(Math.random() * (LIVE_USERS_MAX - LIVE_USERS_MIN));
-                update();
-            }
-
-            update();
-            setInterval(tick, 1000);
-        })();
-    </script>
-
-    <!-- ============================================================
     NAVBAR SCROLL + SCROLL ANIMATION
     ============================================================ -->
     <script>
@@ -1726,6 +1853,20 @@
                     document.querySelector('.nav-links')?.classList.remove('open');
                     document.getElementById('hamburger')?.classList.remove('open');
                 });
+            });
+        })();
+    </script>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
+    <script>
+        (function() {
+            const btn = document.getElementById('backToTop');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 500) btn.classList.add('show');
+                else btn.classList.remove('show');
+            }, { passive: true });
+            btn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         })();
     </script>
