@@ -140,7 +140,7 @@ The "Last updated" date at the top of this page will also be revised.
 
 Questions about this policy:
 
-📧 **ramhardamp@gmail.com**
+📧 **babasitarampro@gmail.com**
 
 **Developer:** VIKRAM SINGH RAJPUT  
 **GitHub:** [https://github.com/ramhardamp/babasitaram-pro](https://github.com/ramhardamp/babasitaram-pro)
