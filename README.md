@@ -264,9 +264,9 @@ If it's saving you from ads, protecting your privacy, or you just want to help k
 
 Get it straight from your browser's store:
 
-🔥 **[Firefox Add-ons](https://addons.mozilla.org/addon/babasitaram-pro)**
-🌐 **[Chrome Web Store](https://chrome.google.com/webstore/detail/babasitaram-pro)**
-🟦 **[Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1)**
+🔥 **[Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/ultimateprivacyshield/)**
+🌐 **[Chrome Web Store](https://github.com/ramhardamp/babasitaram-pro/releases/tag/9.2.4)**
+🟦 **[Edge Add-ons](https://github.com/ramhardamp/babasitaram-pro/releases/tag/9.2.4)**
 
 Or grab the latest build directly:
 
