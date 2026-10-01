@@ -227,7 +227,7 @@ bash scripts/build.sh chrome   # → dist/chrome/
 
 ### Firefox (AMO)
 
-1. Visit the [Firefox Add-ons listing](#) *(link after publishing)*
+1. Visit the [ https://addons.mozilla.org/en-US/firefox/addon/ultimateprivacyshield/](#) *(link after publishing)*
 2. Click **Add to Firefox**
 
 ### Firefox (Developer / Local)
