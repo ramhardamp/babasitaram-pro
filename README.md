@@ -4,9 +4,9 @@
 
 ### Ultimate Privacy Shield for Chrome & Firefox
 
-[![Version](https://img.shields.io/badge/version-9.2.4-00ff88?style=for-the-badge&logo=github)](https://github.com/yourusername/babasitaram-pro/releases)
+[![Version](https://addons.mozilla.org/en-US/firefox/addon/ultimateprivacyshield/)
 [![Chrome](https://img.shields.io/badge/Chrome-MV3_Ready-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore)
-[![Firefox](https://img.shields.io/badge/Firefox-AMO_Ready-FF7139?style=for-the-badge&logo=firefox&logoColor=white)](https://addons.mozilla.org)
+[![Firefox](https://addons.mozilla.org/en-US/firefox/addon/ultimateprivacyshield/)
 [![License](https://img.shields.io/badge/license-MIT-ffcc00?style=for-the-badge)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge)](CONTRIBUTING.md)
 
