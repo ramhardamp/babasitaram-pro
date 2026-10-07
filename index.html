@@ -60,118 +60,13 @@ body{display:flex;justify-content:center;align-items:flex-start;min-height:100vh
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.success{background:var(--success)}
 .toast.error{background:var(--error)}
-
-/* --- APK CARD STYLING (Matching Extension Cards) --- */
-.apk-card {
-  background: #1e293b; /* Dark background like extension cards */
-  border: 1.5px solid #334155;
-  border-radius: 20px;
-  padding: 20px;
-  margin-top: 16px;
-  color: #f1f5f9;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-}
-.apk-card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-.apk-card-title {
-  font-size: 18px;
-  font-weight: 800;
-  color: #ffffff;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.apk-card-version {
-  font-size: 12px;
-  color: #94a3b8;
-  background: #0f172a;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-weight: 700;
-}
-.apk-stats {
-  display: flex;
-  justify-content: space-around;
-  background: #0f172a;
-  border-radius: 14px;
-  padding: 12px;
-  margin-bottom: 16px;
-  text-align: center;
-}
-.apk-stat-item {
-  display: flex;
-  flex-direction: column;
-}
-.apk-stat-value {
-  font-size: 16px;
-  font-weight: 900;
-  color: #6366f1;
-}
-.apk-stat-label {
-  font-size: 10px;
-  color: #94a3b8;
-  font-weight: 700;
-  margin-top: 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.apk-buttons {
-  display: flex;
-  gap: 10px;
-}
-.apk-btn-download {
-  flex: 1;
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 14px;
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: transform 0.2s;
-}
-.apk-btn-download:active {
-  transform: scale(0.97);
-}
-.apk-btn-notes {
-  flex: 1;
-  background: transparent;
-  color: #6366f1;
-  border: 2px solid #6366f1;
-  border-radius: 12px;
-  padding: 14px;
-  font-size: 14px;
-  font-weight: 800;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: background 0.2s;
-}
-.apk-btn-notes:active {
-  background: rgba(99, 102, 241, 0.1);
-}
-@media(prefers-color-scheme:dark){
-  :root{--text:#f1f5f9;--text-muted:#94a3b8;--text-light:#64748b;--border:#334155;--bg:#0f172a;--white:#1e293b;--primary-lighter:#1e1b4b;--primary-light:#312e81;--error-bg:#450a0a;--success-bg:#052e16;--info-bg:#172554}
-  body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%)}
-  .text-input,.email-input,.password-input{color:var(--text);background:var(--white)}
-}
+@media(prefers-color-scheme:dark){:root{--text:#f1f5f9;--text-muted:#94a3b8;--text-light:#64748b;--border:#334155;--bg:#0f172a;--white:#1e293b;--primary-lighter:#1e1b4b;--primary-light:#312e81;--error-bg:#450a0a;--success-bg:#052e16;--info-bg:#172554}body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%)}.text-input,.email-input,.password-input{color:var(--text);background:var(--white)}}
 
 /* Fixed login viewport — no page scrolling */
 html,body{height:100%;min-height:100%;overflow:hidden}
 body{height:100dvh;min-height:100dvh}
 .app-shell{height:100dvh;min-height:0;max-height:none;overflow:hidden}
-.screen-container{min-height:0;overflow-y:auto} /* Changed to auto to allow scrolling if APK card is added */
+.screen-container{min-height:0;overflow:hidden}
 @media(min-width:500px){body{height:100dvh;min-height:100dvh;padding:24px 0}.app-shell{height:calc(100dvh - 48px);min-height:0;max-height:none}}
 @media(max-width:500px){.brand-header{padding:18px 16px 16px;margin-bottom:12px}.brand-logo-top{width:84px;height:84px;margin-bottom:8px;border-radius:22px}.brand-title{font-size:17px}.brand-newtagline{font-size:12px;margin-top:8px}.screen-container{padding:0 14px 10px}.card{padding:18px 16px;margin-bottom:10px}.card-subtitle{margin-bottom:13px}.input-group{margin-bottom:11px}.input-label{margin-bottom:5px}.text-input,.email-input,.password-input{height:50px;padding:12px 14px}.btn{min-height:50px;padding:12px 16px}.divider{margin:13px 0}.footer-bar{padding:10px 0 4px}}
 </style>
@@ -183,6 +78,8 @@ body{height:100dvh;min-height:100dvh}
     <div class="brand-title">BSR PRO<span class="brand-title-line2">DIGITAL KHATA APP</span></div>
     <div class="brand-newtagline">आपका हिसाब, हमेशा सुरक्षित</div>
   </div>
+
+
 
   <div class="screen-container">
 
@@ -219,43 +116,6 @@ body{height:100dvh;min-height:100dvh}
           <button class="btn btn-outline">➕ नया अकाउंट बनाएं</button>
         </a>
       </div>
-
-      <!-- ========================================== -->
-      <!-- APK RELEASE CARD (Added here)              -->
-      <!-- ========================================== -->
-      <div class="apk-card">
-        <div class="apk-card-header">
-          <div class="apk-card-title">
-            <span>📱</span> BABASITARAM PRO
-          </div>
-          <div class="apk-card-version">v1.0.0</div>
-        </div>
-        
-        <div class="apk-stats">
-          <div class="apk-stat-item">
-            <div class="apk-stat-value">500K+</div>
-            <div class="apk-stat-label">Downloads</div>
-          </div>
-          <div class="apk-stat-item">
-            <div class="apk-stat-value" style="color: #fcd34d;">4.9★</div>
-            <div class="apk-stat-label">Rating</div>
-          </div>
-          <div class="apk-stat-item">
-            <div class="apk-stat-value" style="color: #a855f7;">v1.0.0</div>
-            <div class="apk-stat-label">Version</div>
-          </div>
-        </div>
-
-        <div class="apk-buttons">
-          <a href="https://github.com/ramhardamp/babasitaram-pro/releases/download/1.0.0/BSRPRO-PM-Android.apk" class="apk-btn-download" target="_blank">
-            📥 Download APK
-          </a>
-          <a href="https://github.com/ramhardamp/babasitaram-pro/releases/tag/1.0.0" class="apk-btn-notes" target="_blank">
-            📄 Release Notes
-          </a>
-        </div>
-      </div>
-      <!-- ========================================== -->
 
       <div class="footer-bar">
         लॉगिन करके आप हमारी <a href="#" class="terms-link">नियम</a> और <a href="#" class="terms-link">गोपनीयता नीति</a> से सहमत होते हैं।<br>
@@ -340,6 +200,9 @@ async function handleLogin() {
       return;
     }
 
+    // Critical path: Auth only. Do NOT wait for the users/{uid} Firestore
+    // profile or the ledger here. Dashboard starts profile + ledger hydration
+    // in parallel after navigation, so the login page never blocks on data.
     try {
       sessionStorage.setItem('bsp_login_handoff', JSON.stringify({
         uid: user.uid,
@@ -403,6 +266,8 @@ async function checkVerified() {
       localStorage.setItem('bsp_userId', user.uid);
       showToast('ईमेल verify हो गया!', 'success');
 
+      // Dashboard now validates the profile without adding another
+      // blocking read or artificial delay on the verification screen.
       window.location.replace('dashboard.html');
     } else {
       showToast('अभी verify नहीं हुआ। ईमेल चेक करें।', 'error');
