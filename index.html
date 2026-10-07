@@ -60,186 +60,118 @@ body{display:flex;justify-content:center;align-items:flex-start;min-height:100vh
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.success{background:var(--success)}
 .toast.error{background:var(--error)}
-@media(prefers-color-scheme:dark){:root{--text:#f1f5f9;--text-muted:#94a3b8;--text-light:#64748b;--border:#334155;--bg:#0f172a;--white:#1e293b;--primary-lighter:#1e1b4b;--primary-light:#312e81;--error-bg:#450a0a;--success-bg:#052e16;--info-bg:#172554}body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%)}.text-input,.email-input,.password-input{color:var(--text);background:var(--white)}}
 
-/* ================= APK DOWNLOAD CARD CSS ================= */
+/* --- APK CARD STYLING (Matching Extension Cards) --- */
 .apk-card {
-  width: 100%;
-  max-width: 380px;
-  margin: 0 auto 16px;
-  background: linear-gradient(145deg, #12122a, #0d0d1f);
-  border: 1px solid #2a2a4a;
+  background: #1e293b; /* Dark background like extension cards */
+  border: 1.5px solid #334155;
   border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  position: relative;
-  overflow: hidden;
+  padding: 20px;
+  margin-top: 16px;
+  color: #f1f5f9;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
 }
-.apk-card::before {
-  content: '';
-  position: absolute;
-  top: -40%;
-  right: -20%;
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-.apk-header {
+.apk-card-header {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 1;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
-.apk-icon-wrapper {
-  width: 52px;
-  height: 52px;
-  background: linear-gradient(135deg, #3ddc84 0%, #0f9d58 100%);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  box-shadow: 0 6px 20px rgba(61, 220, 132, 0.3);
-  flex-shrink: 0;
-}
-.apk-title-group { flex: 1; }
-.apk-title {
-  font-size: 19px;
+.apk-card-title {
+  font-size: 18px;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 0.5px;
-  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-.apk-subtitle {
+.apk-card-version {
   font-size: 12px;
-  color: #8b8ba7;
-  font-weight: 600;
-  margin-top: 2px;
-  letter-spacing: 0.3px;
-}
-.badge-new {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 800;
+  color: #94a3b8;
+  background: #0f172a;
   padding: 4px 10px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  z-index: 2;
-  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+  border-radius: 20px;
+  font-weight: 700;
 }
-.apk-description {
-  font-size: 13px;
-  color: #a0a0b8;
-  line-height: 1.65;
-  margin-bottom: 22px;
-  position: relative;
-  z-index: 1;
+.apk-stats {
+  display: flex;
+  justify-content: space-around;
+  background: #0f172a;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: center;
 }
-.apk-features {
+.apk-stat-item {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 24px;
-  position: relative;
-  z-index: 1;
 }
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  color: #c0c0d8;
-  font-weight: 500;
+.apk-stat-value {
+  font-size: 16px;
+  font-weight: 900;
+  color: #6366f1;
 }
-.feature-icon {
-  width: 20px;
-  height: 20px;
-  background: rgba(61, 220, 132, 0.12);
-  border: 1px solid rgba(61, 220, 132, 0.25);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  flex-shrink: 0;
-  color: #3ddc84;
+.apk-stat-label {
+  font-size: 10px;
+  color: #94a3b8;
+  font-weight: 700;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.apk-download-btn {
+.apk-buttons {
   display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 10px;
-  width: 100%;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+}
+.apk-btn-download {
+  flex: 1;
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
   color: #fff;
-  font-size: 15px;
-  font-weight: 800;
-  font-family: inherit;
   border: none;
-  border-radius: 14px;
-  cursor: pointer;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 800;
   text-decoration: none;
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.25s ease;
-  position: relative;
-  z-index: 1;
-  letter-spacing: 0.3px;
-}
-.apk-download-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 35px rgba(99, 102, 241, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-.apk-download-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.35);
-}
-.download-icon {
-  font-size: 18px;
-  animation: bounceDown 1.5s ease infinite;
-}
-@keyframes bounceDown {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
-}
-.apk-release-link {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 14px;
-  font-size: 12px;
-  color: #6b6b8a;
+  transition: transform 0.2s;
+}
+.apk-btn-download:active {
+  transform: scale(0.97);
+}
+.apk-btn-notes {
+  flex: 1;
+  background: transparent;
+  color: #6366f1;
+  border: 2px solid #6366f1;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 800;
   text-decoration: none;
-  font-weight: 600;
-  transition: color 0.2s;
-  position: relative;
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s;
 }
-.apk-release-link:hover { color: #a0a0c8; }
-@media (max-width: 420px) {
-  .apk-card { padding: 20px 18px; border-radius: 18px; }
-  .apk-icon-wrapper { width: 46px; height: 46px; font-size: 24px; }
-  .apk-title { font-size: 17px; }
-  .badge-new { top: 20px; right: 18px; font-size: 9px; padding: 3px 8px; }
-  .apk-download-btn { padding: 14px 18px; font-size: 14px; }
+.apk-btn-notes:active {
+  background: rgba(99, 102, 241, 0.1);
 }
-/* ================= END APK CSS ================= */
+@media(prefers-color-scheme:dark){
+  :root{--text:#f1f5f9;--text-muted:#94a3b8;--text-light:#64748b;--border:#334155;--bg:#0f172a;--white:#1e293b;--primary-lighter:#1e1b4b;--primary-light:#312e81;--error-bg:#450a0a;--success-bg:#052e16;--info-bg:#172554}
+  body{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 100%)}
+  .text-input,.email-input,.password-input{color:var(--text);background:var(--white)}
+}
 
 /* Fixed login viewport — no page scrolling */
 html,body{height:100%;min-height:100%;overflow:hidden}
 body{height:100dvh;min-height:100dvh}
 .app-shell{height:100dvh;min-height:0;max-height:none;overflow:hidden}
-.screen-container{min-height:0;overflow:hidden}
+.screen-container{min-height:0;overflow-y:auto} /* Changed to auto to allow scrolling if APK card is added */
 @media(min-width:500px){body{height:100dvh;min-height:100dvh;padding:24px 0}.app-shell{height:calc(100dvh - 48px);min-height:0;max-height:none}}
 @media(max-width:500px){.brand-header{padding:18px 16px 16px;margin-bottom:12px}.brand-logo-top{width:84px;height:84px;margin-bottom:8px;border-radius:22px}.brand-title{font-size:17px}.brand-newtagline{font-size:12px;margin-top:8px}.screen-container{padding:0 14px 10px}.card{padding:18px 16px;margin-bottom:10px}.card-subtitle{margin-bottom:13px}.input-group{margin-bottom:11px}.input-label{margin-bottom:5px}.text-input,.email-input,.password-input{height:50px;padding:12px 14px}.btn{min-height:50px;padding:12px 16px}.divider{margin:13px 0}.footer-bar{padding:10px 0 4px}}
 </style>
@@ -288,46 +220,42 @@ body{height:100dvh;min-height:100dvh}
         </a>
       </div>
 
-      <!-- ================= APK DOWNLOAD CARD START ================= -->
+      <!-- ========================================== -->
+      <!-- APK RELEASE CARD (Added here)              -->
+      <!-- ========================================== -->
       <div class="apk-card">
-        <span class="badge-new">NEW</span>
-        <div class="apk-header">
-          <div class="apk-icon-wrapper">🤖</div>
-          <div class="apk-title-group">
-            <div class="apk-title">BSR PRO Android</div>
-            <div class="apk-subtitle">v1.0.0 · APK Release</div>
+        <div class="apk-card-header">
+          <div class="apk-card-title">
+            <span>📱</span> BABASITARAM PRO
+          </div>
+          <div class="apk-card-version">v1.0.0</div>
+        </div>
+        
+        <div class="apk-stats">
+          <div class="apk-stat-item">
+            <div class="apk-stat-value">500K+</div>
+            <div class="apk-stat-label">Downloads</div>
+          </div>
+          <div class="apk-stat-item">
+            <div class="apk-stat-value" style="color: #fcd34d;">4.9★</div>
+            <div class="apk-stat-label">Rating</div>
+          </div>
+          <div class="apk-stat-item">
+            <div class="apk-stat-value" style="color: #a855f7;">v1.0.0</div>
+            <div class="apk-stat-label">Version</div>
           </div>
         </div>
-        <div class="apk-description">
-          BSR PRO Password Manager का Android App डाउनलोड करें। सीधे APK फ़ाइल के ज़रिए इंस्टॉल करें।
+
+        <div class="apk-buttons">
+          <a href="https://github.com/ramhardamp/babasitaram-pro/releases/download/1.0.0/BSRPRO-PM-Android.apk" class="apk-btn-download" target="_blank">
+            📥 Download APK
+          </a>
+          <a href="https://github.com/ramhardamp/babasitaram-pro/releases/tag/1.0.0" class="apk-btn-notes" target="_blank">
+            📄 Release Notes
+          </a>
         </div>
-        <div class="apk-features">
-          <div class="feature-item">
-            <span class="feature-icon">✓</span>
-            <span>Android 7.0+ के लिए सपोर्टेड</span>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">✓</span>
-            <span>Direct APK · No Play Store ज़रूरत नहीं</span>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">✓</span>
-            <span>v1.0.0 · Latest Release</span>
-          </div>
-          <div class="feature-item">
-            <span class="feature-icon">✓</span>
-            <span>GitHub पर Open Source</span>
-          </div>
-        </div>
-        <a href="https://github.com/ramhardamp/babasitaram-pro/releases/download/1.0.0/BSRPRO-PM-Android.apk" class="apk-download-btn" download rel="noopener">
-          <span class="download-icon">⬇</span>
-          <span>BSR PRO Android APK Release</span>
-        </a>
-        <a href="https://github.com/ramhardamp/babasitaram-pro/releases/tag/1.0.0" class="apk-release-link" target="_blank" rel="noopener">
-          🔗 GitHub Release Notes देखें →
-        </a>
       </div>
-      <!-- ================= APK DOWNLOAD CARD END ================= -->
+      <!-- ========================================== -->
 
       <div class="footer-bar">
         लॉगिन करके आप हमारी <a href="#" class="terms-link">नियम</a> और <a href="#" class="terms-link">गोपनीयता नीति</a> से सहमत होते हैं।<br>
@@ -474,6 +402,7 @@ async function checkVerified() {
       });
       localStorage.setItem('bsp_userId', user.uid);
       showToast('ईमेल verify हो गया!', 'success');
+
       window.location.replace('dashboard.html');
     } else {
       showToast('अभी verify नहीं हुआ। ईमेल चेक करें।', 'error');
