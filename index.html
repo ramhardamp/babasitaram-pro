@@ -287,17 +287,17 @@
         .nav-links a:hover::after { width: 100%; }
 
         .nav-cta {
-            background: linear-gradient(135deg, var(--accent), var(--accent-purple));
-            color: #000 !important;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: #fff !important;
             padding: 10px 22px;
             border-radius: 8px;
             font-weight: 700;
             font-size: 13px;
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
             transition: all 0.3s ease;
         }
         .nav-cta::after { display: none !important; }
-        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.5); }
 
         .lang-switcher { display: flex; gap: 6px; align-items: center; margin-right: 10px; }
         .lang-btn {
@@ -375,7 +375,7 @@
                HERO
             ============================================================ */
         .hero {
-            padding: 70px 0 90px;
+            padding: 70px 0 50px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -983,7 +983,7 @@
             }
             .nav-links.open { display: flex; }
             .hamburger { display: flex; }
-            .hero { padding: 50px 0 70px; }
+            .hero { padding: 50px 0 40px; }
             .hero-stats { gap: 26px; }
             .v-divider { display: none; }
             .visitor-banner .container { gap: 20px; }
@@ -1025,13 +1025,13 @@
                 </button>
             </div>
             <ul class="nav-links">
+                <li><a href="#apk" class="nav-cta" data-hi="ऐप डाउनलोड" data-en="Download App">📱 ऐप डाउनलोड</a></li>
                 <li><a href="#extensions" data-hi="एक्सटेंशन" data-en="Extensions">एक्सटेंशन</a></li>
                 <li><a href="#features" data-hi="सुविधाएँ" data-en="Features">सुविधाएँ</a></li>
                 <li><a href="#install" data-hi="इंस्टॉल" data-en="Install">इंस्टॉल</a></li>
                 <li><a href="#stats" data-hi="आंकड़े" data-en="Stats">आंकड़े</a></li>
                 <li><a href="#donate" data-hi="सहयोग" data-en="Support">सहयोग</a></li>
                 <li><a href="#faq" data-hi="सवाल" data-en="FAQ">सवाल</a></li>
-                <li><a href="#install" class="nav-cta" data-hi="डाउनलोड" data-en="Download">डाउनलोड</a></li>
             </ul>
         </div>
     </nav>
@@ -1041,6 +1041,15 @@
     ============================================================ -->
     <div class="visitor-banner">
         <div class="container">
+            <div class="visitor-item">
+                <span class="v-icon">📱</span>
+                <div class="v-text">
+                    <div class="v-label lang-hi active">Android ऐप</div>
+                    <div class="v-label lang-en">Android App</div>
+                    <div class="v-value green">Available</div>
+                </div>
+            </div>
+            <div class="v-divider"></div>
             <div class="visitor-item">
                 <span class="v-icon">🦊</span>
                 <div class="v-text">
@@ -1067,15 +1076,6 @@
                     <div class="v-value purple">Zero</div>
                 </div>
             </div>
-            <div class="v-divider"></div>
-            <div class="visitor-item">
-                <span class="v-icon">📜</span>
-                <div class="v-text">
-                    <div class="v-label lang-hi active">लाइसेंस</div>
-                    <div class="v-label lang-en">License</div>
-                    <div class="v-value green">MIT</div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1088,8 +1088,8 @@
                 <div class="hero-logo-ring"></div>
                 <img src="icon128.png" alt="BABASITARAM PRO" class="hero-logo" />
             </div>
-            <div class="hero-badge lang-hi active">🔥 Firefox · Edge · Chrome — सबके लिए उपलब्ध</div>
-            <div class="hero-badge lang-en">🔥 Available on Firefox · Edge · Chrome</div>
+            <div class="hero-badge lang-hi active">🔥 Android ऐप अब उपलब्ध है</div>
+            <div class="hero-badge lang-en">🔥 Android App Now Available</div>
             <h1>
                 <span class="lang-hi active">अल्टीमेट<br /><span class="highlight">प्राइवेसी</span> &amp; <span class="highlight-gold">पासवर्ड</span> शील्ड</span>
                 <span class="lang-en">Ultimate<br /><span class="highlight">Privacy</span> &amp; <span class="highlight-gold">Password</span> Shield</span>
@@ -1097,8 +1097,8 @@
             <p class="lang-hi active">1,00,000+ विज्ञापनों और ट्रैकर्स को ब्लॉक करें, अपने पासवर्ड सुरक्षित रखें, संवेदनशील साइटों को PIN से लॉक करें, और एक क्लिक में अपना डेटा साफ़ करें — बिना किसी डेटा कलेक्शन के।</p>
             <p class="lang-en">Block 100,000+ ads and trackers, keep your passwords safe, lock sensitive sites with a PIN, and clear your data with one click — with zero data collection.</p>
             <div class="hero-buttons">
-                <a href="#extensions" class="btn-primary" data-hi="⬇️ एक्सटेंशन देखें" data-en="⬇️ View Extensions">⬇️ एक्सटेंशन देखें</a>
-                <a href="https://github.com/ramhardamp/babasitaram-pro" target="_blank" rel="noopener" class="btn-secondary">🐙 GitHub</a>
+                <a href="#apk" class="btn-primary" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; box-shadow: 0 0 30px rgba(34,197,94,0.4);">📱 ऐप डाउनलोड करें</a>
+                <a href="#extensions" class="btn-secondary">⬇️ एक्सटेंशन देखें</a>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
@@ -1107,7 +1107,7 @@
                     <div class="hs-label lang-en">Ad Rules</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="hs-num">4</div>
+                    <div class="hs-num">2</div>
                     <div class="hs-label lang-hi active">एक्सटेंशन</div>
                     <div class="hs-label lang-en">Extensions</div>
                 </div>
@@ -1120,6 +1120,54 @@
                     <div class="hs-num">🔐</div>
                     <div class="hs-label lang-hi active">PIN प्रोटेक्शन</div>
                     <div class="hs-label lang-en">PIN Protection</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    APK DOWNLOAD SECTION (DEDICATED & PROMINENT)
+    ============================================================ -->
+    <section class="section" id="apk" style="padding-top: 20px;">
+        <div class="container">
+            <div class="section-header animate-on-scroll">
+                <h2>
+                    <span class="lang-hi active">📱 <span class="gradient-text">Android ऐप</span></span>
+                    <span class="lang-en">📱 <span class="gradient-text">Android App</span></span>
+                </h2>
+                <p class="lang-hi active">BSR PRO Password Manager — मोबाइल के लिए डाउनलोड करें</p>
+                <p class="lang-en">BSR PRO Password Manager — Download for mobile</p>
+            </div>
+            
+            <div class="ext-card animate-on-scroll" style="max-width: 700px; margin: 0 auto; border-color: rgba(34, 197, 94, 0.5); box-shadow: 0 0 40px rgba(34, 197, 94, 0.15); background: linear-gradient(135deg, rgba(15, 26, 40, 0.9), rgba(20, 40, 30, 0.9));">
+                <div class="ext-header">
+                    <div class="ext-icon" style="filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.5));">📱</div>
+                    <div class="ext-title">
+                        <h3 style="font-size: 24px; color: #fff;">BSR PRO Android App</h3>
+                        <div class="version" style="font-size: 13px; color: var(--green);">v1.0.0 · GitHub Release</div>
+                    </div>
+                    <span class="ext-badge new" style="background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 0 15px rgba(34,197,94,0.5); font-size: 12px; padding: 6px 14px;">NEW</span>
+                </div>
+                <p class="ext-desc lang-hi active" style="font-size: 15px;">BSR PRO Password Manager की Latest Release Download करें! Source Code और Documentation भी उपलब्ध है।</p>
+                <p class="ext-desc lang-en" style="font-size: 15px;">Download the latest release of BSR PRO Password Manager! Source code and documentation included.</p>
+                <ul class="ext-features" style="margin: 20px 0;">
+                    <li class="lang-hi active">📱 Android APK</li>
+                    <li class="lang-hi active">🔐 Password Manager</li>
+                    <li class="lang-hi active">🚀 Fast &amp; Secure</li>
+                    <li class="lang-hi active">📂 Open Source</li>
+                    <li class="lang-en">📱 Android APK</li>
+                    <li class="lang-en">🔐 Password Manager</li>
+                    <li class="lang-en">🚀 Fast &amp; Secure</li>
+                    <li class="lang-en">📂 Open Source</li>
+                </ul>
+                <div class="ext-stats" style="margin: 20px 0; border-color: rgba(34, 197, 94, 0.3);">
+                    <div class="ext-stat"><div class="num" style="color: var(--green);">500K+</div><div class="lbl">Downloads</div></div>
+                    <div class="ext-stat"><div class="num" style="color: var(--green);">⭐ 3.2K</div><div class="lbl">Stars</div></div>
+                    <div class="ext-stat"><div class="num" style="color: var(--green);">v1.0.0</div><div class="lbl">Version</div></div>
+                </div>
+                <div class="ext-actions" style="grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <a href="https://github.com/ramhardamp/babasitaram-pro/releases/download/1.0.0/BSRPRO-PM-Android.apk" download class="ext-btn primary" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; box-shadow: 0 0 20px rgba(34,197,94,0.4); font-size: 16px; padding: 16px;">⬇️ Download APK</a>
+                    <a href="https://github.com/ramhardamp/babasitaram-pro/releases/tag/1.0.0" target="_blank" rel="noopener" class="ext-btn gold" style="font-size: 16px; padding: 16px;">📄 Release Notes</a>
                 </div>
             </div>
         </div>
@@ -1164,50 +1212,16 @@
                             <td style="text-align: right; padding: 14px 10px;"><span style="color: var(--green); font-weight: 700;">✅ Available</span></td>
                         </tr>
                         <tr>
-                            <td style="padding: 14px 10px; font-weight: 700;">🐙 GitHub Release (Source Code)</td>
-                            <td style="text-align: center; padding: 14px 10px;">🌍 All Platforms</td>
-                            <td style="text-align: center; padding: 14px 10px; color: var(--gold); font-weight: 800;">Latest</td>
-                            <td style="text-align: right; padding: 14px 10px;"><span style="color: var(--accent); font-weight: 700;">🆕 Source</span></td>
+                            <td style="padding: 14px 10px; font-weight: 700;">📱 BSR PRO Android App</td>
+                            <td style="text-align: center; padding: 14px 10px;">📱 Android</td>
+                            <td style="text-align: center; padding: 14px 10px; color: var(--gold); font-weight: 800;">v1.0.0</td>
+                            <td style="text-align: right; padding: 14px 10px;"><span style="color: var(--green); font-weight: 700;">✅ Available</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="extensions-grid">
-
-                <!-- ==================== APK RELEASE CARD ==================== -->
-                <div class="ext-card animate-on-scroll" style="border-color: rgba(34, 197, 94, 0.4);">
-                    <div class="ext-header">
-                        <div class="ext-icon" style="filter: drop-shadow(0 0 15px rgba(34, 197, 94, 0.4));">📱</div>
-                        <div class="ext-title">
-                            <h3>BSR PRO Android App</h3>
-                            <div class="version">v1.0.0 · GitHub Release</div>
-                        </div>
-                        <span class="ext-badge new" style="background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 0 15px rgba(34,197,94,0.4);">NEW</span>
-                    </div>
-                    <p class="ext-desc lang-hi active">BSR PRO Password Manager की Latest Release Download करें! Source Code और Documentation भी उपलब्ध है।</p>
-                    <p class="ext-desc lang-en">Download the latest release of BSR PRO Password Manager! Source code and documentation included.</p>
-                    <ul class="ext-features">
-                        <li class="lang-hi active">📱 Android APK</li>
-                        <li class="lang-hi active">🔐 Password Manager</li>
-                        <li class="lang-hi active">🚀 Fast &amp; Secure</li>
-                        <li class="lang-hi active">📂 Open Source</li>
-                        <li class="lang-en">📱 Android APK</li>
-                        <li class="lang-en">🔐 Password Manager</li>
-                        <li class="lang-en">🚀 Fast &amp; Secure</li>
-                        <li class="lang-en">📂 Open Source</li>
-                    </ul>
-                    <div class="ext-stats">
-                        <div class="ext-stat"><div class="num">500K+</div><div class="lbl">Downloads</div></div>
-                        <div class="ext-stat"><div class="num">⭐ 3.2K</div><div class="lbl">Stars</div></div>
-                        <div class="ext-stat"><div class="num">v1.0.0</div><div class="lbl">Version</div></div>
-                    </div>
-                    <div class="ext-actions" style="grid-template-columns: 1fr 1fr;">
-                        <a href="https://github.com/ramhardamp/babasitaram-pro/releases/download/1.0.0/BSRPRO-PM-Android.apk" download class="ext-btn primary" style="background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; box-shadow: 0 0 20px rgba(34,197,94,0.3);">⬇️ Download APK</a>
-                        <a href="https://github.com/ramhardamp/babasitaram-pro/releases/tag/1.0.0" target="_blank" rel="noopener" class="ext-btn gold">📄 Release Notes</a>
-                    </div>
-                </div>
-                <!-- ==================== END APK RELEASE CARD ==================== -->
 
                 <!-- 1. BABASITARAM PRO (Ultimate Privacy Shield) -->
                 <div class="ext-card animate-on-scroll">
@@ -1831,6 +1845,7 @@
                 <a href="https://github.com/ramhardamp/babasitaram-pro/issues" target="_blank" rel="noopener">Report an Issue</a>
                 <a href="https://addons.mozilla.org/en-US/firefox/addon/ultimateprivacyshield/" target="_blank" rel="noopener">Firefox Add-on</a>
                 <a href="https://microsoftedge.microsoft.com/addons/detail/0RDCK99NZNZ1" target="_blank" rel="noopener">Edge Add-on</a>
+                <a href="#apk">Android App</a>
                 <a href="#faq">FAQ</a>
                 <a href="https://github.com/ramhardamp/babasitaram-pro/blob/main/PRIVACY.md" target="_blank" rel="noopener">Privacy Policy</a>
                 <a href="mailto:babasitarampro@gmail.com">Contact</a>
@@ -1852,7 +1867,7 @@
                 el.innerHTML = lang === 'hi' ? el.dataset.hi : el.dataset.en;
             });
             const cta = document.querySelector('.nav-cta');
-            if (cta) cta.innerHTML = lang === 'hi' ? 'डाउनलोड' : 'Download';
+            if (cta) cta.innerHTML = lang === 'hi' ? '📱 ऐप डाउनलोड' : '📱 Download App';
             localStorage.setItem('baba-lang', lang);
         }
 
