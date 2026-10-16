@@ -1,0 +1,16 @@
+{
+  "name": "BABASITARAM PRO — Ultimate Privacy Shield & Password Manager",
+  "short_name": "BABASITARAM PRO",
+  "description": "Block ads, protect passwords, lock sites, focus mode, emergency burn — all with zero data collection.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#00d4ff",
+  "icons": [
+    {
+      "src": "icon128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
