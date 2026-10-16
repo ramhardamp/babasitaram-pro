@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<script src="theme.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+<script src="native-shim.js"></script>
+<meta name="theme-color" content="#1e8e3e">
+<title>Signup - BSRPRO Digital Khata</title>
+<link rel="icon" href="assets/guru-shree-logo.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --primary: #6366f1; --primary-dark: #4f46e5;
+  --primary-light: #e0e7ff; --primary-lighter: #eef2ff;
+  --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
+  --gradient-dark: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+  --text: #0f172a; --text-muted: #64748b; --text-light: #94a3b8;
+  --border: #e2e8f0; --bg: #f8fafc; --white: #ffffff;
+  --error: #ef4444; --error-bg: #fef2f2;
+  --success: #10b981; --success-bg: #ecfdf5;
+  --info-bg: #eff6ff;
+  --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --radius-full: 999px;
+}
+html, body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', sans-serif;
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4c1d95 100%);
+  color: var(--text); font-size: 16px; line-height: 1.5; overflow-x: hidden;
+}
+body { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; }
+.app-shell {
+  width: 100%; max-width: 480px; min-height: 100vh; background: var(--bg);
+  position: relative; box-shadow: 0 0 80px rgba(0,0,0,0.3);
+  overflow: hidden; display: flex; flex-direction: column;
+}
+@media (min-width: 500px) {
+  body { padding: 24px 0; }
+  .app-shell { min-height: calc(100vh - 48px); border-radius: 32px; max-height: 940px; }
+}
+.brand-header {
+  background: var(--gradient-dark); padding: 22px 20px 20px; text-align: center;
+  position: relative; overflow: hidden; border-radius: 0 0 28px 28px;
+  margin-bottom: 18px; box-shadow: 0 12px 40px rgba(30,27,75,0.3);
+}
+.brand-header::before {
+  content: ''; position: absolute; top: -50%; right: -30%; width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(139,92,246,0.4) 0%, transparent 70%); border-radius: 50%;
+}
+.brand-logo-top {
+  width: 60px; height: 60px; margin: 0 auto 10px;
+  background: rgba(255,255,255,0.12); backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255,255,255,0.2); border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 30px; position: relative; z-index: 1;
+}
+.brand-title {
+  font-size: 16px; font-weight: 900; color: white; letter-spacing: 1.5px;
+  position: relative; z-index: 1; line-height: 1.3;
+}
+.brand-title-line2 {
+  display: block; font-size: 11px; letter-spacing: 2.5px; color: #fcd34d;
+  margin-top: 3px; font-weight: 800;
+}
+.brand-newtagline {
+  font-size: 12px; color: rgba(255,255,255,0.9); margin-top: 10px;
+  position: relative; z-index: 1; font-weight: 600;
+}
+.screen-container { flex: 1; overflow-y: auto; padding: 0 20px 30px; }
+.screen { display: none; animation: fadeSlide 0.35s cubic-bezier(0.4,0,0.2,1); }
+.screen.active { display: block; }
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.card {
+  background: var(--white); border-radius: var(--radius-lg); padding: 22px 20px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.05); border: 1.5px solid var(--border);
+  margin-bottom: 16px;
+}
+.card-title { font-size: 20px; font-weight: 900; color: var(--text); margin-bottom: 6px; letter-spacing: -0.3px; }
+.card-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5; }
+.input-group { margin-bottom: 16px; }
+.input-label { display: block; font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 7px; }
+.text-input, .email-input, .password-input {
+  width: 100%; border: 2px solid var(--border); border-radius: var(--radius-md);
+  padding: 15px 16px; font-size: 15px; font-weight: 500; font-family: inherit;
+  outline: none; background: var(--white); color: var(--text); transition: all 0.2s; height: 56px;
+}
+.text-input:focus, .email-input:focus, .password-input:focus {
+  border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light);
+}
+.text-input::placeholder, .email-input::placeholder, .password-input::placeholder {
+  color: var(--text-light); font-weight: 400;
+}
+.password-wrapper { position: relative; }
+.password-toggle {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; font-size: 18px; cursor: pointer;
+  padding: 4px 8px; color: var(--text-muted); border-radius: 6px;
+}
+.password-toggle:active { background: var(--bg); }
+.helper-text { font-size: 11px; color: var(--text-muted); margin-top: 6px; padding-left: 4px; }
+.helper-text.good { color: var(--success); font-weight: 600; }
+.helper-text.bad { color: var(--error); font-weight: 600; }
+.pw-strength { display: flex; gap: 4px; margin-top: 8px; }
+.pw-strength-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; transition: background 0.3s; }
+.pw-strength-bar.weak { background: var(--error); }
+.pw-strength-bar.medium { background: #f59e0b; }
+.pw-strength-bar.strong { background: var(--success); }
+.btn {
+  width: 100%; padding: 15px 20px; font-size: 15px; font-weight: 800;
+  border: none; border-radius: var(--radius-md); cursor: pointer; font-family: inherit;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 56px; transition: all 0.2s;
+}
+.btn-primary { background: var(--gradient); color: white; box-shadow: 0 6px 20px rgba(99,102,241,0.35); margin-top: 6px; }
+.btn-primary:active:not(:disabled) { transform: translateY(1px); }
+.btn-primary:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; color: #f1f5f9; }
+.btn-secondary { background: var(--white); color: var(--text); border: 2px solid var(--border); margin-top: 10px; }
+.btn-secondary:active { background: var(--bg); border-color: var(--primary); }
+.divider { display: flex; align-items: center; margin: 20px 0; color: var(--text-light); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.divider span { padding: 0 14px; }
+.error-text {
+  color: var(--error); font-size: 12px; margin-top: 10px; text-align: center;
+  padding: 10px 14px; background: var(--error-bg); border-radius: var(--radius-sm);
+  font-weight: 600; border: 1px solid #fecaca;
+}
+.info-box {
+  background: var(--info-bg); border-radius: var(--radius-md); padding: 14px 16px;
+  margin-bottom: 16px; font-size: 12px; color: #1e40af;
+  display: flex; gap: 10px; align-items: flex-start; line-height: 1.5;
+  border: 1px solid #bfdbfe; font-weight: 600;
+}
+.info-box .icon { font-size: 18px; flex-shrink: 0; }
+.hidden { display: none !important; }
+.spinner {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2.5px solid rgba(255,255,255,0.3); border-top-color: white;
+  border-radius: 50%; animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.success-icon {
+  width: 100px; height: 100px; margin: 20px auto;
+  background: var(--gradient); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 50px; box-shadow: 0 12px 40px rgba(99,102,241,0.4);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+.success-title { font-size: 22px; font-weight: 900; text-align: center; color: var(--text); margin-bottom: 8px; }
+.success-subtitle { font-size: 14px; text-align: center; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+.email-display {
+  background: var(--bg); border-radius: var(--radius-md); padding: 14px;
+  text-align: center; font-weight: 700; color: var(--primary); font-size: 15px;
+  margin: 16px 0; word-break: break-all;
+}
+.footer-bar { text-align: center; font-size: 11px; color: var(--text-muted); padding: 20px 0 10px; line-height: 1.8; }
+.footer-bar a { color: var(--primary); text-decoration: none; font-weight: 800; }
+.toast {
+  position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #1e293b; color: white; padding: 13px 24px; border-radius: var(--radius-full);
+  font-size: 13px; font-weight: 700; z-index: 999; opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none; max-width: 90%; text-align: center;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { background: var(--success); }
+.toast.error { background: var(--error); }
+@media (max-width: 360px) {
+  .brand-logo-top { width: 54px; height: 54px; font-size: 26px; }
+  .card { padding: 18px 16px; }
+  .screen-container { padding: 0 14px 30px; }
+}</style>
+<style id="ok-theme">
+/* ===== OK-THEME v1: OkCredit-style green UI (sirf CSS override, logic/JS/IDs untouched) ===== */
+:root{--primary:#1e8e3e;--primary-dark:#166b2e;--primary-light:#d9f0e0;--primary-lighter:#eef8f1;
+--gradient:linear-gradient(135deg,#22a047 0%,#1e8e3e 100%);--gradient-dark:linear-gradient(135deg,#ffffff 0%,#f3faf5 100%);
+--credit:#e5322d;--credit-bg:#fdecec;--debit:#1e8e3e;--debit-bg:#e6f5ea;--interest:#d98a00;--interest-bg:#fff6e0;
+--violet:#6b4fbb;--violet-bg:#f1edfb;--text:#1c1f23;--text-muted:#5f6b76;--text-light:#98a2ab;--border:#e3e8e5;--bg:#f4f7f5;
+--radius-md:14px;--radius-lg:18px}
+html,body{background:#f4f7f5}
+/* Top bar: clean white, thin border */
+.top-bar{background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.back-btn,.lock-btn{background:var(--primary-lighter);color:var(--primary)}
+.back-btn:active{background:var(--primary-light)}
+.lang-toggle{background:var(--primary-lighter)}
+/* Hero summary: OkCredit "Net Balance" style white card */
+.dash-hero{background:#fff;color:var(--text);margin:10px 12px 12px;padding:14px;border:1px solid var(--border);border-radius:18px;box-shadow:0 2px 10px rgba(16,24,40,.06)}
+.dash-hero::before{display:none}
+.dash-split{background:var(--bg);border:1px solid var(--border);border-radius:14px}
+.dash-split-item+.dash-split-item{border-left:1px solid var(--border)}
+.dash-split-label{color:var(--text-muted);opacity:1}
+.dash-split-value.red{color:var(--credit)}.dash-split-value.amber{color:var(--interest)}.dash-split-value.green{color:var(--debit)}
+.dash-split-sub{color:var(--text-muted);opacity:1}
+/* Search + filter chips */
+.customer-search{border:1px solid var(--border);border-radius:999px;background:#fff;height:44px;padding:0 18px;box-shadow:0 1px 4px rgba(16,24,40,.04)}
+.customer-search:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+.tab{border:1px solid var(--border);padding:8px 14px;font-weight:700}
+.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Customer cards: soft, rounded, light shadow */
+.customer-card{border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 4px rgba(16,24,40,.05)}
+.customer-card:active{border-color:var(--primary);box-shadow:0 3px 12px rgba(30,142,62,.15)}
+/* Buttons + FAB */
+.btn-primary{background:var(--gradient);box-shadow:0 6px 18px rgba(30,142,62,.30)}
+.btn-primary:disabled{background:#cbd5d0;box-shadow:none}
+.fab{background:var(--gradient);box-shadow:0 8px 22px rgba(30,142,62,.45)}
+/* Bottom nav: green active pill */
+.bottom-tabs{background:#fff;border-top:1px solid var(--border);box-shadow:0 -4px 18px rgba(16,24,40,.06)}
+.btab.active{color:var(--primary)}
+.btab.active::before{background:var(--primary)}
+.btab.active .btab-icon{background:var(--primary-light);border-radius:999px;padding:0 14px}
+.btab-icon{transition:background .2s}
+/* Inputs focus */
+.text-input:focus,input:focus,select:focus,textarea:focus{border-color:var(--primary)}
+/* Loading */
+.loading-spinner{border-color:var(--primary-light);border-top-color:var(--primary)}
+/* ===== /OK-THEME ===== */
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <div class="brand-header">
+    <div class="brand-logo-top"><img src="assets/guru-shree-logo.svg?v=20261010-1" onerror="this.onerror=null;this.src='assets/guru-shree-logo.jpg'" loading="eager" decoding="sync" alt="BSR PRO" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+    <div class="brand-title">
+      BSRPRO
+      <span class="brand-title-line2">DIGITAL KHATA</span>
+    </div>
+    <div class="brand-newtagline">आपका हिसाब, हमेशा सुरक्षित</div>
+  </div>
+
+  <div class="screen-container">
+
+    <!-- SIGNUP FORM -->
+    <div id="screen-signup" class="screen active">
+      <div class="card">
+        <div class="card-title">नया अकाउंट बनाएं</div>
+        <div class="card-subtitle">ईमेल और पासवर्ड से शुरू करें</div>
+
+        <div class="input-group">
+          <label class="input-label">ईमेल पता *</label>
+          <input type="email" id="signupEmail" class="email-input" placeholder="your@email.com" inputmode="email" autocomplete="email">
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">पासवर्ड *</label>
+          <div class="password-wrapper">
+            <input type="password" id="signupPassword" class="password-input" placeholder="कम से कम 6 अक्षर" autocomplete="new-password" oninput="checkPasswordStrength()">
+            <button type="button" class="password-toggle" onclick="togglePassword('signupPassword', this)">👁️</button>
+          </div>
+          <div class="pw-strength">
+            <div class="pw-strength-bar" id="pwBar1"></div>
+            <div class="pw-strength-bar" id="pwBar2"></div>
+            <div class="pw-strength-bar" id="pwBar3"></div>
+          </div>
+          <div class="helper-text" id="pwHint">कम से कम 6 अक्षर</div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">पासवर्ड दोबारा *</label>
+          <div class="password-wrapper">
+            <input type="password" id="signupPassword2" class="password-input" placeholder="वही पासवर्ड दोबारा" autocomplete="new-password">
+            <button type="button" class="password-toggle" onclick="togglePassword('signupPassword2', this)">👁️</button>
+          </div>
+        </div>
+
+        <p id="signupError" class="error-text hidden"></p>
+
+        <button id="signupBtn" class="btn btn-primary" onclick="handleSignup()">
+          <span class="btn-text">📝 अकाउंट बनाएं</span>
+          <span class="btn-loader hidden"><span class="spinner"></span></span>
+        </button>
+
+        <div class="divider"><span>या</span></div>
+
+        <a href="index.html" style="text-decoration:none">
+          <button class="btn btn-secondary">← लॉगिन पर वापस जाएं</button>
+        </a>
+      </div>
+
+      <div class="footer-bar">
+        सहायता: <a href="mailto:babasitaram@gmail.com">babasitaram@gmail.com</a>
+      </div>
+    </div>
+
+    <!-- VERIFY EMAIL -->
+    <div id="screen-verify" class="screen">
+      <div class="card">
+        <div style="text-align:center">
+          <div class="success-icon">📧</div>
+          <div class="success-title">अपना ईमेल चेक करें</div>
+          <div class="success-subtitle">हमने एक verification link भेजा है।<br>लिंक पर क्लिक करके अकाउंट activate करें।</div>
+          <div class="email-display" id="verifyEmailDisplay">your@email.com</div>
+        </div>
+
+        <div class="info-box">
+          <span class="icon">💡</span>
+          <span>ईमेल न मिले तो <strong>Spam</strong> या <strong>Promotions</strong> folder भी check करें।</span>
+        </div>
+
+        <button id="resendVerifyBtn" class="btn btn-secondary" onclick="resendVerification()">
+          <span class="btn-text">🔄 ईमेल दोबारा भेजें</span>
+          <span class="btn-loader hidden"><span class="spinner"></span></span>
+        </button>
+
+        <button id="checkVerifyBtn" class="btn btn-primary" onclick="checkEmailVerified()" style="margin-top:10px">
+          <span class="btn-text">✅ मैंने verify कर लिया</span>
+          <span class="btn-loader hidden"><span class="spinner"></span></span>
+        </button>
+
+        <div class="divider"><span>या</span></div>
+
+        <button class="btn btn-secondary" onclick="handleLogout()" style="color:var(--error)">← दूसरे ईमेल से साइनअप करें</button>
+      </div>
+    </div>
+
+    <!-- SETUP -->
+    <div id="screen-setup" class="screen">
+      <div class="card">
+        <div style="text-align:center;margin-bottom:20px">
+          <div style="font-size:60px">🎉</div>
+          <div class="card-title" style="margin-top:8px">ईमेल verify हो गया!</div>
+          <div class="card-subtitle">अब अपने व्यवसाय की जानकारी भरें</div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">व्यवसाय का नाम *</label>
+          <input type="text" id="shopName" class="text-input" placeholder="जैसे: बाबा सीताराम ट्रेडर्स" maxlength="60">
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">आपका नाम *</label>
+          <input type="text" id="ownerName" class="text-input" placeholder="जैसे: रमेश कुमार" maxlength="60">
+        </div>
+        
+        <div class="input-group">
+          <label class="input-label">मोबाइल नंबर *</label>
+          <input type="tel" id="ownerPhone" class="text-input" placeholder="98765 43210" maxlength="18" inputmode="numeric" autocomplete="tel" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+          <div class="helper-text">यह अकाउंट प्रोफाइल मोबाइल होगा और बाद में बदला नहीं जाएगा।</div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">UPI ID (वैकल्पिक)</label>
+          <input type="text" id="upiId" class="text-input" placeholder="yourname@upi" inputmode="email">
+          <div class="helper-text">जैसे: 9876543210@paytm / name@ybl</div>
+        </div>
+
+        <p id="setupError" class="error-text hidden"></p>
+
+        <button id="setupBtn" class="btn btn-primary" onclick="saveSetup()">
+          <span class="btn-text">🚀 अब शुरू करें</span>
+          <span class="btn-loader hidden"><span class="spinner"></span></span>
+        </button>
+      </div>
+
+      <div class="footer-bar">
+        कोई सवाल? ईमेल करें: <a href="mailto:babasitaram@gmail.com">babasitaram@gmail.com</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+<!-- EMAILJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<!-- FIREBASE CONFIG -->
+<script src="app-config.js"></script>
+<script src="firebase-config.js"></script>
+
+<script>
+/* ============================================================
+   BABASITARAM PRO - SIGNUP LOGIC
+   Email + Password + Verification + Welcome Email (EmailJS)
+============================================================ */
+
+// ============================================
+// ✅ EMAILJS KEYS (AAPKI)
+// ============================================
+const EMAILJS_PUBLIC_KEY = APP_CONFIG.emailjs.publicKey;
+const EMAILJS_SERVICE_ID = APP_CONFIG.emailjs.serviceId;
+const EMAILJS_TEMPLATE_ID = APP_CONFIG.emailjs.welcomeTemplateId;
+
+// Initialize EmailJS
+if (typeof emailjs !== 'undefined') {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+  console.log('✅ EmailJS initialized');
+}
+
+// ============================================
+// PASSWORD STRENGTH CHECKER
+// ============================================
+function checkPasswordStrength() {
+  const pw = document.getElementById('signupPassword').value;
+  const bar1 = document.getElementById('pwBar1');
+  const bar2 = document.getElementById('pwBar2');
+  const bar3 = document.getElementById('pwBar3');
+  const hint = document.getElementById('pwHint');
+
+  bar1.className = 'pw-strength-bar';
+  bar2.className = 'pw-strength-bar';
+  bar3.className = 'pw-strength-bar';
+
+  if (!pw) { hint.textContent = 'कम से कम 6 अक्षर'; hint.className = 'helper-text'; return; }
+
+  let s = 0;
+  if (pw.length >= 6) s++;
+  if (pw.length >= 8) s++;
+  if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) s++;
+  if (/\d/.test(pw)) s++;
+  if (/[^A-Za-z0-9]/.test(pw)) s++;
+
+  if (s <= 1) {
+    bar1.classList.add('weak');
+    hint.textContent = 'कमजोर पासवर्ड';
+    hint.className = 'helper-text bad';
+  } else if (s <= 3) {
+    bar1.classList.add('medium');
+    bar2.classList.add('medium');
+    hint.textContent = 'ठीक पासवर्ड';
+    hint.className = 'helper-text';
+  } else {
+    bar1.classList.add('strong');
+    bar2.classList.add('strong');
+    bar3.classList.add('strong');
+    hint.textContent = 'मजबूत पासवर्ड';
+    hint.className = 'helper-text good';
+  }
+}
+
+// ============================================
+// TOGGLE PASSWORD
+// ============================================
+function togglePassword(id, btn) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+  else { input.type = 'password'; btn.textContent = '👁️'; }
+}
+
+// ============================================
+// SIGNUP HANDLER
+// ============================================
+async function handleSignup() {
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('signupPassword').value;
+  const password2 = document.getElementById('signupPassword2').value;
+  const errorEl = document.getElementById('signupError');
+  const btn = document.getElementById('signupBtn');
+
+  errorEl.classList.add('hidden');
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return showError(errorEl, 'कृपया सही ईमेल डालें');
+  }
+  if (!password || password.length < 6) {
+    return showError(errorEl, 'पासवर्ड कम से कम 6 अक्षर का होना चाहिए');
+  }
+  if (password !== password2) {
+    return showError(errorEl, 'दोनों पासवर्ड मेल नहीं खाते');
+  }
+
+  setBtnLoading(btn, true);
+
+  try {
+    const result = await auth.createUserWithEmailAndPassword(email, password);
+    const user = result.user;
+    console.log('✅ Account created');
+
+    await user.updateProfile({ displayName: email.split('@')[0] });
+
+    await user.sendEmailVerification({
+      url: window.location.origin + window.location.pathname.replace('signup.html', 'index.html')
+    });
+    console.log('📧 Verification email sent');
+
+    await db.collection('users').doc(user.uid).set({
+      uid: user.uid,
+      email: email,
+      emailVerified: false,
+      signupStep: 'email_pending',
+      language: 'hi',
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    document.getElementById('verifyEmailDisplay').textContent = email;
+    showScreen('verify');
+    showToast('ईमेल भेज दिया गया!', 'success');
+
+  } catch (error) {
+    console.error('Signup error:', error);
+    let msg = 'साइनअप विफल। दोबारा कोशिश करें।';
+    if (error.code === 'auth/email-already-in-use') msg = 'यह ईमेल पहले से रजिस्टर्ड है। लॉगिन करें।';
+    else if (error.code === 'auth/weak-password') msg = 'पासवर्ड कमजोर है।';
+    else if (error.code === 'auth/invalid-email') msg = 'ईमेल पता सही नहीं है।';
+    else if (error.code === 'auth/network-request-failed') msg = 'इंटरनेट कनेक्शन चेक करें।';
+    showError(errorEl, msg);
+    setBtnLoading(btn, false);
+  }
+}
+
+// ============================================
+// RESEND VERIFICATION EMAIL
+// ============================================
+async function resendVerification() {
+  const btn = document.getElementById('resendVerifyBtn');
+  setBtnLoading(btn, true);
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error('No user');
+    await user.sendEmailVerification({
+      url: window.location.origin + window.location.pathname.replace('signup.html', 'index.html')
+    });
+    showToast('ईमेल दोबारा भेज दिया गया!', 'success');
+  } catch (error) {
+    console.error('Resend error:', error);
+    showToast('ईमेल भेजने में समस्या', 'error');
+  } finally {
+    setBtnLoading(btn, false);
+  }
+}
+
+// ============================================
+// CHECK EMAIL VERIFIED + SEND WELCOME EMAIL
+// ============================================
+async function checkEmailVerified() {
+  const btn = document.getElementById('checkVerifyBtn');
+  setBtnLoading(btn, true);
+
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error('No user');
+
+    await user.reload();
+    const refreshedUser = auth.currentUser;
+
+    if (refreshedUser.emailVerified) {
+      await db.collection('users').doc(user.uid).update({
+        emailVerified: true,
+        signupStep: 'email_verified',
+        emailVerifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+
+      // 🎉 Send Welcome Email
+      await sendWelcomeEmail(user.email);
+
+      showToast('ईमेल verify हो गया!', 'success');
+      showScreen('setup');
+    } else {
+      showToast('अभी verify नहीं हुआ। ईमेल चेक करें।', 'error');
+    }
+  } catch (error) {
+    console.error('Check verified error:', error);
+    showToast('कुछ गड़बड़ हुई', 'error');
+  } finally {
+    setBtnLoading(btn, false);
+  }
+}
+
+// ============================================
+// SEND WELCOME EMAIL
+// ============================================
+async function sendWelcomeEmail(userEmail) {
+  try {
+    const user = auth.currentUser;
+    let userName = userEmail.split('@')[0];
+
+    try {
+      const doc = await db.collection('users').doc(user.uid).get();
+      if (doc.exists && doc.data().ownerName) {
+        userName = doc.data().ownerName;
+      }
+    } catch (e) {}
+
+    const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      user_name: userName,
+      user_email: userEmail,
+      app_link: APP_CONFIG.webBaseUrl(),
+      reset_link: APP_CONFIG.pageUrl('forgot-password.html')
+    });
+
+    console.log('✅ Welcome email sent');
+    showToast('🎉 Welcome email भेज दिया गया!', 'success');
+  } catch (error) {
+    console.error('Welcome email error:', error);
+    // Fail ho to bhi user aage badhe
+  }
+}
+
+// ============================================
+// SAVE SETUP
+// ============================================
+async function saveSetup() {
+  const shopName = document.getElementById('shopName').value.trim();
+  const ownerName = document.getElementById('ownerName').value.trim();
+  const ownerPhone = document.getElementById('ownerPhone').value.replace(/\D/g,'').slice(0,10);
+  const upiId = document.getElementById('upiId').value.trim();
+  const errorEl = document.getElementById('setupError');
+  const btn = document.getElementById('setupBtn');
+
+  errorEl.classList.add('hidden');
+  if (!shopName) return showError(errorEl, 'व्यवसाय का नाम डालें');
+  if (!ownerName) return showError(errorEl, 'अपना नाम डालें');
+  if (!/^\d{10}$/.test(ownerPhone)) return showError(errorEl, '10 अंकों का मोबाइल नंबर डालें');
+
+  setBtnLoading(btn, true);
+
+  try {
+    const user = auth.currentUser;
+    if (!user) throw new Error('No user');
+
+    await db.collection('users').doc(user.uid).update({
+      shopName: shopName,
+      ownerName: ownerName,
+      phone: ownerPhone,
+      profileName: ownerName,
+      profilePhone: ownerPhone,
+      profileEmail: user.email,
+      upiId: upiId || '',
+      backupEmail: user.email,
+      defaultRate: 2,
+      signupStep: 'complete',
+      setupCompletedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    localStorage.setItem('bsp_userId', user.uid);
+    showToast('स्वागत है!', 'success');
+
+    setTimeout(() => {
+      window.location.href = 'dashboard.html';
+    }, 800);
+
+  } catch (error) {
+    console.error('Setup error:', error);
+    showError(errorEl, 'कुछ गड़बड़ हुई। दोबारा कोशिश करें।');
+    setBtnLoading(btn, false);
+  }
+}
+
+// ============================================
+// LOGOUT
+// ============================================
+async function handleLogout() {
+  if (!confirm('लॉगआउट करें?')) return;
+  try {
+    await auth.signOut();
+    window.location.href = 'signup.html';
+  } catch (error) {
+    console.error('Logout error:', error);
+  }
+}
+
+// ============================================
+// HELPERS
+// ============================================
+function showError(el, msg) {
+  if (!el) { showToast(msg, 'error'); return; }
+  el.textContent = msg;
+  el.classList.remove('hidden');
+}
+
+function setBtnLoading(btn, isLoading) {
+  if (!btn) return;
+  const txt = btn.querySelector('.btn-text');
+  const loader = btn.querySelector('.btn-loader');
+  btn.disabled = isLoading;
+  if (txt) txt.classList.toggle('hidden', isLoading);
+  if (loader) loader.classList.toggle('hidden', !isLoading);
+}
+
+function showToast(msg, type) {
+  const el = document.getElementById('toast');
+  if (!el) { alert(msg); return; }
+  el.textContent = msg;
+  el.className = 'toast show' + (type ? ' ' + type : '');
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + name);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('load', () => {
+  console.log('🚀 Signup page loaded');
+  setTimeout(() => {
+    const emailField = document.getElementById('signupEmail');
+    if (emailField) emailField.focus();
+  }, 400);
+});
+</script>
+
+<script src="v18-i18n.js"></script>
+<script src="localize-pages.js"></script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js").catch(e=>console.warn("Service worker unavailable:",e)));}</script>
+</body>
+</html>

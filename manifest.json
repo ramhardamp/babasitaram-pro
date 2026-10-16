@@ -1,16 +1,25 @@
 {
-  "name": "BABASITARAM PRO — Ultimate Privacy Shield & Password Manager",
-  "short_name": "BABASITARAM PRO",
-  "description": "Block ads, protect passwords, lock sites, focus mode, emergency burn — all with zero data collection.",
+  "name": "BSRPRO Digital Khata",
+  "short_name": "BSRPRO",
+  "description": "Offline-first digital khata, customer ledger and payment collection.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0a0a0f",
-  "theme_color": "#00d4ff",
+  "background_color": "#f4f7f5",
+  "theme_color": "#1e8e3e",
+  "lang": "hi",
   "icons": [
     {
-      "src": "icon128.png",
-      "sizes": "128x128",
-      "type": "image/png"
+      "src": "assets/guru-shree-logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/guru-shree-logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<script src="theme.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#1e8e3e">
+<title>My Khata - BSR PRO</title>
+<link rel="icon" href="assets/guru-shree-logo.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#e0e7ff;--primary-lighter:#eef2ff;--gradient:linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#a855f7 100%);--gradient-dark:linear-gradient(135deg,#1e1b4b 0%,#312e81 100%);--credit:#ef4444;--credit-bg:#fef2f2;--debit:#10b981;--debit-bg:#ecfdf5;--interest:#f59e0b;--interest-bg:#fffbeb;--info:#3b82f6;--info-bg:#eff6ff;--violet:#7c3aed;--violet-bg:#f5f3ff;--text:#0f172a;--text-muted:#64748b;--text-light:#94a3b8;--border:#e2e8f0;--bg:#f8fafc;--white:#fff;--error:#ef4444;--success:#10b981;--radius-sm:8px;--radius-md:14px;--radius-lg:20px;--radius-xl:28px;--radius-full:999px}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans Devanagari',sans-serif;background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4c1d95 100%);color:var(--text);font-size:16px;line-height:1.5;overflow-x:hidden}
+body{display:flex;justify-content:center;align-items:flex-start;min-height:100vh}
+.app-shell{width:100%;max-width:480px;min-height:100vh;background:var(--bg);position:relative;box-shadow:0 0 80px rgba(0,0,0,.3);overflow:hidden;display:flex;flex-direction:column}
+@media(min-width:500px){body{padding:24px 0}.app-shell{min-height:calc(100vh - 48px);border-radius:32px;max-height:940px}}
+.brand-header{background:var(--gradient-dark);padding:24px 20px 22px;text-align:center;position:relative;overflow:hidden;border-radius:0 0 28px 28px;margin-bottom:20px;box-shadow:0 12px 40px rgba(30,27,75,.3)}
+.brand-header::before{content:'';position:absolute;top:-50%;right:-30%;width:250px;height:250px;background:radial-gradient(circle,rgba(139,92,246,.4) 0%,transparent 70%);border-radius:50%}
+.brand-logo{width:68px;height:68px;margin:0 auto 12px;background:rgba(255,255,255,.12);backdrop-filter:blur(20px);border:1.5px solid rgba(255,255,255,.2);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:34px;position:relative;z-index:1}
+.brand-title{font-size:19px;font-weight:900;color:#fff;letter-spacing:2px;position:relative;z-index:1;line-height:1.3}
+.brand-title-line2{display:block;font-size:12px;letter-spacing:3px;color:#fcd34d;margin-top:4px;font-weight:800}
+.brand-tagline{font-size:13px;color:rgba(255,255,255,.9);margin-top:12px;position:relative;z-index:1;font-weight:600}
+.screen-container{flex:1;overflow-y:auto;padding:0 20px 30px}
+.loading-wrap{display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:16px}
+.loading-spinner{width:40px;height:40px;border:4px solid var(--primary-light);border-top-color:var(--primary);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-screen{text-align:center;padding:60px 20px}
+.error-icon{font-size:80px;margin-bottom:20px}
+.error-title{font-size:20px;font-weight:900;margin-bottom:10px;color:var(--text)}
+.error-text{font-size:14px;color:var(--text-muted);line-height:1.6}
+
+/* ⭐ CRITICAL: Hidden class */
+.hidden{display:none!important}
+
+/* Customer Hero */
+.cust-hero{background:var(--gradient-dark);color:#fff;padding:22px 20px;border-radius:var(--radius-lg);margin-bottom:16px;box-shadow:0 12px 40px rgba(30,27,75,.3);position:relative;overflow:hidden}
+.cust-hero::before{content:'';position:absolute;top:-50%;right:-30%;width:250px;height:250px;background:radial-gradient(circle,rgba(139,92,246,.4) 0%,transparent 70%);border-radius:50%}
+.ch-shop-label{font-size:10px;opacity:.8;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;position:relative}
+.ch-shop-name{font-size:20px;font-weight:900;margin-top:4px;margin-bottom:16px;position:relative;letter-spacing:-.3px}
+.ch-greeting{font-size:12px;opacity:.85;position:relative}
+.ch-customer-name{font-size:16px;font-weight:800;margin-top:2px;position:relative}
+.ch-balance-label{font-size:11px;opacity:.75;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;position:relative;margin-top:18px}
+.ch-balance-amount{font-size:40px;font-weight:900;margin-top:4px;position:relative;letter-spacing:-1.5px;line-height:1}
+.ch-balance-sub{font-size:11px;opacity:.75;margin-top:6px;position:relative}
+
+/* Summary Cards */
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.summary-card{background:var(--white);border:2px solid var(--border);border-radius:var(--radius-md);padding:14px;text-align:center}
+.summary-card.udhaar{background:var(--credit-bg);border-color:#fecaca}
+.summary-card.jama{background:var(--debit-bg);border-color:#bbf7d0}
+.summary-icon{font-size:20px;margin-bottom:4px}
+.summary-label{font-size:10px;color:var(--text-muted);font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.summary-card.udhaar .summary-label{color:#991b1b}
+.summary-card.jama .summary-label{color:#065f46}
+.summary-value{font-size:22px;font-weight:900;margin-top:4px;letter-spacing:-.5px}
+.summary-card.udhaar .summary-value{color:var(--credit)}
+.summary-card.jama .summary-value{color:var(--debit)}
+
+/* Transactions */
+.section-title{font-size:12px;font-weight:900;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin:20px 0 10px}
+.txn-item{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-md);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
+.txn-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.txn-icon.udhaar{background:var(--credit-bg)}
+.txn-icon.jama{background:var(--debit-bg)}
+.txn-icon.byaj_loan{background:var(--interest-bg)}
+.txn-icon.loan_repay{background:var(--info-bg)}
+.txn-icon.interest_paid{background:var(--violet-bg)}
+.txn-info{flex:1;min-width:0}
+.txn-title{font-size:14px;font-weight:700;color:var(--text)}
+.txn-date{font-size:11px;color:var(--text-muted);margin-top:3px}
+.txn-amt{font-size:15px;font-weight:900;letter-spacing:-.3px;flex-shrink:0}
+.txn-amt.udhaar{color:var(--credit)}
+.txn-amt.jama{color:var(--debit)}
+.txn-amt.byaj_loan{color:var(--interest)}
+.txn-amt.loan_repay{color:var(--info)}
+.txn-amt.interest_paid{color:var(--violet)}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-muted)}
+.empty-icon{font-size:56px;margin-bottom:12px;opacity:.4}
+.empty-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px}
+.empty-text{font-size:12px}
+
+/* UPI Payment */
+.upi-pay-card{background:var(--white);border:2px solid #bbf7d0;border-radius:var(--radius-lg);padding:18px;margin:16px 0;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.upi-pay-title{font-size:17px;font-weight:900;color:#15803d;margin-bottom:4px}
+.upi-pay-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px}
+.upi-qr{width:220px;height:220px;max-width:80vw;object-fit:contain;border:8px solid #fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);margin:4px auto 12px;display:block}
+.upi-id-box{font-size:12px;font-weight:800;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:9px;word-break:break-all;margin-bottom:10px}
+.upi-pay-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;border:0;border-radius:14px;background:#16a34a;color:#fff;font-size:15px;font-weight:900;cursor:pointer;text-decoration:none}
+.upi-link-box{font-size:10px;color:var(--text-muted);word-break:break-all;margin-top:10px;padding:8px;background:var(--bg);border-radius:8px}
+.upi-copy-btn{margin-top:8px;border:1px solid #86efac;background:#fff;color:#15803d;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}
+/* Footer */
+.footer-bar{text-align:center;padding:24px 0 12px;font-size:11px;color:var(--text-muted);line-height:1.8}
+.footer-bar a{color:var(--primary);text-decoration:none;font-weight:800}
+
+/* Contact Box */
+.contact-box{background:var(--primary-lighter);border:1.5px solid var(--primary-light);border-radius:var(--radius-md);padding:14px 16px;margin-top:20px;text-align:center}
+.contact-box-label{font-size:11px;color:var(--primary-dark);font-weight:800;text-transform:uppercase;letter-spacing:1px}
+.contact-box-value{font-size:14px;color:var(--text);font-weight:700;margin-top:6px;word-break:break-all}
+.contact-box-value a{color:var(--primary);text-decoration:none}</style>
+<style id="ok-theme">
+/* ===== OK-THEME v1: OkCredit-style green UI (sirf CSS override, logic/JS/IDs untouched) ===== */
+:root{--primary:#1e8e3e;--primary-dark:#166b2e;--primary-light:#d9f0e0;--primary-lighter:#eef8f1;
+--gradient:linear-gradient(135deg,#22a047 0%,#1e8e3e 100%);--gradient-dark:linear-gradient(135deg,#ffffff 0%,#f3faf5 100%);
+--credit:#e5322d;--credit-bg:#fdecec;--debit:#1e8e3e;--debit-bg:#e6f5ea;--interest:#d98a00;--interest-bg:#fff6e0;
+--violet:#6b4fbb;--violet-bg:#f1edfb;--text:#1c1f23;--text-muted:#5f6b76;--text-light:#98a2ab;--border:#e3e8e5;--bg:#f4f7f5;
+--radius-md:14px;--radius-lg:18px}
+html,body{background:#f4f7f5}
+/* Top bar: clean white, thin border */
+.top-bar{background:#fff;border-bottom:1px solid var(--border);box-shadow:0 1px 0 rgba(0,0,0,.02)}
+.back-btn,.lock-btn{background:var(--primary-lighter);color:var(--primary)}
+.back-btn:active{background:var(--primary-light)}
+.lang-toggle{background:var(--primary-lighter)}
+/* Hero summary: OkCredit "Net Balance" style white card */
+.dash-hero{background:#fff;color:var(--text);margin:10px 12px 12px;padding:14px;border:1px solid var(--border);border-radius:18px;box-shadow:0 2px 10px rgba(16,24,40,.06)}
+.dash-hero::before{display:none}
+.dash-split{background:var(--bg);border:1px solid var(--border);border-radius:14px}
+.dash-split-item+.dash-split-item{border-left:1px solid var(--border)}
+.dash-split-label{color:var(--text-muted);opacity:1}
+.dash-split-value.red{color:var(--credit)}.dash-split-value.amber{color:var(--interest)}.dash-split-value.green{color:var(--debit)}
+.dash-split-sub{color:var(--text-muted);opacity:1}
+/* Search + filter chips */
+.customer-search{border:1px solid var(--border);border-radius:999px;background:#fff;height:44px;padding:0 18px;box-shadow:0 1px 4px rgba(16,24,40,.04)}
+.customer-search:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+.tab{border:1px solid var(--border);padding:8px 14px;font-weight:700}
+.tab.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* Customer cards: soft, rounded, light shadow */
+.customer-card{border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 4px rgba(16,24,40,.05)}
+.customer-card:active{border-color:var(--primary);box-shadow:0 3px 12px rgba(30,142,62,.15)}
+/* Buttons + FAB */
+.btn-primary{background:var(--gradient);box-shadow:0 6px 18px rgba(30,142,62,.30)}
+.btn-primary:disabled{background:#cbd5d0;box-shadow:none}
+.fab{background:var(--gradient);box-shadow:0 8px 22px rgba(30,142,62,.45)}
+/* Bottom nav: green active pill */
+.bottom-tabs{background:#fff;border-top:1px solid var(--border);box-shadow:0 -4px 18px rgba(16,24,40,.06)}
+.btab.active{color:var(--primary)}
+.btab.active::before{background:var(--primary)}
+.btab.active .btab-icon{background:var(--primary-light);border-radius:999px;padding:0 14px}
+.btab-icon{transition:background .2s}
+/* Inputs focus */
+.text-input:focus,input:focus,select:focus,textarea:focus{border-color:var(--primary)}
+/* Loading */
+.loading-spinner{border-color:var(--primary-light);border-top-color:var(--primary)}
+/* 🎨 FIX: Customer-view hero — सफ़ेद text light gradient पर अदृश्य हो रहा था */
+.cust-hero{background:#fff!important;color:var(--text)!important;border:1px solid var(--border)!important;box-shadow:0 2px 10px rgba(16,24,40,.06)!important}
+.cust-hero::before{display:none!important}
+.ch-shop-label{color:var(--text-muted)!important;opacity:1!important}
+.ch-shop-name{color:var(--text)!important}
+.ch-greeting{color:var(--text-muted)!important;opacity:1!important}
+.ch-customer-name{color:var(--text)!important}
+.ch-balance-label{color:var(--text-muted)!important;opacity:1!important}
+.ch-balance-amount{color:var(--primary)!important}
+.ch-balance-sub{color:var(--text-muted)!important;opacity:1!important}
+/* Balance state colors: due=red, advance=green, settled=gray */
+.cust-hero[data-bal="due"] .ch-balance-amount{color:var(--credit)!important}
+.cust-hero[data-bal="advance"] .ch-balance-amount{color:var(--debit)!important}
+.cust-hero[data-bal="settled"] .ch-balance-amount{color:var(--text-muted)!important}
+/* ===== /OK-THEME ===== */
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="app-shell">
+  <div class="brand-header">
+    <div class="brand-logo"><img src="assets/guru-shree-logo.svg?v=20261010-1" onerror="this.onerror=null;this.src='assets/guru-shree-logo.jpg'" loading="eager" decoding="sync" alt="BSR PRO" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+    <div class="brand-title">BSR PRO<span class="brand-title-line2">DIGITAL KHATA</span></div>
+    <div class="brand-tagline">आपका हिसाब, हमेशा सुरक्षित</div>
+  </div>
+
+  <div class="screen-container" id="screenContainer">
+    <!-- LOADING SCREEN -->
+    <div id="loadingScreen" class="loading-wrap">
+      <div class="loading-spinner"></div>
+      <div style="color:var(--text-muted);font-size:14px;font-weight:600">आपका खाता load हो रहा है...</div>
+    </div>
+
+    <!-- ERROR SCREEN (hidden by default) -->
+    <div id="errorScreen" class="error-screen hidden">
+      <div class="error-icon">⚠️</div>
+      <div class="error-title" id="errorTitle">लिंक काम नहीं कर रहा</div>
+      <div class="error-text" id="errorText">यह लिंक expire हो गया है या गलत है।</div>
+    </div>
+
+    <!-- CONTENT SCREEN (hidden by default) -->
+    <div id="contentScreen" class="hidden"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="ledger.js"></script>
+<script>
+/* ============================================================
+   CUSTOMER VIEW - Read-only ledger view via unique token
+============================================================ */
+
+// Firebase init (same config as main app)
+const firebaseConfig = {
+  apiKey: "AIzaSyC77zcxIzK8ISBZwxwQhANmPlq5skkBpns",
+  authDomain: "baba-sitaram-pro.firebaseapp.com",
+  projectId: "baba-sitaram-pro",
+  storageBucket: "baba-sitaram-pro.firebasestorage.app",
+  messagingSenderId: "991032718946",
+  appId: "1:991032718946:web:219b8cd748474a3d78033b"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function fmt(n){return '₹'+Math.round(Math.abs(n)||0).toLocaleString('en-IN')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function dateStr(d){
+  if(!d)return '-';
+  try{
+    const date = d.toDate ? d.toDate() : new Date(d);
+    const dd = String(date.getDate()).padStart(2,'0');
+    const mm = String(date.getMonth()+1).padStart(2,'0');
+    const yyyy = date.getFullYear();
+    return `${dd}/${mm}/${yyyy}`;
+  }catch(e){return '-'}
+}
+
+/* ⭐ FIXED: Show only ONE screen at a time */
+function showOnly(screenName){
+  document.getElementById('loadingScreen').classList.add('hidden');
+  document.getElementById('errorScreen').classList.add('hidden');
+  document.getElementById('contentScreen').classList.add('hidden');
+  
+  if(screenName === 'loading'){
+    document.getElementById('loadingScreen').classList.remove('hidden');
+  } else if(screenName === 'error'){
+    document.getElementById('errorScreen').classList.remove('hidden');
+  } else if(screenName === 'content'){
+    document.getElementById('contentScreen').classList.remove('hidden');
+  }
+}
+
+async function loadCustomerView(){
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  
+
+  if(!token||!Ledger.isWellFormedToken(token)){
+    showError('लिंक गलत है', 'इस लिंक में आवश्यक जानकारी नहीं है। कृपया दुकानदार से नया लिंक मांगें।');
+    return;
+  }
+
+  try {
+    const doc = await db.collection('publicViews').doc(token).get();
+
+    if(!doc.exists){
+      showError('लिंक expire हो गया', 'यह लिंक अब काम नहीं कर रहा। कृपया दुकानदार से नया लिंक मांगें।');
+      return;
+    }
+
+    const data = doc.data();
+    const st = Ledger.portalStatus(data, new Date());
+    if(st === 'revoked'){ showError('लिंक बंद कर दिया गया है', 'यह लिंक दुकानदार ने बंद कर दिया है। कृपया दुकानदार से नया लिंक माँगें।'); return; }
+    if(st === 'expired'){ showError('लिंक की अवधि समाप्त हो गई', 'इस लिंक की अवधि पूरी हो चुकी है। कृपया दुकानदार से नया लिंक माँगें।'); return; }
+    renderView(data);
+
+  } catch(e) {
+    console.error('❌ Error:', e);
+    showError('कुछ गड़बड़ हुई', 'डेटा load नहीं हो पाया। कृपया कुछ देर बाद कोशिश करें।');
+  }
+}
+
+function showError(title, text){
+  showOnly('error');
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorText').textContent = text;
+}
+
+function cvT(key, fallback){
+  let lang = 'hi';
+  try { lang = window.localStorage?.getItem('bsp_lang') || 'hi'; } catch (_) {}
+  const value = window.BSR_I18N?.locales?.[lang]?.[key];
+  return (typeof value === 'string' && value.trim()) ? value : fallback;
+}
+
+function buildCustomerUpiUrl(data,amount){
+  // Stored/stale upiPayUrl kabhi use nahi: current UPI ID + amount se validated, encoded link (Ledger.buildUpiUrl)
+  return Ledger.buildUpiUrl(data&&data.upiId,amount);
+}
+function qrImageUrl(text){
+  return text?'https://quickchart.io/qr?size=260&margin=2&text='+encodeURIComponent(text):'';
+}
+async function copyText(value){
+  try{await navigator.clipboard.writeText(value);alert(cvT('ui.fix.183','UPI link कॉपी हो गया'));}catch(_){alert(cvT('ui.fix.184','कॉपी नहीं हुआ'));}
+}
+function renderView(data){
+  showOnly('content');
+  const content = document.getElementById('contentScreen');
+
+  const v2 = Number(data.schemaVersion) >= 2;
+  const total = Number(data.totalOutstanding) || 0;
+  const advance = Number(data.advance) || 0;
+  // balance: + = bakaya, - = advance. v2 mein loan + byaj bhi total mein shamil hain.
+  const balance = v2 ? (total > 0 ? total : (advance > 0 ? -advance : 0)) : (data.balance || 0);
+  const totalUdhaar = data.totalUdhaar || 0;
+  const totalJama = data.totalJama || 0;
+  const transactions = data.transactions || [];
+
+  let balLabel = cvT('ui.fix.168','कुल बकाया');
+  let balSub = '';
+  if(balance > 0){
+    balLabel = cvT('ui.fix.169','आपको देना है');
+    balSub = cvT('ui.fix.170','कृपया भुगतान करें');
+  } else if(balance < 0){
+    balLabel = cvT('ui.fix.171','आपका एडवांस');
+    balSub = cvT('ui.fix.172','आपने ज्यादा भुगतान किया है');
+  } else {
+    balLabel = cvT('ui.fix.173','हिसाब साफ');
+    balSub = cvT('ui.fix.174','कोई बकाया नहीं');
+  }
+  /* 🔧 NEW: Balance state for CSS color control (due=red, advance=green, settled=gray) */
+  const balState = balance > 0 ? 'due' : (balance < 0 ? 'advance' : 'settled');
+
+  let txnHtml = '';
+  if(transactions.length === 0){
+    txnHtml = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-title">कोई लेन-देन नहीं</div></div>`;
+  } else {
+    const map = {
+      udhaar: { icon: '📤', cls: 'udhaar', label: cvT('ui.fix.189','पेमेंट दिया') },
+      Payment: { icon: '📤', cls: 'udhaar', label: cvT('ui.fix.189','पेमेंट दिया') },
+      jama: { icon: '📥', cls: 'jama', label: cvT('ui.fix.190','भुगतान किया') },
+      byaj_loan: { icon: '📈', cls: 'byaj_loan', label: cvT('ui.fix.191','ब्याज पर लोन') },
+      loan_repay: { icon: '💵', cls: 'loan_repay', label: cvT('ui.fix.192','लोन वापसी') },
+      interest_paid: { icon: '💰', cls: 'interest_paid', label: cvT('ui.fix.193','ब्याज भुगतान') }
+    };
+    txnHtml = transactions.map(txn => {
+      const m = map[txn.type] || map.udhaar;
+      const amt = txn.amount || txn.principal || 0;
+      return `<div class="txn-item">
+        <div class="txn-icon ${m.cls}">${m.icon}</div>
+        <div class="txn-info">
+          <div class="txn-title">${m.label}${txn.note ? ' • ' + esc(txn.note) : ''}</div>
+          <div class="txn-date">${dateStr(txn.date)}</div>
+        </div>
+        <div class="txn-amt ${m.cls}">${fmt(amt)}</div>
+      </div>`;
+    }).join('');
+  }
+
+  const legacyGrid = `<div class="summary-grid">
+      <div class="summary-card udhaar">
+        <div class="summary-icon">📤</div>
+        <div class="summary-label">कुल पेमेंट</div>
+        <div class="summary-value">${fmt(totalUdhaar)}</div>
+      </div>
+      <div class="summary-card jama">
+        <div class="summary-icon">📥</div>
+        <div class="summary-label">कुल जमा</div>
+        <div class="summary-value">${fmt(totalJama)}</div>
+      </div>
+    </div>`;
+  const sec = (label, value, cls) => `<div class="summary-card ${cls}"><div class="summary-label">${label}</div><div class="summary-value">${fmt(value)}</div></div>`;
+  const v2Grid = `<div class="summary-grid">
+      ${sec(cvT('ui.fix.175','सामान्य पेमेंट बाकी'), Number(data.ordinaryOutstanding)||0, 'udhaar')}
+      ${sec(cvT('ui.fix.176','लोन मूलधन बाकी'), Number(data.loanPrincipalOutstanding)||0, 'udhaar')}
+      ${sec(cvT('ui.fix.177','ब्याज बाकी'), Number(data.interestOutstanding)||0, 'udhaar')}
+      ${sec(cvT('ui.fix.178','एडवांस जमा'), advance, 'jama')}
+    </div>`;
+  const summaryHtml = v2 ? v2Grid : legacyGrid;
+
+  content.innerHTML = `
+    <div class="cust-hero" data-bal="${balState}">
+      <div class="ch-shop-label">${cvT('ui.fix.166','दुकान का नाम')}</div>
+      <div class="ch-shop-name">${esc(data.shopName || 'BSR PRO')}</div>
+      <div class="ch-greeting">${cvT('ui.fix.167','नमस्ते,')}</div>
+      <div class="ch-customer-name">${esc(data.customerName || 'Customer')}</div>
+      <div class="ch-balance-label">${balLabel}</div>
+      <div class="ch-balance-amount">${fmt(Math.abs(balance))}</div>
+      ${balSub ? `<div class="ch-balance-sub">${balSub}</div>` : ''}
+    </div>
+
+    ${summaryHtml}
+
+    ${data.upiId && balance>0 ? (()=>{const upiUrl=buildCustomerUpiUrl(data,balance);const qr=qrImageUrl(upiUrl);return `
+    <div class="upi-pay-card">
+      <div class="upi-pay-title">${cvT('ui.fix.179','💳 UPI से भुगतान करें')}</div>
+      <div class="upi-pay-sub">${cvT('ui.fix.180','आपके बकाया {amount} का amount पहले से भरा है').replace('{amount}',fmt(balance))}</div>
+      ${qr?`<img class="upi-qr" src="${qr}" alt="UPI QR Code" loading="eager">`:''}
+      <div class="upi-id-box">UPI ID: ${esc(data.upiId)}</div>
+      ${upiUrl?`<a class="upi-pay-btn" href="${esc(upiUrl).replace(/%40/g,"@")}">${cvT('ui.fix.181','📲 UPI App में भुगतान करें')}</a>
+      <button class="upi-copy-btn" onclick="copyText('${esc(upiUrl).replace(/'/g,"\\'")}')">${cvT('ui.fix.182','🔗 UPI Link कॉपी करें')}</button>
+      <div class="upi-link-box">${esc(upiUrl)}</div>`:''}
+    </div>`;})() : ''}
+
+    <div class="section-title">📋 ${cvT('ui.fix.185','लेन-देन')} (${transactions.length})</div>
+    ${txnHtml}
+
+    <div class="contact-box">
+      <div class="contact-box-label">${cvT('ui.fix.186','कोई सवाल? दुकानदार से संपर्क करें')}</div>
+      <div class="contact-box-value">
+        ${data.shopPhone ? `📱 ${esc(data.shopPhone)}<br>` : ''}
+        ${data.shopEmail ? `📧 <a href="mailto:${esc(data.shopEmail)}">${esc(data.shopEmail)}</a>` : ''}
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      ${cvT('ui.fix.187','Updated:')} ${dateStr(data.updatedAt || new Date())}<br>
+      ${cvT('ui.fix.188','Powered by BSR PRO')}
+    </div>
+  `;
+}
+
+window.addEventListener('load', loadCustomerView);
+</script>
+<script src="v18-i18n.js"></script>
+<script src="localize-pages.js"></script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js").catch(e=>console.warn("Service worker unavailable:",e)));}</script>
+</body>
+</html>
